@@ -111,7 +111,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
         {
 
             //set the sign in fragment to be the initial view
-            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Up")
+            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Down")
 
         }
 

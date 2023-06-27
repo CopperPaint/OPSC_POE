@@ -35,36 +35,74 @@ class Home_Activity : AppCompatActivity()
 
         binding.tvUserUsername.text = GlobalClass.user.username
 
-        fun CycleHomeFragmentView ()
+        fun CycleHomeFragmentView (arrow : String)
         {
 
-            if (binding.tvSectionTitle.text == "Activities")
+            if (arrow == "Left")
             {
-                binding.tvSectionTitle.text = "Categories"
-                fragmentControl.replaceFragment(
-                    home_category_view_fragment(),
-                    R.id.fcFragmentContainer,
-                    supportFragmentManager
-                )
-            } else
-            {
-                binding.tvSectionTitle.text = "Activities"
-                fragmentControl.replaceFragment(
-                    home_activity_view_fragment(),
-                    R.id.fcFragmentContainer,
-                    supportFragmentManager
-                )
+                if (binding.tvSectionTitle.text == "Activities")
+                {
+                    binding.tvSectionTitle.text = "Categories"
+                    /*
+                    fragmentControl.replaceFragment(
+                        home_category_view_fragment(),
+                        R.id.fcFragmentContainer,
+                        supportFragmentManager
+                    )
+
+                     */
+                    fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
+                } else
+                {
+                    binding.tvSectionTitle.text = "Activities"
+                    /*
+                     fragmentControl.replaceFragment(
+                         home_activity_view_fragment(),
+                         R.id.fcFragmentContainer,
+                         supportFragmentManager
+                     )
+                     */
+                    fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
+                }
             }
+            else
+            {
+                if (binding.tvSectionTitle.text == "Activities")
+                {
+                    binding.tvSectionTitle.text = "Categories"
+                    /*
+                    fragmentControl.replaceFragment(
+                        home_category_view_fragment(),
+                        R.id.fcFragmentContainer,
+                        supportFragmentManager
+                    )
+
+                     */
+                    fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
+                } else
+                {
+                    binding.tvSectionTitle.text = "Activities"
+                    /*
+                     fragmentControl.replaceFragment(
+                         home_activity_view_fragment(),
+                         R.id.fcFragmentContainer,
+                         supportFragmentManager
+                     )
+                     */
+                    fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
+                }
+            }
+
 
         }
 
 
         binding.imgCycleViewLeft.setOnClickListener {
-            CycleHomeFragmentView()
+            CycleHomeFragmentView("Left")
         }
 
         binding.imgCycleViewRight.setOnClickListener {
-            CycleHomeFragmentView()
+            CycleHomeFragmentView("Right")
         }
 
         //add new entry depending on if category or activity is selected

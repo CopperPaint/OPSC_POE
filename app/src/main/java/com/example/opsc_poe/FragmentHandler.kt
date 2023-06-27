@@ -24,30 +24,79 @@ class FragmentHandler {
         //choose a fragment animation
         when (anim) {
             "Up" -> {
-                chosenAnim = com.example.opsc_poe.R.anim.slide_up
+                //chosenAnim = com.example.opsc_poe.R.anim.slide_up
+
+                //define fragment animations
+                fragmentTransaction.setCustomAnimations(
+                    com.example.opsc_poe.R.anim.slide_in_up,
+                    com.example.opsc_poe.R.anim.slide_out_down,
+                    com.example.opsc_poe.R.anim.slide_in_down,
+                    com.example.opsc_poe.R.anim.slide_out_up
+                )
+
             }
             "Down" -> {
-                chosenAnim = com.example.opsc_poe.R.anim.slide_down
+                //chosenAnim = com.example.opsc_poe.R.anim.slide_down
+
+                //define fragment animations
+                fragmentTransaction.setCustomAnimations(
+
+                    com.example.opsc_poe.R.anim.slide_in_down,
+                    com.example.opsc_poe.R.anim.slide_out_up,
+                    com.example.opsc_poe.R.anim.slide_in_up,
+                    com.example.opsc_poe.R.anim.slide_out_down
+
+
+                )
+
             }
             "Left" -> {
-                chosenAnim = com.example.opsc_poe.R.anim.slide_left
+                //chosenAnim = com.example.opsc_poe.R.anim.slide_left
+
+                //define fragment animations
+                fragmentTransaction.setCustomAnimations(
+                    com.example.opsc_poe.R.anim.slide_in_left,
+                    com.example.opsc_poe.R.anim.slide_out_right,
+                    com.example.opsc_poe.R.anim.slide_in_right,
+                    com.example.opsc_poe.R.anim.slide_out_left
+                )
             }
             "Right" -> {
-                chosenAnim = com.example.opsc_poe.R.anim.slide_right
+                //chosenAnim = com.example.opsc_poe.R.anim.slide_right
+
+                //define fragment animations
+                fragmentTransaction.setCustomAnimations(
+                    com.example.opsc_poe.R.anim.slide_in_right,
+                    com.example.opsc_poe.R.anim.slide_out_left,
+                    com.example.opsc_poe.R.anim.slide_in_left,
+                    com.example.opsc_poe.R.anim.slide_out_right
+                )
             }
             "Left_Half" -> {
-                chosenAnim = com.example.opsc_poe.R.anim.slide_left_half
+                //chosenAnim = com.example.opsc_poe.R.anim.slide_left_half
+
+                //define fragment animations
+                fragmentTransaction.setCustomAnimations(
+                    com.example.opsc_poe.R.anim.slide_in_left_half,
+                    com.example.opsc_poe.R.anim.slide_out_right_half,
+                    com.example.opsc_poe.R.anim.slide_in_right_half,
+                    com.example.opsc_poe.R.anim.slide_out_left_half
+                )
             }
             "Right_Half" -> {
-                chosenAnim = com.example.opsc_poe.R.anim.slide_right_half
+                //chosenAnim = com.example.opsc_poe.R.anim.slide_right_half
+
+                //define fragment animations
+                fragmentTransaction.setCustomAnimations(
+                    com.example.opsc_poe.R.anim.slide_in_right_half,
+                    com.example.opsc_poe.R.anim.slide_out_left_half,
+                    com.example.opsc_poe.R.anim.slide_in_left_half,
+                    com.example.opsc_poe.R.anim.slide_out_right_half
+                )
             }
         }
 
-        //define fragment animations
-        fragmentTransaction.setCustomAnimations(
-            chosenAnim,
-            chosenAnim
-        )
+
 
         //set the desired fragment to be swapped
         fragmentTransaction.replace(fragmentContainerID, fragment)

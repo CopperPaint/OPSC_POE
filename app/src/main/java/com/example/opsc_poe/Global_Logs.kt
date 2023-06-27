@@ -29,25 +29,54 @@ class Global_Logs : AppCompatActivity()
         //set the activity view fragment to be the initial view
         fragmentControl.replaceFragment(global_logs_list_fragment(), R.id.fcFragmentContainer, supportFragmentManager)
 
-        fun CycleHomeFragmentView ()
+        fun CycleHomeFragmentView (arrow : String)
         {
 
-            if (binding.tvSectionTitle.text == "List")
+
+
+            if (arrow == "Left")
             {
-                binding.tvSectionTitle.text = "Category"
-                fragmentControl.replaceFragment(
-                    global_logs_category_fragment(),
-                    R.id.fcFragmentContainer,
-                    supportFragmentManager
-                )
-            } else
+                if (binding.tvSectionTitle.text == "List")
+                {
+                    binding.tvSectionTitle.text = "Category"
+                    fragmentControl.replaceFragmentAnim(
+                        global_logs_category_fragment(),
+                        R.id.fcFragmentContainer,
+                        supportFragmentManager,
+                        "Left"
+                    )
+                } else
+                {
+                    binding.tvSectionTitle.text = "List"
+                    fragmentControl.replaceFragmentAnim(
+                        global_logs_list_fragment(),
+                        R.id.fcFragmentContainer,
+                        supportFragmentManager,
+                        "Left"
+                    )
+                }
+            }
+            else
             {
-                binding.tvSectionTitle.text = "List"
-                fragmentControl.replaceFragment(
-                    global_logs_list_fragment(),
-                    R.id.fcFragmentContainer,
-                    supportFragmentManager
-                )
+                if (binding.tvSectionTitle.text == "List")
+                {
+                    binding.tvSectionTitle.text = "Category"
+                    fragmentControl.replaceFragmentAnim(
+                        global_logs_category_fragment(),
+                        R.id.fcFragmentContainer,
+                        supportFragmentManager,
+                        "Right"
+                    )
+                } else
+                {
+                    binding.tvSectionTitle.text = "List"
+                    fragmentControl.replaceFragmentAnim(
+                        global_logs_list_fragment(),
+                        R.id.fcFragmentContainer,
+                        supportFragmentManager,
+                        "Right"
+                    )
+                }
             }
 
         }
@@ -61,12 +90,12 @@ class Global_Logs : AppCompatActivity()
 
         binding.imgCycleViewLeft.setOnClickListener()
         {
-            CycleHomeFragmentView()
+            CycleHomeFragmentView("Left")
         }
 
         binding.imgCycleViewRight.setOnClickListener()
         {
-            CycleHomeFragmentView()
+            CycleHomeFragmentView("Right")
         }
 
         binding.tvBackText.setOnClickListener()
