@@ -40,12 +40,13 @@ class sign_up_fragment : Fragment(R.layout.sign_up_fragment){
 
                 var tryValidateUserEmail = trySignUp.ValidateUserEmail(binding.etEmail.text.toString())
 
+                var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(binding.etPassword.text.toString())
 
 
 
                 if (tryValidateUserEmail)
                 {
-                    if (trySignUp.ValidateUserPassword(binding.etPassword.text.toString(), requireContext())) {
+                    if (validateUserPasswordBool) {
 
                         trySignUp.RegisterUser(
                             binding.etEmail.text.toString(),
@@ -53,6 +54,10 @@ class sign_up_fragment : Fragment(R.layout.sign_up_fragment){
                             binding.etPassword.text.toString(),
                             requireContext()
                         )
+                    }
+                    else
+                    {
+                        GlobalClass.InformUser("Invalid Password", validateUserPasswordFeedback, requireContext())
                     }
                 }
                 else

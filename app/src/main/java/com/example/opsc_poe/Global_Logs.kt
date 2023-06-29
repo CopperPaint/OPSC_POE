@@ -29,7 +29,7 @@ class Global_Logs : AppCompatActivity()
         //set the activity view fragment to be the initial view
         fragmentControl.replaceFragment(global_logs_list_fragment(), R.id.fcFragmentContainer, supportFragmentManager)
 
-        fun CycleHomeFragmentView (arrow : String)
+        fun CycleGlobalLogsFragmentView (arrow : String)
         {
 
 
@@ -90,12 +90,12 @@ class Global_Logs : AppCompatActivity()
 
         binding.imgCycleViewLeft.setOnClickListener()
         {
-            CycleHomeFragmentView("Left")
+            CycleGlobalLogsFragmentView("Left")
         }
 
         binding.imgCycleViewRight.setOnClickListener()
         {
-            CycleHomeFragmentView("Right")
+            CycleGlobalLogsFragmentView("Right")
         }
 
         binding.tvBackText.setOnClickListener()

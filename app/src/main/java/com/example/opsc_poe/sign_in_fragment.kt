@@ -3,6 +3,7 @@ package com.example.opsc_poe
 import android.app.AlertDialog
 import android.content.ContentValues
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.icu.util.Output
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
@@ -61,21 +63,25 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
                 GlobalClass.InformUser("Input Error","Please fill in all fields", requireContext())
             }
 
-
-
-/*
-val alert = AlertDialog.Builder(this)
-        alert.setTitle(messageTitle)
-        alert.setMessage(messageText)
-        alert.setPositiveButton("OK", null)
-        alert.show()
- */
-
-
-
-
-            //-------------------------------------------------
         }
+
+        binding.tvForgotPasswordButton.setOnClickListener()
+        {
+
+            val etPopUp = EditText(requireContext())
+            etPopUp.hint = "Your email"
+
+            var alert = AlertDialog.Builder(requireContext())
+            alert.setTitle("Forgot Password? (Coming Soon)")
+            alert.setMessage("Enter your email, a 6-digit reset code will be delivered shortly")
+            alert.setView(etPopUp)
+            alert.setPositiveButton("Send", DialogInterface.OnClickListener { dialog, whichButton -> })
+            alert.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, whichButton -> })
+            alert.show()
+
+        }
+
+
 
             return view
         }

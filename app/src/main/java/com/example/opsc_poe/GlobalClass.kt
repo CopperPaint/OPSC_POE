@@ -4,15 +4,9 @@ import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
-import android.icu.text.IDNA.Info
-import android.view.ContentInfo
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import java.time.LocalDate
@@ -31,6 +25,7 @@ class GlobalClass : Application()
         var goals = arrayListOf<Temp_GoalDataClass>()
         var logs = arrayListOf<Temp_LogDataClass>()
         var user = Temp_UserDataClass()
+
 
         fun ReturnToHome(context: Context)
         {
@@ -149,11 +144,15 @@ class GlobalClass : Application()
 
 
 
+
+
+
         fun InformUser(messageTitle: String, messageText: String, context: Context) {
             val alert = AlertDialog.Builder(context)
             alert.setTitle(messageTitle)
             alert.setMessage(messageText)
             alert.setPositiveButton("OK", null)
+
             alert.show()
         }
 

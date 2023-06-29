@@ -92,7 +92,7 @@ class Temp_UserDataClass{
 
 
 
-        fun ValidateUserPassword(attemptedPassword : String, context: Context): Boolean
+        fun ValidateUserPassword(attemptedPassword : String): Pair<Boolean, String>
         {
 
             var validationErrors = ArrayList<String>()
@@ -151,7 +151,7 @@ class Temp_UserDataClass{
 
             if (validationErrors.isEmpty())
             {
-                return true
+                return Pair(true, "")//true
             }
             else
             {
@@ -160,8 +160,8 @@ class Temp_UserDataClass{
                     passwordErrors+= "$i\n"
                 }
 
-                GlobalClass.InformUser("Invalid Password", passwordErrors, context)
-                return false
+                //GlobalClass.InformUser("Invalid Password", passwordErrors, context)
+                return Pair(false, passwordErrors)//false
             }
 
 

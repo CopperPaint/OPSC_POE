@@ -1,9 +1,13 @@
 package com.example.opsc_poe
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.opsc_poe.databinding.ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity()
 {
@@ -46,6 +50,8 @@ class MainActivity : AppCompatActivity()
             //replaceFragment(sign_up_fragment())
             fragmentControl.replaceFragmentAnim(sign_up_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right_Half")
         }
+
+
     }
 
   /*  private fun replaceFragment(fragment : Fragment) {
