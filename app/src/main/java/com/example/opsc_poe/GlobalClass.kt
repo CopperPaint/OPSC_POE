@@ -24,7 +24,7 @@ class GlobalClass : Application()
 {
     companion object
     {
-
+        var InitialRead: Boolean = false
 
         var activities = arrayListOf<Temp_ActivityDataClass>()
         var categories = arrayListOf<Temp_CategoryDataClass>()
@@ -303,7 +303,6 @@ class GlobalClass : Application()
         //add the goals
         for(i in listGoalGoalID.indices)
         {
-
             var newGoal = Temp_GoalDataClass(listGoalGoalID[i], listGoalUserID[i], listGoalAmount[i], listGoalInterval[i], isSet = true)
             goals.add(newGoal)
         }
@@ -326,16 +325,21 @@ class GlobalClass : Application()
         }
     }
 
+
+
     override fun onCreate()
     {
         super.onCreate()
         //call the data import method
-        LoadLists()
+        //LoadLists()
 
         //add images 3.6.9.12
+        /*
         activities[2].photo = BitmapFactory.decodeResource(applicationContext.resources,R.drawable.imgstockbike);
         activities[5].photo = BitmapFactory.decodeResource(applicationContext.resources,R.drawable.imgstockdriving);
         activities[8].photo = BitmapFactory.decodeResource(applicationContext.resources,R.drawable.imgstockboileggs);
         activities[11].photo = BitmapFactory.decodeResource(applicationContext.resources,R.drawable.imgstockhacking);
+        */
     }
+
 }

@@ -13,6 +13,10 @@ import com.example.opsc_poe.GlobalClass.Companion.DoubleToTime
 import com.example.opsc_poe.GlobalClass.Companion.NoUserAppData
 import com.example.opsc_poe.GlobalClass.Companion.user
 import com.example.opsc_poe.databinding.HomeActivityViewFragmentBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragment) {
 
@@ -34,8 +38,29 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
         //-------------------------------------------------
         //code here
 
+        GlobalScope.launch{
+            if (GlobalClass.InitialRead == false)
+            {
+                var DBManger = ManageDatabase()
+                GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
+            }
+            GlobalClass.InitialRead = true
 
+            withContext(Dispatchers.Main) {
+                UpdateUI()
+            }
+        }
 
+        //-------------------------------------------------
+        return view
+    }
+
+    @SuppressLint("Range")
+    fun UpdateUI()
+    {
         var userHasData = false
         for (i in GlobalClass.activities.indices) {
 
@@ -44,7 +69,6 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                 userHasData = true
                 break
             }
-
         }
 
         if (userHasData == false)
@@ -53,7 +77,6 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
         }
         else
         {
-
             val activityLayout = binding.llBars
             for (i in GlobalClass.activities.indices)
             {
@@ -80,6 +103,8 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                     var hour = ""
                     var text = ""
 
+
+
                     var currentMaxGoal = -1
                     var currentMinGoal = -1
 
@@ -96,10 +121,9 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                         }
                     }
 
+
                     var minGoal = GlobalClass.goals[currentMinGoal]
                     var maxGoal = GlobalClass.goals[currentMaxGoal]
-
-
 
                     if (minGoal.isSet)
                     {
@@ -148,17 +172,6 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                     }
 
 
-
-
-
-
-
-
-
-
-
-
-
                     newActivity.setOnClickListener(){
                         var intent = Intent(activity, ViewActivity::class.java)
                         intent.putExtra("activityIDIndex", i)
@@ -171,20 +184,9 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                     // GlobalClass.InformUser("", "Activity Name: $GlobalClass.activities[i].name \n Category Name: $category.name \n Time Text: $text \n Hour: $hour \n Min Goal: ${GlobalClass.activities[i].mingoalID.toString()} \n Max Goal: ${GlobalClass.activities[i].maxgoalID.toString()}", requireContext())
                 }
             }
-
-
         }
-
-
-
-
-
-
-
-
-        //-------------------------------------------------
-        return view
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
