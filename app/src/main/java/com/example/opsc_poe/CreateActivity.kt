@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 
 class CreateActivity : AppCompatActivity()
 {
@@ -144,9 +147,38 @@ class CreateActivity : AppCompatActivity()
                                 //GlobalClass.goals.add(maxgoal)
                                 //GlobalClass.goals.add(mingoal)
 
+
+
+                                var filePath: String = ""
+                                if (activity.photo != null)
+                                {
+                                    //Save Image to Local Storage
+                                    val filename = "${activity.name}.jpg"
+                                    val file = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), filename)
+                                    try {
+                                        val out = FileOutputStream(file)
+                                        tempImage?.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                                        out.flush()
+                                        out.close()
+                                        filePath = file.absolutePath
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                }
                                 GlobalScope.launch{
+                                    val store = ActivitySave(
+                                        activityID = activity.activityID,
+                                        userID = activity.userID,
+                                        categoryID = activity.categoryID,
+                                        name = activity.name,
+                                        description = activity.description,
+                                        maxgoalID = activity.maxgoalID,
+                                        mingoalID = activity.mingoalID,
+                                        photo = filePath
+                                    )
                                     var DBmanager = ManageDatabase()
-                                    DBmanager.AddActivityToFirestore(activity)
+
+                                    DBmanager.AddActivityToFirestore(store)
                                     //GlobalClass.goals.add(maxgoal)
                                     DBmanager.AddGoalToFirestore(maxgoal)
                                     //GlobalClass.goals.add(mingoal)
@@ -291,12 +323,15 @@ class CreateActivity : AppCompatActivity()
             val imageBitmap = data?.extras?.get("data") as Bitmap
             imageView.setImageBitmap(imageBitmap)
             //Save the image locally
-            saveImageLocally(imageBitmap)
+            //saveImageLocally(imageBitmap)
+            tempImage = imageBitmap
         }
     }
     //save image locally
-    private fun saveImageLocally(imageBitmap: Bitmap) {
-        tempImage = imageBitmap
+    private fun saveImageLocally(imageBitmap: Bitmap, name: String)
+    {
+
+
     }
     override fun onBackPressed() {}
 

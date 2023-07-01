@@ -1,12 +1,15 @@
 package com.example.opsc_poe
 
 import android.content.ContentValues
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.io.File
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
@@ -53,6 +56,18 @@ class ManageDatabase
                 var Description: String = document.data.getValue("description").toString()
                 var MaxID: Int = document.data.getValue("maxgoalID").toString().toInt()
                 var MinID: Int = document.data.getValue("mingoalID").toString().toInt()
+                var filePath: String = document.data.getValue("photo").toString()
+                var bitmap: Bitmap?
+
+                if (filePath.isNotEmpty())
+                {
+                    var file = File(filePath)
+                    bitmap = BitmapFactory.decodeFile(file.absolutePath)
+                }
+                else
+                {
+                    bitmap = null
+                }
 
                 var tempAct = Temp_ActivityDataClass(
                     userID = userID,
@@ -61,7 +76,8 @@ class ManageDatabase
                     name = Name,
                     description = Description,
                     maxgoalID = MaxID,
-                    mingoalID = MinID
+                    mingoalID = MinID,
+                    photo = bitmap
                 )
                 activities.add(tempAct)
             }
@@ -133,7 +149,7 @@ class ManageDatabase
             }
     }
 
-    suspend fun AddActivityToFirestore(activity: Temp_ActivityDataClass)
+    suspend fun AddActivityToFirestore(activity: ActivitySave)
     {
         db.collection("Activity")
             .add(activity)
