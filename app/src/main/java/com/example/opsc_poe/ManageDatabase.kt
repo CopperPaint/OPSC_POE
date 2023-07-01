@@ -1,5 +1,7 @@
 package com.example.opsc_poe
 
+import android.content.ContentValues
+import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.GlobalScope
@@ -19,12 +21,12 @@ class ManageDatabase
         val categories = arrayListOf<Temp_CategoryDataClass>()
         val querySnapshot = db.collection("Category").get().await()
         for (document in querySnapshot) {
-            if (document.data.getValue("UserID").toString().toInt() == userID) {
+            if (document.data.getValue("userID").toString().toInt() == userID) {
 
-                val catID: Int = document.data.getValue("CategoryID").toString().toInt()
-                val name: String = document.data.getValue("Name").toString()
-                val description: String = document.data.getValue("Description").toString()
-                val colour: String = document.data.getValue("Colour").toString()
+                val catID: Int = document.data.getValue("categoryID").toString().toInt()
+                val name: String = document.data.getValue("name").toString()
+                val description: String = document.data.getValue("description").toString()
+                val colour: String = document.data.getValue("colour").toString()
 
                 val tempCat = Temp_CategoryDataClass(
                     userID = userID,
@@ -43,14 +45,14 @@ class ManageDatabase
         val activities = arrayListOf<Temp_ActivityDataClass>()
         val querySnapshot = db.collection("Activity").get().await()
         for (document in querySnapshot) {
-            if (document.data.getValue("UserID").toString().toInt() == userID) {
+            if (document.data.getValue("userID").toString().toInt() == userID) {
 
-                var ActID: Int = document.data.getValue("ActivityID").toString().toInt()
-                var CatID: Int = document.data.getValue("CategoryID").toString().toInt()
-                var Name: String = document.data.getValue("Name").toString()
-                var Description: String = document.data.getValue("Description").toString()
-                var MaxID: Int = document.data.getValue("MaxGoalID").toString().toInt()
-                var MinID: Int = document.data.getValue("MinGoalID").toString().toInt()
+                var ActID: Int = document.data.getValue("activityID").toString().toInt()
+                var CatID: Int = document.data.getValue("categoryID").toString().toInt()
+                var Name: String = document.data.getValue("name").toString()
+                var Description: String = document.data.getValue("description").toString()
+                var MaxID: Int = document.data.getValue("maxgoalID").toString().toInt()
+                var MinID: Int = document.data.getValue("mingoalID").toString().toInt()
 
                 var tempAct = Temp_ActivityDataClass(
                     userID = userID,
@@ -71,12 +73,12 @@ class ManageDatabase
         val goals = arrayListOf<Temp_GoalDataClass>()
         val querySnapshot = db.collection("Goals").get().await()
         for (document in querySnapshot) {
-            if (document.data.getValue("UserID").toString().toInt() == userID) {
+            if (document.data.getValue("userID").toString().toInt() == userID) {
 
-                var GoalID: Int = document.data.getValue("GoalID").toString().toInt()
-                var Amount: Int = document.data.getValue("Amount").toString().toInt()
-                var Interval: String = document.data.getValue("Interval").toString()
-                var isSet: Boolean = document.data.getValue("isSet").toString().toBoolean()
+                var GoalID: Int = document.data.getValue("goalID").toString().toInt()
+                var Amount: Int = document.data.getValue("amount").toString().toInt()
+                var Interval: String = document.data.getValue("interval").toString()
+                var isSet: Boolean = document.data.getValue("set").toString().toBoolean()
 
                 var tempGoal = Temp_GoalDataClass(
                     userID = userID,
@@ -118,6 +120,54 @@ class ManageDatabase
         }
         return logs
     }
+
+
+
+    suspend fun AddCategoryToFirestore(category: Temp_CategoryDataClass)
+    {
+        db.collection("Category")
+            .add(category)
+            .addOnSuccessListener {
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${it.id}")
+                GlobalClass.UpdateDataBase = true
+            }
+    }
+
+    suspend fun AddActivityToFirestore(activity: Temp_ActivityDataClass)
+    {
+        db.collection("Activity")
+            .add(activity)
+            .addOnSuccessListener {
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${it.id}")
+                GlobalClass.UpdateDataBase = true
+            }
+    }
+
+    suspend fun AddGoalToFirestore(goal: Temp_GoalDataClass)
+    {
+        db.collection("Goals")
+            .add(goal)
+            .addOnSuccessListener {
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${it.id}")
+                GlobalClass.UpdateDataBase = true
+            }
+    }
+
+    suspend fun AddLogToFirestore(log: Temp_LogDataClass)
+    {
+    db.collection("Logs")
+        .add(log)
+        .addOnSuccessListener {
+            Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${it.id}")
+            GlobalClass.UpdateDataBase = true
+        }
+    }
+
+
+
+
+
+
 
 
 }

@@ -12,6 +12,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import com.example.opsc_poe.GlobalClass.Companion.ReturnToHome
 import com.example.opsc_poe.databinding.ActivityCreateCategoryBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import yuku.ambilwarna.AmbilWarnaDialog
 
 class CreateCategory : AppCompatActivity()
@@ -54,7 +58,6 @@ class CreateCategory : AppCompatActivity()
 
             if (categoryIDIndex == -1)
             {
-
                 binding.btnCreate.setOnClickListener()
                 {
                     //create new category object
@@ -66,11 +69,22 @@ class CreateCategory : AppCompatActivity()
                         colour = intToColourString(defaultcolour)
                     )
                     //save to global class
-                    GlobalClass.categories.add(category)
+                    //GlobalClass.categories.add(category)
+                    GlobalScope.launch(){
+                        var DBmanager = ManageDatabase()
+                        //add to database
+                        DBmanager.AddCategoryToFirestore(category)
 
-                    //back to home page
-                    var intent = Intent(this, Home_Activity::class.java)
-                    startActivity(intent)
+                        //READ DATA
+                        GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.UpdateDataBase = false
+                        withContext(Dispatchers.Main) {
+                            ReturnToHome()
+                        }
+                    }
                 }
 
             }
@@ -96,8 +110,7 @@ class CreateCategory : AppCompatActivity()
                     category.description = binding.etDescription.text.toString()
 
                     //back to home page
-                    var intent = Intent(this, Home_Activity::class.java)
-                    startActivity(intent)
+                    ReturnToHome()
                 }
             }
         }
@@ -118,6 +131,14 @@ class CreateCategory : AppCompatActivity()
             })
         colorPickerDialogue.show()
     }
+
+    fun ReturnToHome()
+    {
+        //back to home page
+        var intent = Intent(this, Home_Activity::class.java)
+        startActivity(intent)
+    }
+
 
     //Convert Color Int to String
     fun intToColourString(color: Int): String

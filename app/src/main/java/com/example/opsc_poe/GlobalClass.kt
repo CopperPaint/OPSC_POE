@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -18,7 +20,7 @@ class GlobalClass : Application()
 {
     companion object
     {
-        var InitialRead: Boolean = false
+        var UpdateDataBase: Boolean = true
 
         var activities = arrayListOf<Temp_ActivityDataClass>()
         var categories = arrayListOf<Temp_CategoryDataClass>()
@@ -323,7 +325,6 @@ class GlobalClass : Application()
             logs.add(newLog)
         }
     }
-
 
 
     override fun onCreate()

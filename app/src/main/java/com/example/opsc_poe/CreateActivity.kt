@@ -13,6 +13,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.opsc_poe.GlobalClass.Companion.ReturnToHome
 import com.example.opsc_poe.databinding.ActivityCreateBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CreateActivity : AppCompatActivity()
 {
@@ -87,7 +91,7 @@ class CreateActivity : AppCompatActivity()
             catch (e: Error)
             {
                 GlobalClass.InformUser("Error", e.toString(), this)
-                //return user to the sign in screen
+                //return user to the home screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
             }
@@ -114,7 +118,7 @@ class CreateActivity : AppCompatActivity()
                                 var selectedItem = spinner.selectedItemPosition
                                 var category = GlobalClass.categories[indexes[selectedItem]]
                                 //create activity object
-                                var activities = Temp_ActivityDataClass(
+                                var activity = Temp_ActivityDataClass(
                                     activityID = GlobalClass.activities.size + 1,
                                     userID = GlobalClass.user.userID,
                                     categoryID = category.categoryID, //get current category ID
@@ -125,7 +129,8 @@ class CreateActivity : AppCompatActivity()
                                     photo = tempImage
                                 )
                                 //save activity
-                                GlobalClass.activities.add(activities)
+                                //GlobalClass.activities.add(activity)
+
 
                                 //create max activity goal
                                 var maxgoal = Temp_GoalDataClass(
@@ -136,12 +141,28 @@ class CreateActivity : AppCompatActivity()
                                     goalID = GlobalClass.goals.size + 2,
                                     userID = GlobalClass.user.userID,
                                 )
-                                GlobalClass.goals.add(maxgoal)
-                                GlobalClass.goals.add(mingoal)
+                                //GlobalClass.goals.add(maxgoal)
+                                //GlobalClass.goals.add(mingoal)
 
-                                //return user to the home view screen
-                                var intent = Intent(this, Home_Activity::class.java)
-                                startActivity(intent)
+                                GlobalScope.launch{
+                                    var DBmanager = ManageDatabase()
+                                    DBmanager.AddActivityToFirestore(activity)
+                                    //GlobalClass.goals.add(maxgoal)
+                                    DBmanager.AddGoalToFirestore(maxgoal)
+                                    //GlobalClass.goals.add(mingoal)
+                                    DBmanager.AddGoalToFirestore(mingoal)
+
+                                    //READ DATA
+                                    GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                                    GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                                    GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                                    GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                                    GlobalClass.UpdateDataBase = false
+
+                                    withContext(Dispatchers.Main) {
+                                        ReturnToHome()
+                                    }
+                                }
                             }
                         }
                         else
@@ -199,8 +220,7 @@ class CreateActivity : AppCompatActivity()
                     GlobalClass.activities[activityIDIndex].categoryID = category.categoryID
                     GlobalClass.activities[activityIDIndex].photo = tempImage
 
-                    var intent = Intent(this, Home_Activity::class.java)
-                    startActivity(intent)
+                    ReturnToHome()
                 }
             }
             catch (e: Error)
@@ -246,6 +266,14 @@ class CreateActivity : AppCompatActivity()
             }
         }
         }
+
+
+    private fun ReturnToHome()
+    {
+        var intent = Intent(this, Home_Activity::class.java) //ViewActivity
+        startActivity(intent)
+    }
+
 
     private fun startCamera()
     {

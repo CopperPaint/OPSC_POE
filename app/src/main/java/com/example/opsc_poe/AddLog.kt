@@ -15,11 +15,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.opsc_poe.GlobalClass.Companion.ReturnToHome
 import com.example.opsc_poe.databinding.ActivityAddLogBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.math.round
 import kotlin.math.roundToInt
@@ -174,10 +179,33 @@ class AddLog : AppCompatActivity()
                         endDate = addHoursToDate(startDate, inputTime),
                         hours = inputTime
                     )
-                    GlobalClass.logs.add(log)
+                    //GlobalClass.logs.add(log)
 
-                    var intent = Intent(this, Home_Activity::class.java)
-                    startActivity(intent)
+
+                    GlobalScope.launch {
+                        var DBmanager = ManageDatabase()
+                        //add log to database
+
+
+
+
+                        DBmanager.AddLogToFirestore(log)
+
+                        //READ DATA
+                        /*
+                        GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.UpdateDataBase = false
+
+                         */
+                        GlobalClass.UpdateDataBase = false
+
+                        withContext(Dispatchers.Main) {
+                            ReturnToHome()
+                        }
+                    }
                 }
             }
             catch (e: Error)
@@ -188,6 +216,12 @@ class AddLog : AppCompatActivity()
                 startActivity(intent)
             }
         }
+    }
+
+    fun ReturnToHome()
+    {
+        var intent = Intent(this, Home_Activity::class.java) //ViewActivity
+        startActivity(intent)
     }
 
 

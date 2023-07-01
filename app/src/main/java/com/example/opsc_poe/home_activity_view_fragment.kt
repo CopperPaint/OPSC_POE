@@ -38,17 +38,21 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
         //-------------------------------------------------
         //code here
 
+        //Test Data
+        GlobalClass.user.userID = 5
+
+
+        //Read Data
         GlobalScope.launch{
-            if (GlobalClass.InitialRead == false)
+            if (GlobalClass.UpdateDataBase == true)
             {
                 var DBManger = ManageDatabase()
-                GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
-                GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
-                GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
-                GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.categories = DBManger.getCategoriesFromFirestore(user.userID)
+                GlobalClass.activities = DBManger.getActivitesFromFirestore(user.userID)
+                GlobalClass.goals = DBManger.getGoalsFromFirestore(user.userID)
+                GlobalClass.logs = DBManger.getLogsFromFirestore(user.userID)
+                GlobalClass.UpdateDataBase = false
             }
-            GlobalClass.InitialRead = true
-
             withContext(Dispatchers.Main) {
                 UpdateUI()
             }
