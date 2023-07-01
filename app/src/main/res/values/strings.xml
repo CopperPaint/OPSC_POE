@@ -8,4 +8,10 @@
     <string name="CreateActivityHelpHeading">Create Activity Help</string>
     <string name="SignUpHelp">Welcome to SignUp Help \n\nHere you are required to enter Username and Password to create an account with us to access our application</string>
     <string name="SignUpHelpHeading">Sign Up Help</string>
+    <string name="exportActivityHeaders">Activity Name, Description, Category, Number of Logs, Total Hours Logged (Hours), Maximum Goal Interval, Maximum Goal (Hours), Maximum Goal Remaining Time (Hours), Minimum Goal Interval, Minimum Goal (Hours), Minimum Goal Remaining Time (Hours)</string>
+    <string name="exportLogHeaders">Activity Name, Hours Logged, Date Logged</string>
+    <string name="exportLogFileName">userLogData.csv</string>
+    <string name="exportActivityFileName">userActivityData.csv</string>
+
+
 </resources>
