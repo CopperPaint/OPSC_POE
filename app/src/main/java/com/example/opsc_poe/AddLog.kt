@@ -181,25 +181,26 @@ class AddLog : AppCompatActivity()
                     )
                     //GlobalClass.logs.add(log)
 
-
                     GlobalScope.launch {
                         var DBmanager = ManageDatabase()
                         //add log to database
+                        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
 
-
-
-
-                        DBmanager.AddLogToFirestore(log)
+                        var store = LogStore(
+                            logID = log.logID,
+                            activityID = log.activityID,
+                            userID = log.userID,
+                            startDate = log.startDate.format(formatter),
+                            endDate = log.endDate.format(formatter),
+                            hours = log.hours
+                        )
+                        DBmanager.AddLogToFirestore(store)
 
                         //READ DATA
-                        /*
                         GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
                         GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
                         GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
                         GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.UpdateDataBase = false
-
-                         */
                         GlobalClass.UpdateDataBase = false
 
                         withContext(Dispatchers.Main) {
@@ -217,6 +218,7 @@ class AddLog : AppCompatActivity()
             }
         }
     }
+
 
     fun ReturnToHome()
     {
@@ -359,3 +361,16 @@ class AddLog : AppCompatActivity()
 
     override fun onBackPressed() {}
 }
+
+/*
+data class LogStore(
+    var logID: Int,
+    var activityID: Int,
+    var userID: Int,
+    var startDate: String,
+    var endDate: String,
+    var hours: Double
+)
+
+
+ */

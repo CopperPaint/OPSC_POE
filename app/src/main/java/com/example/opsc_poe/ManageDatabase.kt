@@ -95,17 +95,18 @@ class ManageDatabase
 
     suspend fun getLogsFromFirestore(userID: Int): ArrayList<Temp_LogDataClass> {
         val logs = arrayListOf<Temp_LogDataClass>()
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
         val querySnapshot = db.collection("Logs").get().await()
         for (document in querySnapshot) {
-            if (document.data.getValue("UserID").toString().toInt() == userID) {
+            if (document.data.getValue("userID").toString().toInt() == userID) {
 
-                var LogID: Int = document.data.getValue("LogID").toString().toInt()
-                var ActID: Int = document.data.getValue("ActivityID").toString().toInt()
-                var startString: String = document.data.getValue("StartDate").toString()
-                var StartDate = LocalDate.parse(startString, DateTimeFormatter.ISO_DATE)
-                var endString: String = document.data.getValue("EndDate").toString()
-                var EndDate = LocalDate.parse(endString, DateTimeFormatter.ISO_DATE)
-                var Hours: Double = document.data.getValue("Hours").toString().toDouble()
+                var LogID: Int = document.data.getValue("logID").toString().toInt()
+                var ActID: Int = document.data.getValue("activityID").toString().toInt()
+                var startString: String = document.data.getValue("startDate").toString()
+                var StartDate = LocalDate.parse(startString, formatter)
+                var endString: String = document.data.getValue("endDate").toString()
+                var EndDate = LocalDate.parse(endString, formatter)
+                var Hours: Double = document.data.getValue("hours").toString().toDouble()
 
                 var tempLog = Temp_LogDataClass(
                     userID = userID,
@@ -120,7 +121,6 @@ class ManageDatabase
         }
         return logs
     }
-
 
 
     suspend fun AddCategoryToFirestore(category: Temp_CategoryDataClass)
@@ -153,7 +153,7 @@ class ManageDatabase
             }
     }
 
-    suspend fun AddLogToFirestore(log: Temp_LogDataClass)
+    suspend fun AddLogToFirestore(log: LogStore)
     {
     db.collection("Logs")
         .add(log)
@@ -162,12 +162,5 @@ class ManageDatabase
             GlobalClass.UpdateDataBase = true
         }
     }
-
-
-
-
-
-
-
 
 }

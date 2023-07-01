@@ -12,3 +12,12 @@ data class Temp_LogDataClass(
     var endDate: LocalDate = LocalDate.now(),
     var hours: Double = 0.0
 )
+
+data class LogStore(
+    var logID: Int,
+    var activityID: Int,
+    var userID: Int,
+    var startDate: String,
+    var endDate: String,
+    var hours: Double
+)
