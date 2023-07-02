@@ -1,28 +1,19 @@
 package com.example.opsc_poe
 
 import android.app.AlertDialog
-import android.content.ContentValues
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.icu.util.Output
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.example.opsc_poe.databinding.SignInFragmentBinding
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.*
-
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
-
 
     private var _binding: SignInFragmentBinding? = null
     // This property is only valid between onCreateView and
@@ -37,28 +28,31 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
         _binding = SignInFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
         //-------------------------------------------------
         //code here
 
-
-        //Read Data
-        GlobalScope.launch{
-            if (GlobalClass.UpdateDataBase == true)
-            {
-                var DBManger = ManageDatabase()
-                GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
-                GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
-                GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
-                GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
-                GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
-                GlobalClass.UpdateDataBase = false
+        try {
+            //Read Data
+            GlobalScope.launch{
+                if (GlobalClass.UpdateDataBase == true)
+                {
+                    var DBManger = ManageDatabase()
+                    GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
+                    GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.UpdateDataBase = false
+                }
+                //withContext(Dispatchers.Main) {
+                //    UpdateUI()
+                //}
             }
-            //withContext(Dispatchers.Main) {
-            //    UpdateUI()
-            //}
         }
-
+        catch (e: Error)
+        {
+            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+        }
 
         //sign in button
         binding.tvSignInButton.setOnClickListener {
@@ -101,8 +95,6 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
 
         }
 
-
-
             return view
         }
 
@@ -110,7 +102,4 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
             super.onDestroyView()
             _binding = null
         }
-
-
-
 }

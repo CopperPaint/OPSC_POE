@@ -18,8 +18,12 @@ import java.time.format.DateTimeFormatter
 
 class ManageDatabase
 {
+    //database
     val db = Firebase.firestore
 
+    //READ DATA
+    //---------------------------------------------------------------------------------------------
+    //get all users from database
     suspend fun getAllUsersFromFirestore(): ArrayList<Temp_UserDataClass> {
         val allUsers = arrayListOf<Temp_UserDataClass>()
         val querySnapshot = db.collection("Users").get().await()
@@ -45,9 +49,12 @@ class ManageDatabase
                 GlobalClass.documents.allUserIDs.add(document.id)
             //}
         }
+
+
         return allUsers
     }
 
+    //get categories from database
     suspend fun getCategoriesFromFirestore(userID: Int): ArrayList<Temp_CategoryDataClass> {
         val categories = arrayListOf<Temp_CategoryDataClass>()
         val querySnapshot = db.collection("Category").get().await()
@@ -74,6 +81,7 @@ class ManageDatabase
         return categories
     }
 
+    //get activities from database
     suspend fun getActivitesFromFirestore(userID: Int): ArrayList<Temp_ActivityDataClass> {
         val activities = arrayListOf<Temp_ActivityDataClass>()
         val querySnapshot = db.collection("Activity").get().await()
@@ -116,6 +124,7 @@ class ManageDatabase
         return activities
     }
 
+    //get all goals from database
     suspend fun getGoalsFromFirestore(userID: Int): ArrayList<Temp_GoalDataClass> {
         val goals = arrayListOf<Temp_GoalDataClass>()
         val querySnapshot = db.collection("Goals").get().await()
@@ -141,6 +150,7 @@ class ManageDatabase
         return goals
     }
 
+    //get all logs from firebase
     suspend fun getLogsFromFirestore(userID: Int): ArrayList<Temp_LogDataClass> {
         val logs = arrayListOf<Temp_LogDataClass>()
         val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
@@ -171,6 +181,9 @@ class ManageDatabase
     }
 
 
+    //ADD DATA
+    //---------------------------------------------------------------------------------------------
+    //add user to the database
     fun AddUserToFirestore(newUser: Temp_UserDataClass)
     {
         db.collection("Users")
@@ -181,6 +194,7 @@ class ManageDatabase
             }
     }
 
+    //add category to database
     fun AddCategoryToFirestore(category: Temp_CategoryDataClass)
     {
         db.collection("Category")
@@ -191,6 +205,7 @@ class ManageDatabase
             }
     }
 
+    //add activity to database
     fun AddActivityToFirestore(activity: ActivitySave)
     {
         db.collection("Activity")
@@ -201,6 +216,7 @@ class ManageDatabase
             }
     }
 
+    //add goal to firebase
     fun AddGoalToFirestore(goal: Temp_GoalDataClass)
     {
         db.collection("Goals")
@@ -211,6 +227,7 @@ class ManageDatabase
             }
     }
 
+    //add log to database
     fun AddLogToFirestore(log: LogStore)
     {
     db.collection("Logs")
@@ -221,6 +238,10 @@ class ManageDatabase
         }
     }
 
+
+    //UPDATE DATA
+    //---------------------------------------------------------------------------------------------
+    //update given category in database
     suspend fun updateCategoryInFirestore(category: Temp_CategoryDataClass, ID: String) {
         val categoryRef = db.collection("Category").document(ID)
         categoryRef.update(
@@ -232,6 +253,7 @@ class ManageDatabase
         ).await()
     }
 
+    //update given activity in database
     suspend fun updateActivityInFirestore(activity: ActivitySave, ID: String) {
         val categoryRef = db.collection("Activity").document(ID)
         categoryRef.update(
@@ -244,6 +266,7 @@ class ManageDatabase
         ).await()
     }
 
+    //update given goal in database
     suspend fun updateGoalInFirestore(goal: Temp_GoalDataClass, ID: String) {
         val categoryRef = db.collection("Goals").document(ID)
         categoryRef.update(
