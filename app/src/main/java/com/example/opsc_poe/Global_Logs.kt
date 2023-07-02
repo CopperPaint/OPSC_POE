@@ -31,54 +31,56 @@ class Global_Logs : AppCompatActivity()
 
         fun CycleGlobalLogsFragmentView (arrow : String)
         {
-
-
-
-            if (arrow == "Left")
-            {
-                if (binding.tvSectionTitle.text == "List")
+            try{
+                if (arrow == "Left")
                 {
-                    binding.tvSectionTitle.text = "Category"
-                    fragmentControl.replaceFragmentAnim(
-                        global_logs_category_fragment(),
-                        R.id.fcFragmentContainer,
-                        supportFragmentManager,
-                        "Left"
-                    )
-                } else
+                    if (binding.tvSectionTitle.text == "List")
+                    {
+                        binding.tvSectionTitle.text = "Category"
+                        fragmentControl.replaceFragmentAnim(
+                            global_logs_category_fragment(),
+                            R.id.fcFragmentContainer,
+                            supportFragmentManager,
+                            "Left"
+                        )
+                    } else
+                    {
+                        binding.tvSectionTitle.text = "List"
+                        fragmentControl.replaceFragmentAnim(
+                            global_logs_list_fragment(),
+                            R.id.fcFragmentContainer,
+                            supportFragmentManager,
+                            "Left"
+                        )
+                    }
+                }
+                else
                 {
-                    binding.tvSectionTitle.text = "List"
-                    fragmentControl.replaceFragmentAnim(
-                        global_logs_list_fragment(),
-                        R.id.fcFragmentContainer,
-                        supportFragmentManager,
-                        "Left"
-                    )
+                    if (binding.tvSectionTitle.text == "List")
+                    {
+                        binding.tvSectionTitle.text = "Category"
+                        fragmentControl.replaceFragmentAnim(
+                            global_logs_category_fragment(),
+                            R.id.fcFragmentContainer,
+                            supportFragmentManager,
+                            "Right"
+                        )
+                    } else
+                    {
+                        binding.tvSectionTitle.text = "List"
+                        fragmentControl.replaceFragmentAnim(
+                            global_logs_list_fragment(),
+                            R.id.fcFragmentContainer,
+                            supportFragmentManager,
+                            "Right"
+                        )
+                    }
                 }
             }
-            else
+            catch (e: Error)
             {
-                if (binding.tvSectionTitle.text == "List")
-                {
-                    binding.tvSectionTitle.text = "Category"
-                    fragmentControl.replaceFragmentAnim(
-                        global_logs_category_fragment(),
-                        R.id.fcFragmentContainer,
-                        supportFragmentManager,
-                        "Right"
-                    )
-                } else
-                {
-                    binding.tvSectionTitle.text = "List"
-                    fragmentControl.replaceFragmentAnim(
-                        global_logs_list_fragment(),
-                        R.id.fcFragmentContainer,
-                        supportFragmentManager,
-                        "Right"
-                    )
-                }
+                GlobalClass.InformUser("Error", "${e.toString()}", this)
             }
-
         }
 
         fun ExitLogs()

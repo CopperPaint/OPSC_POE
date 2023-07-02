@@ -102,54 +102,59 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
         //---------------------------------------------------------------------------------
         // on below line we are setting user percent value,
         // setting description as enabled and offset for pie chart
-        pieChart.setUsePercentValues(false)
-        pieChart.getDescription().setEnabled(false)
-        pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
+        try {
+            pieChart.setUsePercentValues(false)
+            pieChart.getDescription().setEnabled(false)
+            pieChart.setExtraOffsets(5f, 10f, 5f, 5f)
 
-        // on below line we are setting drag for our pie chart
-        pieChart.setDragDecelerationFrictionCoef(0.95f)
+            // on below line we are setting drag for our pie chart
+            pieChart.setDragDecelerationFrictionCoef(0.95f)
 
-        // on below line we are setting hole
-        // and hole color for pie chart
-        pieChart.setDrawHoleEnabled(true)
-        pieChart.setHoleColor(Color.WHITE)
+            // on below line we are setting hole
+            // and hole color for pie chart
+            pieChart.setDrawHoleEnabled(true)
+            pieChart.setHoleColor(Color.WHITE)
 
-        // on below line we are setting circle color and alpha
-        pieChart.setTransparentCircleColor(Color.WHITE)
-        pieChart.setTransparentCircleAlpha(110)
+            // on below line we are setting circle color and alpha
+            pieChart.setTransparentCircleColor(Color.WHITE)
+            pieChart.setTransparentCircleAlpha(110)
 
-        // on  below line we are setting hole radius
-        pieChart.setHoleRadius(50f)
-        pieChart.setTransparentCircleRadius(55f)
+            // on  below line we are setting hole radius
+            pieChart.setHoleRadius(50f)
+            pieChart.setTransparentCircleRadius(55f)
 
-        // on below line we are setting center text
-        pieChart.setDrawCenterText(true)
+            // on below line we are setting center text
+            pieChart.setDrawCenterText(true)
 
-        // on below line we are setting
-        // rotation for our pie chart
-        pieChart.setRotationAngle(0f)
+            // on below line we are setting
+            // rotation for our pie chart
+            pieChart.setRotationAngle(0f)
 
-        // enable rotation of the pieChart by touch
-        pieChart.setRotationEnabled(true)
-        pieChart.setHighlightPerTapEnabled(true)
+            // enable rotation of the pieChart by touch
+            pieChart.setRotationEnabled(true)
+            pieChart.setHighlightPerTapEnabled(true)
 
-        // on below line we are setting animation for our pie chart
-        pieChart.animateY(1400, Easing.EaseInOutQuad)
+            // on below line we are setting animation for our pie chart
+            pieChart.animateY(1400, Easing.EaseInOutQuad)
 
-        // on below line we are disabling our legend for pie chart
-        pieChart.legend.isEnabled = false
-        pieChart.setEntryLabelColor(Color.WHITE)
-        pieChart.setEntryLabelTextSize(12f)
+            // on below line we are disabling our legend for pie chart
+            pieChart.legend.isEnabled = false
+            pieChart.setEntryLabelColor(Color.WHITE)
+            pieChart.setEntryLabelTextSize(12f)
 
-        var data = GetChartData()
-        pieChart.setData(data)
+            var data = GetChartData()
+            pieChart.setData(data)
 
-        // undo all highlights
-        pieChart.highlightValues(null)
+            // undo all highlights
+            pieChart.highlightValues(null)
 
-        // loading chart
-        pieChart.invalidate()
-
+            // loading chart
+            pieChart.invalidate()
+        }
+        catch (e: Error)
+        {
+            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+        }
 
         //PIE CHART SELECT
         //---------------------------------------------------------------------
@@ -161,7 +166,6 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
                 var category = GlobalClass.categories[index.toInt()]
                 binding.tvCategoryInformation.text = category.name
             }
-
             override fun onNothingSelected() {
                 // Handle no section selected here
                 binding.tvCategoryInformation.text = "No Category Selected"
@@ -356,10 +360,4 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
         }
         return  totalHour
     }
-
-
-
-
-
-
 }
