@@ -84,6 +84,8 @@
     <string name="viewUserActivitiesTitle">Activities</string>
     <string name="viewUserCategoriesTitle">Categories</string>
     <string name="homeView">Home_View</string>
+    <string name="numberOfActivitiesInCategory">No of activities: </string>
+    <string name="activityView">Activity_View</string>
 
 
     getString(R.string.errorTitle)
