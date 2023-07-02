@@ -52,7 +52,7 @@
             android:id="@+id/tvLog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Log"
+            android:text="@string/add_log"
             android:textColor="@color/Dark_Green"
             android:textSize="34sp"
             android:textStyle="bold"
@@ -87,7 +87,7 @@
             android:id="@+id/tvDates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date"
+            android:text="@string/date"
             android:textColor="#FFFFFF" />
 
         <LinearLayout
@@ -102,7 +102,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_rectangle"
-                android:text="Start Date"
+                android:text="@string/start_date"
                 android:textColor="#FFFFFF"
                 android:theme="@style/button_colour_green" />
 
@@ -124,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Log Option"
+            android:text="@string/log_option"
             android:textColor="#FFFFFF" />
 
         <Spinner
@@ -145,7 +145,7 @@
                 android:id="@+id/tvStopWatch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Stop Watch"
+                android:text="@string/stop_watch"
                 android:textColor="#FFFFFF" />
 
             <TextView
@@ -173,7 +173,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_rectangle"
                     android:drawableLeft="@drawable/play_arrow"
-                    android:text="Start"
+                    android:text="@string/start"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:theme="@style/button_colour_start" />
@@ -185,7 +185,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_rectangle"
                     android:drawableLeft="@drawable/replay"
-                    android:text="Reset"
+                    android:text="@string/reset"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:theme="@style/button_colour_stop" />
@@ -203,7 +203,7 @@
                 android:id="@+id/tvHours"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hours"
+                android:text="@string/hours"
                 android:textColor="#FFFFFF" />
 
             <TimePicker
@@ -223,7 +223,7 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_rectangle"
             android:backgroundTint="@color/Muted_Green"
-            android:text="Add Log"
+            android:text="@string/add_log"
             android:theme="@style/button_colour_green" />
 
     </LinearLayout>

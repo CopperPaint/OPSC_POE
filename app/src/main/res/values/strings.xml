@@ -97,6 +97,31 @@
 
     //-------------------------------------------------------------------------------------
     //Jo
+    <string name="start_date">Start Date</string>
+    <string name="date">Date</string>
+    <string name="log_option">Log Option</string>
+    <string name="stop_watch">Stop Watch</string>
+    <string name="start">Start</string>
+    <string name="reset">Reset</string>
+    <string name="hours">Hours</string>
+    <string name="add_log">Add Log</string>
+    <string name="description">Description</string>
+
+    <string name="create">Create</string>
+    <string name="name">Name</string>
+    <string name="insert_image">Insert Image</string>
+    <string name="save">Save</string>
+    <string name="help">Need Help?</string>
+
+
+
+
+
+
+
+
+
+
     //-------------------------------------------------------------------------------------
 
     getString(R.string.errorTitle)
