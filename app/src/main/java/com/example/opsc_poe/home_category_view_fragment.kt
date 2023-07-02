@@ -73,7 +73,7 @@ class home_category_view_fragment : Fragment(R.layout.home_category_view_fragmen
                         newCategory.binding.tvBlockText.text = "Total Hours:"
                         //set the activity color block time
                         newCategory.binding.tvBlockX.text =  hourTotal.toString()
-                        newCategory.binding.tvBlockX.text = DoubleToTime(hourTotal.toString())
+                        newCategory.binding.tvBlockX.text = DoubleToTime(hourTotal.toString(), requireContext())
 
                         //category select binding
                         newCategory.setOnClickListener(){

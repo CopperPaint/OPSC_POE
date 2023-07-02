@@ -265,7 +265,7 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
 
         newLog.binding.tvBlockText.text = getString(R.string.hoursLoggedPrompt)
 
-        newLog.binding.tvBlockX.text = GlobalClass.DoubleToTime(log.hours.toString())
+        newLog.binding.tvBlockX.text = GlobalClass.DoubleToTime(log.hours.toString(), requireContext())
 
         binding.llLogContainer.addView(newLog)
     }

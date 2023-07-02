@@ -130,7 +130,7 @@ class CategoryName : AppCompatActivity()
                                     val barColor = ColorStateList.valueOf(Color.parseColor(color))
                                     newActivity.binding.vwBar.backgroundTintList = barColor
                                     newActivity.binding.tvBlockText.text = text
-                                    newActivity.binding.tvBlockX.text = DoubleToTime(hour)
+                                    newActivity.binding.tvBlockX.text = DoubleToTime(hour, this)
                                 }
                                 else //min only
                                 {
@@ -139,7 +139,7 @@ class CategoryName : AppCompatActivity()
                                     val barColor = ColorStateList.valueOf(Color.parseColor(color))
                                     newActivity.binding.vwBar.backgroundTintList = barColor
                                     newActivity.binding.tvBlockText.text = text
-                                    newActivity.binding.tvBlockX.text = DoubleToTime(hour)
+                                    newActivity.binding.tvBlockX.text = DoubleToTime(hour, this)
                                 }
                             }
                             else
@@ -151,7 +151,7 @@ class CategoryName : AppCompatActivity()
                                     val barColor = ColorStateList.valueOf(Color.parseColor(color))
                                     newActivity.binding.vwBar.backgroundTintList = barColor
                                     newActivity.binding.tvBlockText.text = text
-                                    newActivity.binding.tvBlockX.text = DoubleToTime(hour)
+                                    newActivity.binding.tvBlockX.text = DoubleToTime(hour, this)
                                 }
                                 else //no goals
                                 {
@@ -164,7 +164,7 @@ class CategoryName : AppCompatActivity()
                                         }
                                     }
                                     newActivity.binding.tvBlockText.text =  getString(R.string.promptTotalHours)
-                                    newActivity.binding.tvBlockX.text = DoubleToTime(total.toString())
+                                    newActivity.binding.tvBlockX.text = DoubleToTime(total.toString(), this)
                                 }
                             }
 

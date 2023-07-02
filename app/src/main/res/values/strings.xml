@@ -67,6 +67,19 @@
     <string name="promptToGoAddLog">Go to an activity to add a log</string>
     <string name="logsDataScreenFunction">LogsData</string>
     <string name="hoursLoggedPrompt">Hours Logged</string>
+    <string name="textNo">No</string>
+    <string name="textData">Data</string>
+    <string name="promptIndicatorToAdd">Click Here to Add</string>
+    <string name="clickIndicator">Click Here</string>
+    <string name="logScreenFunction">Log</string>
+    <string name="addSymbol">+</string>
+    <string name="noLogsFound">No Logs Found</string>
+    <string name="noLogsFoundMessage">Try a different set of filters</string>
+    <string name="calSymbol">📅</string>
+    <string name="alertOK">OK</string>
+    <string name="timeDelimiter">.</string>
+    <string name="minutesFractionStart">0.</string>
+
 
     getString(R.string.errorTitle)
 

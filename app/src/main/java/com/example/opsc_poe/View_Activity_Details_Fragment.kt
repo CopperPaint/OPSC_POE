@@ -96,7 +96,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             val maxBarColor = ColorStateList.valueOf(Color.parseColor(maxColor))
             maxGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
             maxGoalCustom.binding.tvBlockText.text = maxText
-            maxGoalCustom.binding.tvBlockX.text = DoubleToTime(maxhour)
+            maxGoalCustom.binding.tvBlockX.text = DoubleToTime(maxhour, requireContext())
         }
 
         maxGoalCustom.setOnClickListener()
@@ -140,7 +140,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             val maxBarColor = ColorStateList.valueOf(Color.parseColor(color))
             minGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
             minGoalCustom.binding.tvBlockText.text = text
-            minGoalCustom.binding.tvBlockX.text = DoubleToTime(hour)
+            minGoalCustom.binding.tvBlockX.text = DoubleToTime(hour, requireContext())
         }
 
         minGoalCustom.setOnClickListener()

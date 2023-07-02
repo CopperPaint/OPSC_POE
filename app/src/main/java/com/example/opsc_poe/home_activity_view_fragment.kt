@@ -143,7 +143,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
-                            newActivity.binding.tvBlockX.text = DoubleToTime(hour)
+                            newActivity.binding.tvBlockX.text = DoubleToTime(hour, requireContext())
                         }
                         else //min only
                         {
@@ -152,7 +152,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
-                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour)
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour, requireContext())
                         }
                     }
                     else
@@ -164,7 +164,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
-                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour)
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour, requireContext())
                         }
                         else //no goals
                         {
@@ -177,7 +177,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                                 }
                             }
                             newActivity.binding.tvBlockText.text = "Total Hours:"
-                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(total.toString())
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(total.toString(), requireContext())
                         }
                     }
 
