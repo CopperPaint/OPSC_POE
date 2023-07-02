@@ -45,7 +45,7 @@ class Home_Activity : AppCompatActivity()
                             supportFragmentManager
                         )
                          */
-                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left", this)
+                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
                     } else
                     {
                         binding.tvSectionTitle.text = "Activities"
@@ -56,7 +56,7 @@ class Home_Activity : AppCompatActivity()
                              supportFragmentManager
                          )
                          */
-                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left", this)
+                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
                     }
                 }
                 else
@@ -72,7 +72,7 @@ class Home_Activity : AppCompatActivity()
                         )
 
                          */
-                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right", this)
+                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
                     } else
                     {
                         binding.tvSectionTitle.text = "Activities"
@@ -83,7 +83,7 @@ class Home_Activity : AppCompatActivity()
                              supportFragmentManager
                          )
                          */
-                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right", this)
+                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
                     }
                 }
             }
