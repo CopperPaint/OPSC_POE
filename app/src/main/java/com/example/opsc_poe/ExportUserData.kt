@@ -6,6 +6,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import java.io.File
 import java.net.URI
 
@@ -227,7 +228,7 @@ class ExportUserData (
 
 
         //return the complete file
-        return File(upperContext.getExternalFilesDir(null), fileName)
+        return File(upperContext.externalCacheDir,fileName)//File(upperContext.getExternalFilesDir(null), fileName)
 
 
     }
@@ -262,7 +263,7 @@ class ExportUserData (
 
 
         //return the complete file
-        return File(upperContext.getExternalFilesDir(null), fileName)
+        return File(upperContext.externalCacheDir,fileName)//File(upperContext.getExternalFilesDir(null), fileName)
 
 
     }
@@ -274,9 +275,12 @@ class ExportUserData (
 
         for (i in fileArray)
         {
-            var fileUri = FileProvider.getUriForFile(upperContext, BuildConfig.APPLICATION_ID + ".provider", i)
-            fileURIToExport.add(fileUri)
+            var fileUri = FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", i)
+            //var fileUri = "content://com.example.opsc_poe.provider/external_files/Android/data/com.example.opsc_poe/cache/userActivityData.csv"
+            fileURIToExport.add(fileUri)//.toUri())
         }
+
+        //GlobalClass.InformUser("", fileArray[0].toString() + "\n\n" + fileURIToExport[0].toString(), upperContext)
 
         //intent to provide share functionality
         val intent = Intent(Intent.ACTION_SEND)
@@ -291,8 +295,12 @@ class ExportUserData (
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
+
+
         //define share menu intent
         val chooser = Intent.createChooser(intent, "Share using...")
+
+
 
         upperContext.startActivity(chooser)
 
