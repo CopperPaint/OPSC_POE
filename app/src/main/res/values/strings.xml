@@ -62,6 +62,11 @@
     <string name="noMatchingDate">No date in this time period</string>
     <string name="noCategorySelected">No category selected</string>
     <string name="pieCategoriesEntriesText">Category Totals</string>
+    <string name="logsScreenFunction">Logs</string>
+    <string name="noLogsTitle">No Logs Exist</string>
+    <string name="promptToGoAddLog">Go to an activity to add a log</string>
+    <string name="logsDataScreenFunction">LogsData</string>
+    <string name="hoursLoggedPrompt">Hours Logged</string>
 
     getString(R.string.errorTitle)
 

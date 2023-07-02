@@ -49,7 +49,7 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
 
             if (userHasData == false) //if user has no logs
             {
-                GlobalClass.NoUserAppData(binding.llLogContainer, requireActivity(), requireContext(), "Logs", 0)
+                GlobalClass.NoUserAppData(binding.llLogContainer, requireActivity(), requireContext(), getString(R.string.logsScreenFunction), 0)
             }
             else //if user has logs
             {
@@ -59,7 +59,7 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
                 }
                 catch (e: Error)
                 {
-                    GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+                    GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
                 }
             }
 
@@ -90,8 +90,8 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
                 if (userHasData == false) //if user has no data
                 {
                     GlobalClass.InformUser(
-                        "No Logs Exist",
-                        "Go to an activity to add a log",
+                        getString(R.string.noLogsTitle),
+                        getString(R.string.promptToGoAddLog),
                         requireContext()
                     )
                 }
@@ -130,8 +130,8 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
                 if (userHasData == false)
                 {
                     GlobalClass.InformUser(
-                        "No Logs Exist",
-                        "Go to an activity to add a log",
+                        getString(R.string.noLogsTitle),
+                        getString(R.string.promptToGoAddLog),
                         requireContext()
                     )
                 }
@@ -213,13 +213,13 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
 
         if (binding.llLogContainer.childCount == 0)
         {
-            GlobalClass.NoUserAppData(binding.llLogContainer, requireActivity(), requireContext(), "LogsData", 0)
+            GlobalClass.NoUserAppData(binding.llLogContainer, requireActivity(), requireContext(), getString(R.string.logsDataScreenFunction), 0)
         }
     }
 
     //Update Date Text
     private fun updateTable(calendar: Calendar) : String {
-        val dateFormat = "dd-MM-yyyy"
+        val dateFormat = getString(R.string.dateFormat) //"dd-MM-yyyy"
         val sdf = SimpleDateFormat(dateFormat, Locale.UK)
         var dateText = sdf.format(calendar.time)
         return dateText
@@ -263,7 +263,7 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
         )
         newLog.binding.vwBar.backgroundTintList = barColor
 
-        newLog.binding.tvBlockText.text = "Hours Logged"
+        newLog.binding.tvBlockText.text = getString(R.string.hoursLoggedPrompt)
 
         newLog.binding.tvBlockX.text = GlobalClass.DoubleToTime(log.hours.toString())
 
