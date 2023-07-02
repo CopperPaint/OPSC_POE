@@ -275,7 +275,7 @@ class ExportUserData (
 
         for (i in fileArray)
         {
-            var fileUri = FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", i)
+            var fileUri = FileProvider.getUriForFile(upperContext, BuildConfig.APPLICATION_ID + ".provider", i)
             //var fileUri = "content://com.example.opsc_poe.provider/external_files/Android/data/com.example.opsc_poe/cache/userActivityData.csv"
             fileURIToExport.add(fileUri)//.toUri())
         }
