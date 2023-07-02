@@ -79,6 +79,11 @@
     <string name="alertOK">OK</string>
     <string name="timeDelimiter">.</string>
     <string name="minutesFractionStart">0.</string>
+    <string name="signUpScreenValue">Sign_Up</string>
+    <string name="loadSignUpKey">LoadSignUp</string>
+    <string name="viewUserActivitiesTitle">Activities</string>
+    <string name="viewUserCategoriesTitle">Categories</string>
+    <string name="homeView">Home_View</string>
 
 
     getString(R.string.errorTitle)

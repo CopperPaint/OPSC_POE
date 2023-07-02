@@ -33,11 +33,11 @@ class Home_Activity : AppCompatActivity()
         {
             try
             {
-                if (arrow == "Left")
+                if (arrow == getString(R.string.animLeft))
                 {
-                    if (binding.tvSectionTitle.text == "Activities")
+                    if (binding.tvSectionTitle.text == getString(R.string.viewUserActivitiesTitle))
                     {
-                        binding.tvSectionTitle.text = "Categories"
+                        binding.tvSectionTitle.text = getString(R.string.viewUserCategoriesTitle)
                         /*
                         fragmentControl.replaceFragment(
                             home_category_view_fragment(),
@@ -45,10 +45,10 @@ class Home_Activity : AppCompatActivity()
                             supportFragmentManager
                         )
                          */
-                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left", this)
+                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, getString(R.string.animLeft), this)
                     } else
                     {
-                        binding.tvSectionTitle.text = "Activities"
+                        binding.tvSectionTitle.text = getString(R.string.viewUserActivitiesTitle)
                         /*
                          fragmentControl.replaceFragment(
                              home_activity_view_fragment(),
@@ -56,14 +56,14 @@ class Home_Activity : AppCompatActivity()
                              supportFragmentManager
                          )
                          */
-                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left", this)
+                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, getString(R.string.animLeft), this)
                     }
                 }
                 else
                 {
-                    if (binding.tvSectionTitle.text == "Activities")
+                    if (binding.tvSectionTitle.text == getString(R.string.viewUserActivitiesTitle))
                     {
-                        binding.tvSectionTitle.text = "Categories"
+                        binding.tvSectionTitle.text = getString(R.string.viewUserCategoriesTitle)
                         /*
                         fragmentControl.replaceFragment(
                             home_category_view_fragment(),
@@ -72,10 +72,10 @@ class Home_Activity : AppCompatActivity()
                         )
 
                          */
-                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right", this)
+                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, getString(R.string.animRight), this)
                     } else
                     {
-                        binding.tvSectionTitle.text = "Activities"
+                        binding.tvSectionTitle.text = getString(R.string.viewUserActivitiesTitle)
                         /*
                          fragmentControl.replaceFragment(
                              home_activity_view_fragment(),
@@ -83,28 +83,28 @@ class Home_Activity : AppCompatActivity()
                              supportFragmentManager
                          )
                          */
-                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right", this)
+                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, getString(R.string.animRight), this)
                     }
                 }
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error","${e.toString()}", this)
+                GlobalClass.InformUser(getString(R.string.errorTitle),"${e.toString()}", this)
             }
         }
 
         binding.imgCycleViewLeft.setOnClickListener {
-            CycleHomeFragmentView("Left")
+            CycleHomeFragmentView(getString(R.string.animLeft))
         }
 
         binding.imgCycleViewRight.setOnClickListener {
-            CycleHomeFragmentView("Right")
+            CycleHomeFragmentView(getString(R.string.animRight))
         }
 
         //add new entry depending on if category or activity is selected
         binding.imgAddEntry.setOnClickListener{
 
-            if (binding.tvSectionTitle.text == "Activities")
+            if (binding.tvSectionTitle.text == getString(R.string.viewUserActivitiesTitle))
             {
                 //load add activity
                 var intent = Intent(this, CreateActivity::class.java)
@@ -122,7 +122,7 @@ class Home_Activity : AppCompatActivity()
         binding.imgSettingsButton.setOnClickListener()
         {
             var intent = Intent(this, settings_view::class.java)
-            intent.putExtra("previousScreen", "Home_View")
+            intent.putExtra(getString(R.string.previousScreenKey), getString(R.string.homeView))
             startActivity(intent)
         }
     }

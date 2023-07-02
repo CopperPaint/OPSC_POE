@@ -23,20 +23,20 @@ class Help : AppCompatActivity()
         window.statusBarColor = ContextCompat.getColor(this, R.color.Dark_Green)
 
         //get previous screen
-        var previousScreen = intent.getStringExtra("previousScreen")
+        var previousScreen = intent.getStringExtra(getString(R.string.previousScreenKey))
 
         //messages for help
         when (previousScreen)
         {
-            "Create_Goal" -> {
+            getString(R.string.createGoalScreenValue) -> {
                 binding.tvHelpName.text = getString(R.string.CreateGoalHelpHeading)
                binding.tvHelpMessage.text = getString(R.string.CreateGoalHelp)
             }
-            "Create_Activity" -> {
+            getString(R.string.createActivityScreenValue) -> {
                 binding.tvHelpName.text = getString(R.string.CreateActivityHelpHeading)
                 binding.tvHelpMessage.text = getString(R.string.CreateActivityHelp)
             }
-            "Sign_Up" -> {
+            getString(R.string.signUpScreenValue) -> {
                 //return user to the initial view screen
                 binding.tvHelpName.text = getString(R.string.SignUpHelpHeading)
                 binding.tvHelpMessage.text = getString(R.string.SignUpHelp)
@@ -51,29 +51,29 @@ class Help : AppCompatActivity()
             {
                 when (previousScreenVar)
                 {
-                    "Create_Goal" -> {
-                        var returningActivityID = intent.getIntExtra("CurrentActivity", 0)
-                        var returningGoalID = intent.getIntExtra("currentGoalIDIndex", 0)
+                    getString(R.string.createGoalScreenValue) -> {
+                        var returningActivityID = intent.getIntExtra(getString(R.string.currentActivityIndex), 0)
+                        var returningGoalID = intent.getIntExtra(getString(R.string.currentGoalIdentityIndex), 0)
 
                         //return user to the initial view screen
                         var intent = Intent(this, Create_Goal::class.java)
                         //GlobalClass.InformUser("on Help", returningActivityID.toString(), this)
-                        intent.putExtra("CurrentActivity", returningActivityID)
-                        intent.putExtra("currentGoalIDIndex", returningGoalID)
+                        intent.putExtra(getString(R.string.currentActivityIndex), returningActivityID)
+                        intent.putExtra(getString(R.string.currentGoalIdentityIndex), returningGoalID)
                         startActivity(intent)
                     }
-                    "Create_Activity" -> {
-                        var returningActivityID = intent.getIntExtra("activityIDIndex", 0)
+                    getString(R.string.createActivityScreenValue) -> {
+                        var returningActivityID = intent.getIntExtra(getString(R.string.activityIdentityIndex), 0)
 
                         //return user to the initial view screen
                         var intent = Intent(this, CreateActivity::class.java)
-                        intent.putExtra("activityIDIndex", returningActivityID)
+                        intent.putExtra(getString(R.string.activityIdentityIndex), returningActivityID)
                         startActivity(intent)
                     }
-                    "Sign_Up" -> {
+                    getString(R.string.signUpScreenValue) -> {
                         //return user to the initial view screen
                         var intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("LoadSignUp", true)
+                        intent.putExtra(getString(R.string.loadSignUpKey), true)
                         startActivity(intent)
                     }
 
@@ -81,7 +81,7 @@ class Help : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -100,7 +100,7 @@ class Help : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -119,7 +119,7 @@ class Help : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
