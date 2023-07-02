@@ -340,13 +340,11 @@ class CreateActivity : AppCompatActivity()
         }
         }
 
-
     private fun ReturnToHome()
     {
         var intent = Intent(this, Home_Activity::class.java) //ViewActivity
         startActivity(intent)
     }
-
 
     private fun startCamera()
     {
@@ -369,11 +367,6 @@ class CreateActivity : AppCompatActivity()
         }
     }
     //save image locally
-    private fun saveImageLocally(imageBitmap: Bitmap, name: String)
-    {
 
-
-    }
     override fun onBackPressed() {}
-
 }

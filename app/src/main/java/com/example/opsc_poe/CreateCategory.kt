@@ -50,82 +50,92 @@ class CreateCategory : AppCompatActivity()
             ReturnToHome(this)
         }
 
-
         //create category button
         //--------------------------------------------------------------------------------
-
             var categoryIDIndex = intent.getIntExtra("categoryIDIndex", -1)
 
             if (categoryIDIndex == -1) //create category
             {
                 binding.btnCreate.setOnClickListener()
                 {
-                    //create new category object
-                    var category = Temp_CategoryDataClass(
-                        categoryID = GlobalClass.categories.size + 1,
-                        userID = GlobalClass.user.userID,
-                        name = binding.etName.text.toString(),
-                        description = binding.etDescription.text.toString(),
-                        colour = intToColourString(defaultcolour)
-                    )
-                    //save to global class
-                    //GlobalClass.categories.add(category)
-                    GlobalScope.launch(){
-                        var DBmanager = ManageDatabase()
-                        //add to database
-                        DBmanager.AddCategoryToFirestore(category)
+                    try{
+                        //create new category object
+                        var category = Temp_CategoryDataClass(
+                            categoryID = GlobalClass.categories.size + 1,
+                            userID = GlobalClass.user.userID,
+                            name = binding.etName.text.toString(),
+                            description = binding.etDescription.text.toString(),
+                            colour = intToColourString(defaultcolour)
+                        )
+                        //save to global class
+                        //GlobalClass.categories.add(category)
+                        GlobalScope.launch(){
+                            var DBmanager = ManageDatabase()
+                            //add to database
+                            DBmanager.AddCategoryToFirestore(category)
 
-                        //READ DATA
-                        GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.UpdateDataBase = false
-                        withContext(Dispatchers.Main) {
-                            ReturnToHome()
+                            //READ DATA
+                            GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.UpdateDataBase = false
+                            withContext(Dispatchers.Main) {
+                                ReturnToHome()
+                            }
                         }
                     }
+                    catch (e: Error)
+                    {
+                        GlobalClass.InformUser("Error", "${e.toString()}", this)
+                    }
                 }
-
             }
             else //update category
             {
-                var category = GlobalClass.categories[categoryIDIndex]
-                binding.etName.setText(category.name)
-                binding.previewSelectedColor.backgroundTintList = ColorStateList.valueOf(Color.parseColor(category.colour))
+                try{
+                    var category = GlobalClass.categories[categoryIDIndex]
+                    binding.etName.setText(category.name)
+                    binding.previewSelectedColor.backgroundTintList = ColorStateList.valueOf(Color.parseColor(category.colour))
 
-                defaultcolour = category.colour.toColorInt()
-                var previewColor = ColorStateList.valueOf(Color.parseColor(intToColourString(defaultcolour)))
-                colorPreview?.backgroundTintList = previewColor
+                    defaultcolour = category.colour.toColorInt()
+                    var previewColor = ColorStateList.valueOf(Color.parseColor(intToColourString(defaultcolour)))
+                    colorPreview?.backgroundTintList = previewColor
 
-                binding.etDescription.setText(category.description)
-                binding.tvScreenFunction.text = "Edit"
-                binding.btnCreate.text = "Save"
+                    binding.etDescription.setText(category.description)
+                    binding.tvScreenFunction.text = "Edit"
+                    binding.btnCreate.text = "Save"
 
 
-                binding.btnCreate.setOnClickListener()
-                {
-                    category.name = binding.etName.text.toString()
-                    category.colour = intToColourString(defaultcolour)
-                    category.description = binding.etDescription.text.toString()
+                    binding.btnCreate.setOnClickListener()
+                    {
+                        category.name = binding.etName.text.toString()
+                        category.colour = intToColourString(defaultcolour)
+                        category.description = binding.etDescription.text.toString()
 
-                    GlobalScope.launch {
-                        var documentID = GlobalClass.documents.CategoryIDs[categoryIDIndex]
-                        var DBmanager = ManageDatabase()
-                        DBmanager.updateCategoryInFirestore(category, documentID)
+                        GlobalScope.launch {
+                            //Update Data
+                            var documentID = GlobalClass.documents.CategoryIDs[categoryIDIndex]
+                            var DBmanager = ManageDatabase()
+                            DBmanager.updateCategoryInFirestore(category, documentID)
 
-                        //READ DATA
-                        GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
-                        GlobalClass.UpdateDataBase = false
+                            //READ DATA
+                            GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                            GlobalClass.UpdateDataBase = false
 
-                        //back to home page
-                        withContext(Dispatchers.Main) {
-                            ReturnToHome()
+                            //back to home page
+                            withContext(Dispatchers.Main) {
+                                ReturnToHome()
+                            }
                         }
                     }
+                }
+                catch (e: Error)
+                {
+                    GlobalClass.InformUser("Error", "${e.toString()}", this)
                 }
             }
         }
@@ -153,7 +163,6 @@ class CreateCategory : AppCompatActivity()
         var intent = Intent(this, Home_Activity::class.java)
         startActivity(intent)
     }
-
 
     //Convert Color Int to String
     fun intToColourString(color: Int): String

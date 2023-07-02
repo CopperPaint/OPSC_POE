@@ -35,8 +35,6 @@ class Create_Goal : AppCompatActivity()
         //set activity name
         binding.tvActivity.text = activity.name
 
-
-
         //Picker Set up
         binding.npHourGoal.minValue = 1
         binding.npHourGoal.maxValue = 24
@@ -54,72 +52,92 @@ class Create_Goal : AppCompatActivity()
         //if goal exists, preset values
         if (currentGoal.isSet)
         {
-            binding.tvScreenFunction.text = "Edit"
+            try{
+                binding.tvScreenFunction.text = "Edit"
 
-            var currentInterval = 0
+                var currentInterval = 0
 
-            when (currentGoal.interval){
-                "Daily" -> currentInterval = 1
-                "Weekly" -> currentInterval = 2
-                "Monthly" -> currentInterval = 3
-            }
-
-            binding.npTimeFrameGoal.value = currentInterval
-
-            binding.npTimeFrameGoal.setOnValueChangedListener { picker, oldVal, newVal ->
-
-                when (newVal) {
-                    1 -> {binding.npHourGoal.maxValue = 24}
-                    2 -> {binding.npHourGoal.maxValue = 168}
-                    3 -> { binding.npHourGoal.maxValue = 720}
-                    else -> {binding.npHourGoal.maxValue = 24}
+                when (currentGoal.interval){
+                    "Daily" -> currentInterval = 1
+                    "Weekly" -> currentInterval = 2
+                    "Monthly" -> currentInterval = 3
                 }
+
+                binding.npTimeFrameGoal.value = currentInterval
+
+                binding.npTimeFrameGoal.setOnValueChangedListener { picker, oldVal, newVal ->
+
+                    when (newVal) {
+                        1 -> {binding.npHourGoal.maxValue = 24}
+                        2 -> {binding.npHourGoal.maxValue = 168}
+                        3 -> { binding.npHourGoal.maxValue = 720}
+                        else -> {binding.npHourGoal.maxValue = 24}
+                    }
+                }
+                binding.npHourGoal.value = currentGoal.amount
             }
-            binding.npHourGoal.value = currentGoal.amount
+            catch (e: Error)
+            {
+                GlobalClass.InformUser("Error", "${e.toString()}", this)
+            }
         }
 
         //save goal
         binding.tvSaveButton.setOnClickListener()
         {
-            var intervalText = ""
-            when (binding.npTimeFrameGoal.value) {
-                1 -> {intervalText = "Daily"}
-                2 -> {intervalText = "Weekly"}
-                3 -> {intervalText = "Monthly"}
-                else -> {intervalText = "Daily"}
-            }
-            currentGoal.interval = intervalText
-            currentGoal.amount = binding.npHourGoal.value
-            currentGoal.isSet = true
 
-            GlobalScope.launch {
-                var documentID = GlobalClass.documents.GoalIDs[currentGoalID]
-                var DBmanager = ManageDatabase()
-                DBmanager.updateGoalInFirestore(currentGoal, documentID)
-
-                //READ DATA
-                GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
-                GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
-                GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
-                GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
-                GlobalClass.UpdateDataBase = false
-
-                //back to home page
-                withContext(Dispatchers.Main) {
-                    ReturnToHome()
+            try{
+                var intervalText = ""
+                when (binding.npTimeFrameGoal.value) {
+                    1 -> {intervalText = "Daily"}
+                    2 -> {intervalText = "Weekly"}
+                    3 -> {intervalText = "Monthly"}
+                    else -> {intervalText = "Daily"}
                 }
+                currentGoal.interval = intervalText
+                currentGoal.amount = binding.npHourGoal.value
+                currentGoal.isSet = true
+
+                GlobalScope.launch {
+                    var documentID = GlobalClass.documents.GoalIDs[currentGoalID]
+                    var DBmanager = ManageDatabase()
+                    DBmanager.updateGoalInFirestore(currentGoal, documentID)
+
+                    //READ DATA
+                    GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.UpdateDataBase = false
+
+                    //back to home page
+                    withContext(Dispatchers.Main) {
+                        ReturnToHome()
+                    }
+                }
+            }
+            catch (e: Error)
+            {
+                GlobalClass.InformUser("Error", "${e.toString()}", this)
             }
         }
 
+        //Help button
         binding.tvNeedHelpButton.setOnClickListener()
         {
-            var intent = Intent(this, Help::class.java) //ViewActivity
+            try{
+                var intent = Intent(this, Help::class.java) //ViewActivity
 
-            intent.putExtra("previousScreen", "Create_Goal")
-            intent.putExtra("CurrentActivity", currentActivityIndex)
-            intent.putExtra("currentGoalIDIndex", currentGoalID)
-            //GlobalClass.InformUser("", currentActivityIndex.toString(), this)
-            startActivity(intent)
+                intent.putExtra("previousScreen", "Create_Goal")
+                intent.putExtra("CurrentActivity", currentActivityIndex)
+                intent.putExtra("currentGoalIDIndex", currentGoalID)
+                //GlobalClass.InformUser("", currentActivityIndex.toString(), this)
+                startActivity(intent)
+            }
+            catch (e: Error)
+            {
+                GlobalClass.InformUser("Error", "${e.toString()}", this)
+            }
         }
 
         binding.imgBlackTurtle.setOnClickListener()

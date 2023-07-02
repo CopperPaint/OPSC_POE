@@ -76,18 +76,30 @@ class AddLog : AppCompatActivity()
         binding.tvStartDate.text = updateLable(calendar)
         //start date picker pop up
         val StartDatePicker = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month)
-            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            var dateText = updateLable(calendar)
-            binding.tvStartDate.text = dateText
+            try{
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                var dateText = updateLable(calendar)
+                binding.tvStartDate.text = dateText
+            }
+            catch (e: Error)
+            {
+                GlobalClass.InformUser("Error", "${e.toString()}", this)
+            }
         }
         //start date button
         binding.btnStartDate.setOnClickListener {
-            DatePickerDialog(this, StartDatePicker,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show()
+            try {
+                DatePickerDialog(this, StartDatePicker,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)).show()
+            }
+            catch (e: Error)
+            {
+                GlobalClass.InformUser("Error", "${e.toString()}", this)
+            }
         }
 
         binding.imgBlackTurtle.setOnClickListener()
@@ -361,16 +373,3 @@ class AddLog : AppCompatActivity()
 
     override fun onBackPressed() {}
 }
-
-/*
-data class LogStore(
-    var logID: Int,
-    var activityID: Int,
-    var userID: Int,
-    var startDate: String,
-    var endDate: String,
-    var hours: Double
-)
-
-
- */
