@@ -2,8 +2,10 @@ package com.example.opsc_poe
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.content.FileProvider
 import java.io.File
 
 
@@ -24,18 +26,18 @@ class ExportUserData (
         //0 is first item = activity data
         //1 is second = log data
 
-        var filesToExport = ArrayList<File>()
+        var filesToExport = ArrayList<Uri>()
 
         if (selectedExportItems.contains(0)) {
             //if the user wants to export activity data
 
             val activityData = exportActivityData()
-            val activityDataFile = generateActivityCSVFileToExport(
+            val activityDataFileUri = generateActivityCSVFileToExport(
                 activityData,
                 upperContext.getString(R.string.exportActivityFileName),
                 upperContext.getString(R.string.exportActivityHeaders)
             )
-            filesToExport.add(activityDataFile)
+            filesToExport.add(activityDataFileUri)
 
         }
 
@@ -43,12 +45,12 @@ class ExportUserData (
             //if the user wants to export log data
 
             val logData = exportLogData()
-            val logDataFile = generateLogCSVFileToExport(
+            val logDataFileUri = generateLogCSVFileToExport(
                 logData,
                 upperContext.getString(R.string.exportLogFileName),
                 upperContext.getString(R.string.exportLogHeaders)
             )
-            filesToExport.add(logDataFile)
+            filesToExport.add(logDataFileUri)
 
         }
 
@@ -201,7 +203,7 @@ class ExportUserData (
         dataArray: ArrayList<ExportActivityData>,
         fileName: String,
         fileHeaders: String
-    ): File {
+    ): Uri {
 
         //generate the file
         val externalCacheFile = File(upperContext.externalCacheDir, fileName)
@@ -226,7 +228,7 @@ class ExportUserData (
 
 
         //return the complete file
-        return File(upperContext.getExternalFilesDir(null), fileName)
+        return FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", File(upperContext.getExternalFilesDir(null), fileName))//File(upperContext.getExternalFilesDir(null), fileName)
 
 
     }
@@ -235,7 +237,7 @@ class ExportUserData (
         dataArray: ArrayList<ExportLogData>,
         fileName: String,
         fileHeaders: String
-    ): File {
+    ): Uri {
 
 
         //generate the file
@@ -261,13 +263,16 @@ class ExportUserData (
 
 
         //return the complete file
-        return File(upperContext.getExternalFilesDir(null), fileName)
+        return FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", File(upperContext.getExternalFilesDir(null), fileName))//File(upperContext.getExternalFilesDir(null), fileName)
 
 
     }
 
 
-    private fun shareCSVFiles(fileArray: ArrayList<File>) {
+    private fun shareCSVFiles(fileUriArray: ArrayList<Uri>) {
+
+
+        //FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", File(upperContext.getExternalFilesDir(null), fileName))
 
         //intent to provide share functionality
         val intent = Intent(Intent.ACTION_SEND)
@@ -276,7 +281,7 @@ class ExportUserData (
         intent.type = "text/csv"
 
         //add extra with the file and prompt
-        intent.putExtra("Share using...", fileArray)
+        intent.putExtra("Share using...", fileUriArray)
 
         //define share menu intent
         val chooser = Intent.createChooser(intent, "Share using...")
