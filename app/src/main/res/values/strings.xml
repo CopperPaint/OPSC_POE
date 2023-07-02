@@ -57,6 +57,11 @@
     <string name="animRight">Right</string>
     <string name="animLeftHalf">Left_Half</string>
     <string name="animRightHalf">Right_Half</string>
+    <string name="viewLogList">List</string>
+    <string name="viewLogCategory">Category</string>
+    <string name="noMatchingDate">No date in this time period</string>
+    <string name="noCategorySelected">No category selected</string>
+    <string name="pieCategoriesEntriesText">Category Totals</string>
 
     getString(R.string.errorTitle)
 

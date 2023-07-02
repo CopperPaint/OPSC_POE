@@ -32,50 +32,50 @@ class Global_Logs : AppCompatActivity()
         fun CycleGlobalLogsFragmentView (arrow : String)
         {
             try{
-                if (arrow == "Left")
+                if (arrow == getString(R.string.animLeft))
                 {
-                    if (binding.tvSectionTitle.text == "List")
+                    if (binding.tvSectionTitle.text == getString(R.string.viewLogList))
                     {
-                        binding.tvSectionTitle.text = "Category"
+                        binding.tvSectionTitle.text = getString(R.string.viewLogCategory)
                         fragmentControl.replaceFragmentAnim(
                             global_logs_category_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Left",
+                            getString(R.string.animLeft),
                             this
                         )
                     } else
                     {
-                        binding.tvSectionTitle.text = "List"
+                        binding.tvSectionTitle.text = getString(R.string.viewLogList)
                         fragmentControl.replaceFragmentAnim(
                             global_logs_list_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Left",
+                            getString(R.string.animLeft),
                             this
                         )
                     }
                 }
                 else
                 {
-                    if (binding.tvSectionTitle.text == "List")
+                    if (binding.tvSectionTitle.text == getString(R.string.viewLogList))
                     {
-                        binding.tvSectionTitle.text = "Category"
+                        binding.tvSectionTitle.text = getString(R.string.viewLogCategory)
                         fragmentControl.replaceFragmentAnim(
                             global_logs_category_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Right",
+                            getString(R.string.animRight),
                             this
                         )
                     } else
                     {
-                        binding.tvSectionTitle.text = "List"
+                        binding.tvSectionTitle.text = getString(R.string.viewLogList)
                         fragmentControl.replaceFragmentAnim(
                             global_logs_list_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Right",
+                            getString(R.string.animRight),
                             this
                         )
                     }
@@ -83,7 +83,7 @@ class Global_Logs : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
             }
         }
 
@@ -96,12 +96,12 @@ class Global_Logs : AppCompatActivity()
 
         binding.imgCycleViewLeft.setOnClickListener()
         {
-            CycleGlobalLogsFragmentView("Left")
+            CycleGlobalLogsFragmentView(getString(R.string.animLeft))
         }
 
         binding.imgCycleViewRight.setOnClickListener()
         {
-            CycleGlobalLogsFragmentView("Right")
+            CycleGlobalLogsFragmentView(getString(R.string.animRight))
         }
 
         binding.tvBackText.setOnClickListener()
