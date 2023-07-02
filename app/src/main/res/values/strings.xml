@@ -86,11 +86,6 @@
     <string name="homeView">Home_View</string>
     <string name="numberOfActivitiesInCategory">No of activities: </string>
     <string name="activityView">Activity_View</string>
-
-    //-------------------------------------------------------------------------------------
-    //Jake
-    //-------------------------------------------------------------------------------------
-
     <string name="hashSymbol">#</string>
     <string name="workOvertime">Overtime</string>
     <string name="hoursLeft">Hours to Go!</string>

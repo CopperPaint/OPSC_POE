@@ -14,6 +14,8 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.example.opsc_poe.databinding.ActivityMainBinding
 import com.example.opsc_poe.databinding.ActivitySettingsViewBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class settings_view : AppCompatActivity()
 {
@@ -29,6 +31,23 @@ class settings_view : AppCompatActivity()
         //Set view binding
         val binding = ActivitySettingsViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Read Data
+        GlobalScope.launch{
+            if (GlobalClass.UpdateDataBase == true)
+            {
+                var DBManger = ManageDatabase()
+                GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
+                GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.UpdateDataBase = false
+            }
+            //withContext(Dispatchers.Main) {
+            //    UpdateUI()
+            //}
+        }
 
         //get the extra
         var previousScreen = intent.getStringExtra("previousScreen")
@@ -69,6 +88,7 @@ class settings_view : AppCompatActivity()
             }
         }
 
+
         //look over this, the logic is weird with the lists and objects
         fun resetPassword() {
             //var attemptPasswordReset = false
@@ -93,19 +113,18 @@ class settings_view : AppCompatActivity()
 
                 val PasswordManager = ManagePassword(this)
                 //check current password
-                //docode here to chek if current oasswoed is the same and then prompt to choose new password
-                for (i in GlobalClass.listUserUserID.indices) {
+                //for (i in GlobalClass.listUserUserID.indices ) {
 
-                    if (GlobalClass.listUserUserID[i] == GlobalClass.user.userID) {
+                    //if (GlobalClass.listUserUserID[i] == GlobalClass.user.userID) {
 
-                        var currentUserSalt = GlobalClass.listUserPasswordSalt[i]
+                        var currentUserSalt = GlobalClass.user.passwordSalt
 
                         val attemptedUserPasswordHash = PasswordManager.generateHash(
                             etPopUp.text.toString(),
                             currentUserSalt
                         )
 
-                        if (attemptedUserPasswordHash == GlobalClass.listUserPasswordHash[i]) {
+                        if (attemptedUserPasswordHash == GlobalClass.user.passwordHash) {
                             //if password matches show new alert
 
                             var newPasswordAttempt = false
@@ -144,7 +163,7 @@ class settings_view : AppCompatActivity()
                                         )
 
                                         //set the new password hash back into the list (later DB)
-                                        GlobalClass.listUserPasswordHash[i] = newPasswordHash
+                                        GlobalClass.user.passwordHash = newPasswordHash
 
                                         GlobalClass.InformUser(
                                             "Success!",
@@ -201,8 +220,7 @@ class settings_view : AppCompatActivity()
                                     val parentDialogInterface = it
 
                                     alertPasswordError.setOnDismissListener {
-                                        //(it as AlertDialog).show()
-                                        Handler().postDelayed({ it.dismiss() }, 1000)
+                                        (it as AlertDialog).show()
                                         (parentDialogInterface as AlertDialog).show()
                                     }
 
@@ -228,7 +246,7 @@ class settings_view : AppCompatActivity()
  */
 
 
-                            break
+                            //break
 
                         } else {
                             //show wrong current password
@@ -245,9 +263,9 @@ class settings_view : AppCompatActivity()
                             //break
 
                         }
-                    }
+                    //}
 
-                }
+                //}
 
             })
 
