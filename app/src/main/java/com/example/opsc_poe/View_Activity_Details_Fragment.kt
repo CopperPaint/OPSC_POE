@@ -33,7 +33,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         val fragmentControl = FragmentHandler()
 
 
-        val activityIDIndex = requireActivity()!!.intent.extras!!.getInt("activityIDIndex")
+        val activityIDIndex = requireActivity()!!.intent.extras!!.getInt(getString(R.string.activityIdentityIndex))
         //-------------------------------------------------
         //code here
 
@@ -78,14 +78,14 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             maxGoalCustom.binding.vwBar.layoutParams = maxParam
 
 
-            maxGoalCustom.binding.tvPrimaryText.text = "Maximum Goal"
+            maxGoalCustom.binding.tvPrimaryText.text = getString(R.string.maxGoalPrompt)
             maxGoalCustom.binding.llBlockText.backgroundTintList = catColour
             var maxGoal = GlobalClass.goals[currentMaxGoal]
             if (!maxGoal.isSet)
             {
-                maxGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
-                maxGoalCustom.binding.tvBlockText.text = "Hours"
-                maxGoalCustom.binding.tvBlockX.text = "+"
+                maxGoalCustom.binding.tvSecondaryText.text = getString(R.string.noSetGoal)
+                maxGoalCustom.binding.tvBlockText.text = getString(R.string.hours)
+                maxGoalCustom.binding.tvBlockX.text = getString(R.string.addSymbol)
             }
             else
             {
@@ -101,8 +101,8 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             {
                 //go to edit/create goal screen for maximum goal
                 var intent = Intent(requireContext(), Create_Goal::class.java)
-                intent.putExtra("currentGoalIDIndex", currentMaxGoal)
-                intent.putExtra("CurrentActivity", activityIDIndex)
+                intent.putExtra(getString(R.string.currentGoalIdentityIndex), currentMaxGoal)
+                intent.putExtra(getString(R.string.currentActivityIndex), activityIDIndex)
                 startActivity(intent)
             }
 

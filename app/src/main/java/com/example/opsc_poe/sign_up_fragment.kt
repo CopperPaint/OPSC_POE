@@ -40,7 +40,7 @@ class sign_up_fragment : Fragment(R.layout.sign_up_fragment){
 
                     var tryValidateUserEmail = trySignUp.ValidateUserEmail(binding.etEmail.text.toString())
 
-                    var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(binding.etPassword.text.toString())
+                    var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(binding.etPassword.text.toString(), requireContext())
 
 
                     if (tryValidateUserEmail)
