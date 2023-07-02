@@ -1,5 +1,6 @@
 package com.example.opsc_poe
 
+import android.content.Context
 import java.security.SecureRandom
 import java.security.spec.KeySpec
 import javax.crypto.SecretKey
@@ -7,7 +8,7 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
 @OptIn(ExperimentalStdlibApi::class)
-class ManagePassword {
+class ManagePassword (val upperContext: Context){
 
 
 
@@ -22,7 +23,7 @@ class ManagePassword {
 
     fun ByteArray.toHexString() : String {
         return this.joinToString("") {
-            java.lang.String.format("%02x", it)
+            java.lang.String.format(upperContext.getString(R.string.byteArrayFormatter), it)
         }
     }
 

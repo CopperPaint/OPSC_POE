@@ -22,86 +22,11 @@ class Temp_UserDataClass
 )
 
     {
-        /*
-    fun ValidateUser(userEmail: String, userPassword: String, context: Context): Boolean
-    {
-        val PasswordManager = ManagePassword()
-
-        //loop through users
-        for (i in GlobalClass.listUserEmail.indices) {
-            //if the entered email matches an existing email
-            if (userEmail == GlobalClass.listUserEmail[i]) {
-
-                //if user exists
-
-                val attemptedUserPasswordHash = PasswordManager.generateHash(
-                    userPassword,
-                    GlobalClass.listUserPasswordSalt[i]
-                )
-
-                if (attemptedUserPasswordHash == GlobalClass.listUserPasswordHash[i]) {
-                    //if the user password is correct
-                    userID = GlobalClass.listUserUserID[i]
-                    email = userEmail
-                    username = GlobalClass.listUserUsername[i]
-                    passwordHash = GlobalClass.listUserPasswordHash[i]
-                    passwordSalt = GlobalClass.listUserPasswordSalt[i]
-
-
-                    //assign the user data to the global class to share its information
-                    GlobalClass.user.userID = userID
-                    GlobalClass.user.email = email
-                    GlobalClass.user.username = username
-                    GlobalClass.user.passwordHash = passwordHash
-                    GlobalClass.user.passwordSalt = passwordSalt
-
-
-
-
-                   // tester = "hi"
-                   // GlobalClass().InformUser("Unable to Sign In",tester , context)
-
-
-                    //issue is with the global class not saving the user information to its own object
-
-
-                    //exit loop
-                    break
-                }
-
-
-            }
-        }
-
-        if (userID == 0)
-        {
-
-            //user doesn't exist code goes here
-            GlobalClass.InformUser("Unable to Sign In", "Cannot find user with the given data", context)
-
-            //return the user exists boolean as false
-            return false
-
-        }
-        else{
-
-            //return the user exists boolean as true
-            return true
-
-        }
-
-
-
-    }
-
-
-
-         */
 
 
         fun ValidateUser(userEmail: String, userPassword: String, context: Context): Boolean
         {
-            val PasswordManager = ManagePassword()
+            val PasswordManager = ManagePassword(context)
 
             //loop through users
             for (i in GlobalClass.allUsers.indices) {
@@ -151,7 +76,7 @@ class Temp_UserDataClass
             if (userID == 0)
             {
                 //user doesn't exist code goes here
-                GlobalClass.InformUser("Unable to Sign In", "Cannot find user with the given data", context)
+                GlobalClass.InformUser(context.getString(R.string.invalidSignInTitle), context.getString(R.string.invalidSignInMessage), context)
 
                 //return the user exists boolean as false
                 return false
@@ -173,19 +98,19 @@ class Temp_UserDataClass
     }
 
         @SuppressLint("SuspiciousIndentation")
-        fun ValidateUserPassword(attemptedPassword : String): Pair<Boolean, String>
+        fun ValidateUserPassword(attemptedPassword : String, context : Context): Pair<Boolean, String>
         {
 
             var validationErrors = ArrayList<String>()
 
                  if (attemptedPassword.length < 8)
                  {
-                    validationErrors.add("Password too short, needs to be 8 or more characters")
+                    validationErrors.add(context.getString(R.string.passwordShort))
                  }
 
                  if (attemptedPassword.count(Char::isDigit) == 0)
                  {
-                     validationErrors.add("Password needs to contain at least 1 digit")
+                     validationErrors.add(context.getString(R.string.passwordNeedsNumber))
                  }
 
                 if (attemptedPassword.any(Char::isLowerCase))
@@ -194,7 +119,7 @@ class Temp_UserDataClass
                 }
                 else
                 {
-                    validationErrors.add("Password needs to contain at least 1 lower case character")
+                    validationErrors.add(context.getString(R.string.passwordNeedsLowerCase))
                 }
 
                 if (attemptedPassword.any(Char::isUpperCase))
@@ -203,7 +128,7 @@ class Temp_UserDataClass
                 }
             else
                 {
-                    validationErrors.add("Password needs to contain at least 1 upper case character")
+                    validationErrors.add(context.getString(R.string.passwordNeedsUpperCase))
                 }
 
 
@@ -213,17 +138,17 @@ class Temp_UserDataClass
                     }
             else
                 {
-                    validationErrors.add("Password needs start with an upper case character")
+                    validationErrors.add(context.getString(R.string.passwordNeedsToStartWithUpperCaseLetter))
                 }
 
 
-                if (attemptedPassword.any { it in "-?!@#£$%&+=" })
+                if (attemptedPassword.any { it in context.getString(R.string.passwordSpecialCharacters) })
                 {
 
                 }
             else
                 {
-                    validationErrors.add("Password needs to include one of the following special characters: -?!@#£$%&+=")
+                    validationErrors.add(context.getString(R.string.passwordNeedsSpecialCharacter))
                 }
 
 
@@ -247,7 +172,7 @@ class Temp_UserDataClass
 
         fun RegisterUser(userEmail: String, userUsername : String, userPassword: String, context: Context)
         {
-            val PasswordManager = ManagePassword()
+            val PasswordManager = ManagePassword(context)
             var userExists = false
 
 
@@ -263,7 +188,7 @@ class Temp_UserDataClass
                     userExists = true
 
                     //infrom user that the entered information is already registered to another user
-                    GlobalClass.InformUser("Unable to Sign Up", "A user with the provided data already exists", context)
+                    GlobalClass.InformUser(context.getString(R.string.invalidSignUpTitle), context.getString(R.string.invalidSignUpMessage), context)
 
                     //exit loop
                     break
@@ -319,7 +244,7 @@ class Temp_UserDataClass
                 }
 
                 //inform the user that their account was successfully created
-                GlobalClass.InformUser("Account Created", "Your account has been registered, Please Log In", context)
+                GlobalClass.InformUser(context.getString(R.string.addedUserTitle), context.getString(R.string.addedUserMessage), context)
 
                 //temp method used to get the new user password hash and salt text values to hard code into application
                 /*

@@ -96,6 +96,31 @@
     <string name="hoursLeft">Hours to Go!</string>
     <string name="tickSymbol">✔</string>
     <string name="workCompleted">Goal Reached!</string>
+    <string name="byteArrayFormatter">%02x</string>
+    <string name="incompleteFields">Please fill in all fields</string>
+    <string name="askForEmail">Your email</string>
+    <string name="forgotPasswordTitle">Forgot Password? (Coming Soon)</string>
+    <string name="forgotPasswordMessage">Enter your email, a 6-digit reset code will be delivered shortly</string>
+    <string name="alertSend">Send</string>
+    <string name="alertCancel">Cancel</string>
+    <string name="invalidPassword">Invalid Password</string>
+    <string name="invalidEmail">Invalid Email</string>
+    <string name="invalidEmailMessage">The email you entered either does not exist or is invalid</string>
+    <string name="invalidSignInTitle">Unable to Sign In</string>
+    <string name="invalidSignInMessage">Cannot find user with the given data</string>
+    <string name="invalidSignUpTitle">Unable to Sign Up</string>
+    <string name="invalidSignUpMessage">A user with the provided data already exists</string>
+    <string name="addedUserTitle">Account Created</string>
+    <string name="addedUserMessage">Your account has been registered, Please Log In</string>
+
+    <string name="passwordShort">Password too short, needs to be 8 or more characters</string>
+    <string name="passwordNeedsNumber">Password needs to contain at least 1 digit</string>
+    <string name="passwordNeedsLowerCase">Password needs to contain at least 1 lower case character</string>
+    <string name="passwordNeedsUpperCase">Password needs to contain at least 1 upper case character</string>
+    <string name="passwordNeedsToStartWithUpperCaseLetter">Password needs start with an upper case character</string>
+    <string name="passwordNeedsSpecialCharacter">Password needs to include one of the following special characters: -?!@#£$%+=&amp;</string>
+    <string name="passwordSpecialCharacters">-?!@#£$%+=&amp;</string>
+
 
     getString(R.string.errorTitle)
 

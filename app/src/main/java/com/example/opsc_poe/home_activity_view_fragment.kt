@@ -62,7 +62,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
             }
         }
 
@@ -92,7 +92,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
 
             if (userHasData == false) //if user has no data
             {
-                NoUserAppData(binding.llBars, activity, requireContext(),"Activity", 0)
+                NoUserAppData(binding.llBars, activity, requireContext(), getString(R.string.textActivity), 0)
             }
             else //if user has data
             {
@@ -184,7 +184,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                                         total = total + GlobalClass.logs[k].hours
                                     }
                                 }
-                                newActivity.binding.tvBlockText.text = "Total Hours:"
+                                newActivity.binding.tvBlockText.text = getString(R.string.promptTotalHours)
                                 newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(total.toString(), requireContext())
                             }
                         }
@@ -229,7 +229,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                                     total = total + GlobalClass.logs[k].hours
                                 }
                             }
-                            newActivity.binding.tvBlockText.text = "Total Hours:"
+                            newActivity.binding.tvBlockText.text = getString(R.string.promptTotalHours)
                             newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(total.toString(), requireContext())
                         }
                     }
@@ -237,7 +237,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                         //select activity binding
                         newActivity.setOnClickListener(){
                             var intent = Intent(activity, ViewActivity::class.java)
-                            intent.putExtra("activityIDIndex", i)
+                            intent.putExtra(getString(R.string.activityIdentityIndex), i)
                             startActivity(intent)
                         }
 
@@ -249,7 +249,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+            GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
         }
     }
 

@@ -57,22 +57,22 @@ class sign_up_fragment : Fragment(R.layout.sign_up_fragment){
                         }
                         else
                         {
-                            GlobalClass.InformUser("Invalid Password", validateUserPasswordFeedback, requireContext())
+                            GlobalClass.InformUser(getString(R.string.invalidPassword), validateUserPasswordFeedback, requireContext())
                         }
                     }
                     else
                     {
-                        GlobalClass.InformUser("Invalid Email", "The email you entered either does not exist or is invalid", requireContext())
+                        GlobalClass.InformUser(getString(R.string.invalidEmail), getString(R.string.invalidEmailMessage), requireContext())
                     }
                 }
                 else
                 {
-                    GlobalClass.InformUser("Input Error","Please fill in all fields", requireContext())
+                    GlobalClass.InformUser(getString(R.string.inputErrorTitle),getString(R.string.incompleteFields), requireContext())
                 }
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
             }
             //-------------------------------------------------
         }
@@ -80,7 +80,7 @@ class sign_up_fragment : Fragment(R.layout.sign_up_fragment){
         {
             var intent = Intent(requireContext(), Help::class.java) //ViewActivity
 
-            intent.putExtra("previousScreen", "Sign_Up")
+            intent.putExtra(getString(R.string.previousScreenKey), getString(R.string.signUpScreenValue))
             startActivity(intent)
         }
 

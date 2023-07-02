@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity()
             fragmentControl.replaceFragment(sign_in_fragment(), R.id.fcFragmentContainer, supportFragmentManager)
 
             //get the intent value if it exists
-            var showSignUp = intent.getBooleanExtra("LoadSignUp", false)
+            var showSignUp = intent.getBooleanExtra(getString(R.string.loadSignUpKey), false)
 
             if (showSignUp)
             {
@@ -41,18 +41,18 @@ class MainActivity : AppCompatActivity()
             //Sign in view activation
             binding.tvSignIn.setOnClickListener{
                 //replaceFragment(sign_in_fragment())
-                fragmentControl.replaceFragmentAnim(sign_in_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left_Half", this)
+                fragmentControl.replaceFragmentAnim(sign_in_fragment(), R.id.fcFragmentContainer, supportFragmentManager, getString(R.string.animLeftHalf), this)
             }
 
             //Sign up view activation
             binding.tvSignUp.setOnClickListener{
                 //replaceFragment(sign_up_fragment())
-                fragmentControl.replaceFragmentAnim(sign_up_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right_Half", this)
+                fragmentControl.replaceFragmentAnim(sign_up_fragment(), R.id.fcFragmentContainer, supportFragmentManager, getString(R.string.animRightHalf), this)
             }
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", "${e.toString()}", this)
+            GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
         }
     }
 

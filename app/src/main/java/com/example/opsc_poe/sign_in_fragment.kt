@@ -51,7 +51,7 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+            GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
         }
 
         //sign in button
@@ -74,7 +74,7 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
             }
             else
             {
-                GlobalClass.InformUser("Input Error","Please fill in all fields", requireContext())
+                GlobalClass.InformUser(getString(R.string.inputErrorTitle),getString(R.string.incompleteFields), requireContext())
             }
 
         }
@@ -83,14 +83,14 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
         {
 
             val etPopUp = EditText(requireContext())
-            etPopUp.hint = "Your email"
+            etPopUp.hint = getString(R.string.askForEmail)
 
             var alert = AlertDialog.Builder(requireContext())
-            alert.setTitle("Forgot Password? (Coming Soon)")
-            alert.setMessage("Enter your email, a 6-digit reset code will be delivered shortly")
+            alert.setTitle(getString(R.string.forgotPasswordTitle))
+            alert.setMessage(getString(R.string.forgotPasswordMessage))
             alert.setView(etPopUp)
-            alert.setPositiveButton("Send", DialogInterface.OnClickListener { dialog, whichButton -> })
-            alert.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, whichButton -> })
+            alert.setPositiveButton(getString(R.string.alertSend), DialogInterface.OnClickListener { dialog, whichButton -> })
+            alert.setNegativeButton(getString(R.string.alertCancel), DialogInterface.OnClickListener { dialog, whichButton -> })
             alert.show()
 
         }
