@@ -65,6 +65,9 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
     @SuppressLint("Range")
     fun UpdateUI()
     {
+        binding.ivloadingturt.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
+
         var userHasData = false
         for (i in GlobalClass.activities.indices) {
 
