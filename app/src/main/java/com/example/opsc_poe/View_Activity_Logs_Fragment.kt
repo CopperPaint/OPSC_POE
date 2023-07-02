@@ -36,7 +36,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
         //code here
         try
         {
-            val activityIDIndex = requireActivity()!!.intent.extras!!.getInt("activityIDIndex")
+            val activityIDIndex = requireActivity()!!.intent.extras!!.getInt(getString(R.string.activityIdentityIndex))
             var currentActivity = GlobalClass.activities[activityIDIndex]
 
             //-----------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
 
             if (userHasData == false)
             {
-                GlobalClass.NoUserAppData(binding.llBars, requireActivity(), requireContext(), "Log", activityIDIndex)
+                GlobalClass.NoUserAppData(binding.llBars, requireActivity(), requireContext(), getString(R.string.logScreenFunction), activityIDIndex)
             }
             else
             {
@@ -65,7 +65,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
                         //create new custom activity
                         var newLog = CustomActivity(activity)
                         //set primary text
-                        newLog.binding.tvPrimaryText.text = "Start Date"
+                        newLog.binding.tvPrimaryText.text = getString(R.string.start_date)
 
                         //get activity category
                         // var index = Temp_CategoryDataClass().GetIndex(GlobalClass.activities[i].categoryID, GlobalClass.categories)
@@ -92,7 +92,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
                             R.color.Default_Charcoal_Grey)
 
                         newLog.binding.vwBar.backgroundTintList = barColor
-                        newLog.binding.tvBlockText.text = "Hours Logged"
+                        newLog.binding.tvBlockText.text = getString(R.string.hoursLoggedPrompt)
                         newLog.binding.tvBlockX.text = DoubleToTime(GlobalClass.logs[i].hours.toString(), requireContext())
                         //newActivity.binding.llBlockText.backgroundTintList =  ColorStateList.valueOf(Color.parseColor("#5c37d7"))
 
@@ -104,14 +104,14 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+            GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
         }
 
         //-----------------------------------------------------------------------------------------------------
         binding.imgBackIndicator.setOnClickListener()
         {
             //set the sign in fragment to be the initial view
-            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Down", requireContext())
+            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, getString(R.string.animDown), requireContext())
         }
         //-------------------------------------------------
         return view
