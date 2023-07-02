@@ -7,8 +7,7 @@ import android.provider.Settings
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
 import java.io.File
-
-
+import java.net.URI
 
 
 class ExportUserData (
@@ -26,18 +25,18 @@ class ExportUserData (
         //0 is first item = activity data
         //1 is second = log data
 
-        var filesToExport = ArrayList<Uri>()
+        var filesToExport = ArrayList<File>()
 
         if (selectedExportItems.contains(0)) {
             //if the user wants to export activity data
 
             val activityData = exportActivityData()
-            val activityDataFileUri = generateActivityCSVFileToExport(
+            val activityDataFile = generateActivityCSVFileToExport(
                 activityData,
                 upperContext.getString(R.string.exportActivityFileName),
                 upperContext.getString(R.string.exportActivityHeaders)
             )
-            filesToExport.add(activityDataFileUri)
+            filesToExport.add(activityDataFile)
 
         }
 
@@ -45,12 +44,12 @@ class ExportUserData (
             //if the user wants to export log data
 
             val logData = exportLogData()
-            val logDataFileUri = generateLogCSVFileToExport(
+            val logDataFile = generateLogCSVFileToExport(
                 logData,
                 upperContext.getString(R.string.exportLogFileName),
                 upperContext.getString(R.string.exportLogHeaders)
             )
-            filesToExport.add(logDataFileUri)
+            filesToExport.add(logDataFile)
 
         }
 
@@ -203,7 +202,7 @@ class ExportUserData (
         dataArray: ArrayList<ExportActivityData>,
         fileName: String,
         fileHeaders: String
-    ): Uri {
+    ): File {
 
         //generate the file
         val externalCacheFile = File(upperContext.externalCacheDir, fileName)
@@ -228,7 +227,7 @@ class ExportUserData (
 
 
         //return the complete file
-        return FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", File(upperContext.getExternalFilesDir(null), fileName))//File(upperContext.getExternalFilesDir(null), fileName)
+        return File(upperContext.getExternalFilesDir(null), fileName)
 
 
     }
@@ -237,7 +236,7 @@ class ExportUserData (
         dataArray: ArrayList<ExportLogData>,
         fileName: String,
         fileHeaders: String
-    ): Uri {
+    ): File {
 
 
         //generate the file
@@ -263,31 +262,44 @@ class ExportUserData (
 
 
         //return the complete file
-        return FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", File(upperContext.getExternalFilesDir(null), fileName))//File(upperContext.getExternalFilesDir(null), fileName)
+        return File(upperContext.getExternalFilesDir(null), fileName)
 
 
     }
 
 
-    private fun shareCSVFiles(fileUriArray: ArrayList<Uri>) {
+    private fun shareCSVFiles(fileArray: ArrayList<File>) {
 
+        var fileURIToExport = ArrayList<Uri>()
 
-        //FileProvider.getUriForFile(upperContext, upperContext.packageName + ".provider", File(upperContext.getExternalFilesDir(null), fileName))
+        for (i in fileArray)
+        {
+            var fileUri = FileProvider.getUriForFile(upperContext, BuildConfig.APPLICATION_ID + ".provider", i)
+            fileURIToExport.add(fileUri)
+        }
 
         //intent to provide share functionality
         val intent = Intent(Intent.ACTION_SEND)
 
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
         //define file type as csv
-        intent.type = "text/csv"
+        intent.type = "*/*"
 
         //add extra with the file and prompt
-        intent.putExtra("Share using...", fileUriArray)
+        intent.putExtra(Intent.EXTRA_STREAM, fileURIToExport)
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
         //define share menu intent
         val chooser = Intent.createChooser(intent, "Share using...")
 
+        upperContext.startActivity(intent)
+
+
+
         //call the intent to prompt the user with the share menu
-        startActivity(upperContext, chooser, null)
+        //startActivity(upperContext, chooser, null)
     }
 
 
