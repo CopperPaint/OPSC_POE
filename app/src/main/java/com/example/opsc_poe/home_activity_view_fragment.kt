@@ -152,7 +152,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
-                            newActivity.binding.tvBlockX.text = hour
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour)
                         }
                     }
                     else
@@ -164,7 +164,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
-                            newActivity.binding.tvBlockX.text = hour
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour)
                         }
                         else //no goals
                         {

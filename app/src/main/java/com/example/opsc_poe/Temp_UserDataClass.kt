@@ -134,7 +134,7 @@ class Temp_UserDataClass
                         GlobalClass.user.passwordHash = passwordHash
                         GlobalClass.user.passwordSalt = passwordSalt
 
-
+                        GlobalClass.UpdateDataBase =  true
 
 
                         // tester = "hi"

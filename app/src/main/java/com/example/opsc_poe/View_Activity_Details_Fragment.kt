@@ -87,7 +87,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         {
             maxGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
             maxGoalCustom.binding.tvBlockText.text = "Hours"
-            maxGoalCustom.binding.tvBlockX.text = "X"
+            maxGoalCustom.binding.tvBlockX.text = "+"
         }
         else
         {
@@ -131,7 +131,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         {
             minGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
             minGoalCustom.binding.tvBlockText.text = "Hours"
-            minGoalCustom.binding.tvBlockX.text = "X"
+            minGoalCustom.binding.tvBlockX.text = "+"
         }
         else
         {
