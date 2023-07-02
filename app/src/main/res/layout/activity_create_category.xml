@@ -41,7 +41,7 @@
             android:id="@+id/tvScreenFunction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Create"
+            android:text="@string/create"
             android:textColor="@color/Dark_Green"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +53,7 @@
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category"
+            android:text="@string/viewLogCategory"
             android:textColor="@color/Dark_Green"
             android:textSize="34sp"
             android:textStyle="bold"
@@ -88,9 +88,9 @@
             android:id="@+id/tvName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textSize="20dp"
-            android:textColor="@color/Input_Grey" />
+            android:text="@string/name"
+            android:textColor="@color/Input_Grey"
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/etName"
@@ -109,9 +109,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Colour"
-            android:textSize="20dp"
-            android:textColor="@color/Input_Grey" />
+            android:text="@string/colour"
+            android:textColor="@color/Input_Grey"
+            android:textSize="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_rectangle"
-                android:text="Pick Color"
+                android:text="@string/pick_colour"
                 android:textColor="#000000"
                 android:theme="@style/button_colour_white" />
 
@@ -145,9 +145,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="Description"
-            android:textSize="20dp"
-            android:textColor="@color/Input_Grey" />
+            android:text="@string/description"
+            android:textColor="@color/Input_Grey"
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/etDescription"
@@ -163,7 +163,6 @@
             android:padding="5dp"/>
 
 
-
         <Button
             android:id="@+id/btnCreate"
             android:layout_width="match_parent"
@@ -173,7 +172,7 @@
             android:layout_marginRight="60dp"
             android:background="@drawable/rounded_rectangle"
             android:backgroundTint="@color/Muted_Green"
-            android:text="Create"
+            android:text="@string/create"
             android:textSize="20sp"
             android:theme="@style/button_colour_green" />
 

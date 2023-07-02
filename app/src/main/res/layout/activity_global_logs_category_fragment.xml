@@ -28,7 +28,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_rectangle"
-                android:text="Set Start Date"
+                android:text="@string/set_start"
                 android:textColor="#FFFFFF"
                 android:theme="@style/button_colour_green" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_rectangle"
-                android:text="Set End Date"
+                android:text="@string/set_end"
                 android:textColor="#FFFFFF"
                 android:theme="@style/button_colour_green" />
 
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Category Information"
+            android:text="@string/cat_info"
             android:textColor="#FFFFFF" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:layout_height="50dp"
             android:background="@drawable/rounded_rectangle"
             android:gravity="center"
-            android:text="No Category Selected" />
+            android:text="@string/no_cat" />
 
 
 

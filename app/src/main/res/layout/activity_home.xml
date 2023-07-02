@@ -38,7 +38,7 @@
             android:id="@+id/tvAppTitleWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome"
+            android:text="@string/welcome"
             android:textColor="@color/Dark_Green"
             android:textSize="30dp"
             />
@@ -94,7 +94,7 @@
             android:id="@+id/tvSectionTitle"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            android:text="Activities"
+            android:text="@string/viewUserActivitiesTitle"
             android:textSize="30dp"
             android:textAlignment="center"
             android:textColor="@color/Input_Grey"

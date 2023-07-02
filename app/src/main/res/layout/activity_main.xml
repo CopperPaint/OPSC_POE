@@ -9,7 +9,6 @@
     >
 
 
-
     <View
         android:layout_marginLeft="10dp"
         android:layout_marginTop="30dp"
@@ -42,7 +41,7 @@
             android:id="@+id/tvAppTitleWelcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome to"
+            android:text="@string/welcome_to"
             android:textSize="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +53,7 @@
             android:id="@+id/tvCategoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Turtle Time"
+            android:text="@string/turtle_time"
             android:textStyle="bold"
             android:textSize="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -95,7 +94,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onClick"
-            android:text="Sign In"
+            android:text="@string/sign_in"
             android:textAlignment="center"
             android:textColor="@color/Input_Grey"
             android:textSize="30dp"
@@ -108,7 +107,7 @@
             android:layout_weight="1"
             android:clickable="true"
             android:onClick="onClick"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textAlignment="center"
             android:textColor="@color/Input_Grey"
             android:textSize="30dp"

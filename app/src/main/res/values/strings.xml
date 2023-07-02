@@ -113,14 +113,23 @@
     <string name="save">Save</string>
     <string name="help">Need Help?</string>
 
-
-
-
-
-
-
-
-
+    <string name="colour">Colour</string>
+    <string name="pick_colour">Pick Colour</string>
+    <string name="goal">Goal</string>
+    <string name="time_frame">Time Frame</string>
+    <string name="logs">Logs</string>
+    <string name="list">List</string>
+    <string name="back">Back</string>
+    <string name="set_start">Set Start Date</string>
+    <string name="set_end">Set End Date</string>
+    <string name="cat_info">Category Information</string>
+    <string name="no_cat">No Category Selected</string>
+    <string name="help_title">Help</string>
+    <string name="welcome">Welcome</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="turtle_time">Turtle Time</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
 
     //-------------------------------------------------------------------------------------
 
