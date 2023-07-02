@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.opsc_poe.GlobalClass.Companion.ReturnToHome
 import com.example.opsc_poe.databinding.ActivityCreateGoalBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class Create_Goal : AppCompatActivity()
 {
@@ -88,9 +92,23 @@ class Create_Goal : AppCompatActivity()
             currentGoal.amount = binding.npHourGoal.value
             currentGoal.isSet = true
 
-            //return user to the home view screen
-            var intent = Intent(this, Home_Activity::class.java) //ViewActivity
-            startActivity(intent)
+            GlobalScope.launch {
+                var documentID = GlobalClass.documents.GoalIDs[currentGoalID]
+                var DBmanager = ManageDatabase()
+                DBmanager.updateGoalInFirestore(currentGoal, documentID)
+
+                //READ DATA
+                GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.UpdateDataBase = false
+
+                //back to home page
+                withContext(Dispatchers.Main) {
+                    ReturnToHome()
+                }
+            }
         }
 
         binding.tvNeedHelpButton.setOnClickListener()
@@ -109,5 +127,14 @@ class Create_Goal : AppCompatActivity()
             ReturnToHome(this)
         }
     }
+
+    fun ReturnToHome()
+    {
+        //back to home page
+        var intent = Intent(this, Home_Activity::class.java)
+        startActivity(intent)
+    }
+
+
     override fun onBackPressed() {}
 }

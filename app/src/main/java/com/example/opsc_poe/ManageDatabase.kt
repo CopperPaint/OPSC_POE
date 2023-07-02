@@ -23,6 +23,7 @@ class ManageDatabase
     suspend fun getCategoriesFromFirestore(userID: Int): ArrayList<Temp_CategoryDataClass> {
         val categories = arrayListOf<Temp_CategoryDataClass>()
         val querySnapshot = db.collection("Category").get().await()
+        GlobalClass.documents = DocumentID()
         for (document in querySnapshot) {
             if (document.data.getValue("userID").toString().toInt() == userID) {
 
@@ -39,6 +40,7 @@ class ManageDatabase
                     colour = colour
                 )
                 categories.add(tempCat)
+                GlobalClass.documents.CategoryIDs.add(document.id)
             }
         }
         return categories
@@ -80,6 +82,7 @@ class ManageDatabase
                     photo = bitmap
                 )
                 activities.add(tempAct)
+                GlobalClass.documents.ActivityIDs.add(document.id)
             }
         }
         return activities
@@ -104,6 +107,7 @@ class ManageDatabase
                     isSet = isSet
                 )
                 goals.add(tempGoal)
+                GlobalClass.documents.GoalIDs.add(document.id)
             }
         }
         return goals
@@ -139,7 +143,7 @@ class ManageDatabase
     }
 
 
-    suspend fun AddCategoryToFirestore(category: Temp_CategoryDataClass)
+    fun AddCategoryToFirestore(category: Temp_CategoryDataClass)
     {
         db.collection("Category")
             .add(category)
@@ -149,7 +153,7 @@ class ManageDatabase
             }
     }
 
-    suspend fun AddActivityToFirestore(activity: ActivitySave)
+    fun AddActivityToFirestore(activity: ActivitySave)
     {
         db.collection("Activity")
             .add(activity)
@@ -159,7 +163,7 @@ class ManageDatabase
             }
     }
 
-    suspend fun AddGoalToFirestore(goal: Temp_GoalDataClass)
+    fun AddGoalToFirestore(goal: Temp_GoalDataClass)
     {
         db.collection("Goals")
             .add(goal)
@@ -169,7 +173,7 @@ class ManageDatabase
             }
     }
 
-    suspend fun AddLogToFirestore(log: LogStore)
+    fun AddLogToFirestore(log: LogStore)
     {
     db.collection("Logs")
         .add(log)
@@ -179,4 +183,37 @@ class ManageDatabase
         }
     }
 
+    suspend fun updateCategoryInFirestore(category: Temp_CategoryDataClass, ID: String) {
+        val categoryRef = db.collection("Category").document(ID)
+        categoryRef.update(
+            mapOf(
+                "name" to category.name,
+                "description" to category.description,
+                "colour" to category.colour
+            )
+        ).await()
+    }
+
+    suspend fun updateActivityInFirestore(activity: ActivitySave, ID: String) {
+        val categoryRef = db.collection("Activity").document(ID)
+        categoryRef.update(
+            mapOf(
+                "categoryID" to activity.categoryID,
+                "name" to activity.name,
+                "description" to activity.description,
+                "photo" to activity.photo
+            )
+        ).await()
+    }
+
+    suspend fun updateGoalInFirestore(goal: Temp_GoalDataClass, ID: String) {
+        val categoryRef = db.collection("Goals").document(ID)
+        categoryRef.update(
+            mapOf(
+                "interval" to goal.interval,
+                "amount" to goal.amount,
+                "set" to goal.isSet
+            )
+        ).await()
+    }
 }

@@ -56,7 +56,7 @@ class CreateCategory : AppCompatActivity()
 
             var categoryIDIndex = intent.getIntExtra("categoryIDIndex", -1)
 
-            if (categoryIDIndex == -1)
+            if (categoryIDIndex == -1) //create category
             {
                 binding.btnCreate.setOnClickListener()
                 {
@@ -88,7 +88,7 @@ class CreateCategory : AppCompatActivity()
                 }
 
             }
-            else
+            else //update category
             {
                 var category = GlobalClass.categories[categoryIDIndex]
                 binding.etName.setText(category.name)
@@ -109,8 +109,23 @@ class CreateCategory : AppCompatActivity()
                     category.colour = intToColourString(defaultcolour)
                     category.description = binding.etDescription.text.toString()
 
-                    //back to home page
-                    ReturnToHome()
+                    GlobalScope.launch {
+                        var documentID = GlobalClass.documents.CategoryIDs[categoryIDIndex]
+                        var DBmanager = ManageDatabase()
+                        DBmanager.updateCategoryInFirestore(category, documentID)
+
+                        //READ DATA
+                        GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.UpdateDataBase = false
+
+                        //back to home page
+                        withContext(Dispatchers.Main) {
+                            ReturnToHome()
+                        }
+                    }
                 }
             }
         }

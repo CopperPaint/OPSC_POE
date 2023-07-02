@@ -21,6 +21,7 @@ class GlobalClass : Application()
     companion object
     {
         var UpdateDataBase: Boolean = true
+        var documents = DocumentID()
 
         var activities = arrayListOf<Temp_ActivityDataClass>()
         var categories = arrayListOf<Temp_CategoryDataClass>()

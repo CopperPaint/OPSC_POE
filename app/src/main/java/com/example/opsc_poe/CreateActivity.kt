@@ -115,7 +115,7 @@ class CreateActivity : AppCompatActivity()
                             {
                                 GlobalClass.InformUser("Category Needed", "Add a category from the home page", this)
                             }
-                            else
+                            else //create activity
                             {
                                 //code to get selected category
                                 var selectedItem = spinner.selectedItemPosition
@@ -134,7 +134,6 @@ class CreateActivity : AppCompatActivity()
                                 //save activity
                                 //GlobalClass.activities.add(activity)
 
-
                                 //create max activity goal
                                 var maxgoal = Temp_GoalDataClass(
                                     goalID = GlobalClass.goals.size + 1,
@@ -148,7 +147,6 @@ class CreateActivity : AppCompatActivity()
                                 //GlobalClass.goals.add(mingoal)
 
 
-
                                 var filePath: String = ""
                                 if (activity.photo != null)
                                 {
@@ -157,7 +155,7 @@ class CreateActivity : AppCompatActivity()
                                     val file = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), filename)
                                     try {
                                         val out = FileOutputStream(file)
-                                        tempImage?.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                                        activity.photo?.compress(Bitmap.CompressFormat.JPEG, 100, out)
                                         out.flush()
                                         out.close()
                                         filePath = file.absolutePath
@@ -224,7 +222,6 @@ class CreateActivity : AppCompatActivity()
                 binding.etActivtyName.setText(activity.name)
                 binding.etDescription.setText(activity.description)
 
-
                 //get activity category
                 var catIndex = Temp_CategoryDataClass().GetIndex(activity.categoryID, GlobalClass.categories)
 
@@ -242,7 +239,7 @@ class CreateActivity : AppCompatActivity()
                 //set image
                 binding.imgCamera.setImageBitmap(activity.photo)
 
-                binding.btnClick.setOnClickListener()
+                binding.btnClick.setOnClickListener() //update activity
                 {
                     GlobalClass.activities[activityIDIndex].name = binding.etActivtyName.text.toString()
                     GlobalClass.activities[activityIDIndex].description = binding.etDescription.text.toString()
@@ -252,7 +249,51 @@ class CreateActivity : AppCompatActivity()
                     GlobalClass.activities[activityIDIndex].categoryID = category.categoryID
                     GlobalClass.activities[activityIDIndex].photo = tempImage
 
-                    ReturnToHome()
+                    var filePath: String = ""
+                    if (activity.photo != null)
+                    {
+                        //Save Image to Local Storage
+                        val filename = "${activity.name}.jpg"
+                        val file = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), filename)
+                        try {
+                            val out = FileOutputStream(file)
+                            activity.photo?.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                            out.flush()
+                            out.close()
+                            filePath = file.absolutePath
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+
+                    val store = ActivitySave(
+                        activityID = activity.activityID,
+                        userID = activity.userID,
+                        categoryID = activity.categoryID,
+                        name = activity.name,
+                        description = activity.description,
+                        maxgoalID = activity.maxgoalID,
+                        mingoalID = activity.mingoalID,
+                        photo = filePath
+                    )
+
+                    GlobalScope.launch {
+
+                        var documentID = GlobalClass.documents.ActivityIDs[activityIDIndex]
+                        var DBmanager = ManageDatabase()
+                        DBmanager.updateActivityInFirestore(store, documentID)
+
+                        //READ DATA
+                        GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)
+                        GlobalClass.UpdateDataBase = false
+
+                        withContext(Dispatchers.Main) {
+                            ReturnToHome()
+                        }
+                    }
                 }
             }
             catch (e: Error)
