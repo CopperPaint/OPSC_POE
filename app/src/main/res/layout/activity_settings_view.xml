@@ -27,19 +27,17 @@
             app:srcCompat="@drawable/blackturtle" />
 
 
-
-            <TextView
-                android:id="@+id/tvSettingsHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textColor="@color/Dark_Green"
-                android:textSize="30dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="14dp"
-                android:textStyle="bold"
-                android:layout_toRightOf="@id/vwTitleBar"
-                />
+    <TextView
+        android:id="@+id/tvSettingsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@id/vwTitleBar"
+        android:text="@string/settings"
+        android:textColor="@color/Dark_Green"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 
         <View
@@ -62,7 +60,6 @@
         android:orientation="vertical">
 
 
-
         <TextView
             android:id="@+id/tvExportDataText"
             android:layout_width="match_parent"
@@ -70,13 +67,13 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/rounded_rectangle"
             android:backgroundTint="@color/Input_Grey"
+            android:clickable="true"
             android:gravity="center_vertical"
+            android:onClick="onClick"
             android:paddingVertical="18dp"
             android:paddingLeft="82dp"
-            android:text="Export Data (Coming Soon)"
-            android:textSize="20dp"
-            android:clickable="true"
-            android:onClick="onClick"/>
+            android:text="@string/export"
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/imgExportDataIndicator"
@@ -105,7 +102,7 @@
             android:gravity="center_vertical"
             android:paddingVertical="18dp"
             android:paddingLeft="82dp"
-            android:text="Reset Password (Coming Soon)"
+            android:text="@string/password_reset"
             android:textSize="20dp" />
 
         <ImageView
@@ -165,7 +162,7 @@
                 android:onClick="onClick"
                 android:paddingVertical="18dp"
                 android:paddingLeft="80dp"
-                android:text="Back"
+                android:text="@string/back"
                 android:textSize="20dp" />
 
 
@@ -181,7 +178,7 @@
                 android:onClick="onClick"
                 android:paddingVertical="18dp"
                 android:paddingLeft="80dp"
-                android:text="All Logs"
+                android:text="@string/all_logs"
                 android:textSize="20dp" />
 
             <ImageView
@@ -232,7 +229,7 @@
             android:onClick="onClick"
             android:paddingVertical="18dp"
             android:paddingLeft="82dp"
-            android:text="Sign Out"
+            android:text="@string/sign_out"
             android:textSize="20dp" />
 
         <ImageView

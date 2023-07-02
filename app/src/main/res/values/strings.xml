@@ -159,5 +159,11 @@
     <string name="password">Password</string>
     <string name="forget_password">Forgot Password?</string>
     <string name="username">Username</string>
+    <string name="all_logs">All Logs</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="export">Export Data</string>
+    <string name="password_reset">Reset Password</string>
+    <string name="settings">Settings</string>
+
 
 </resources>
