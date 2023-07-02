@@ -36,16 +36,15 @@
                     android:id="@+id/tvBackText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Back"
-                    android:textSize="20dp"
-                    android:paddingLeft="78dp"
-                    android:paddingRight="56dp"
-                    android:paddingVertical="18dp"
-                    android:clickable="true"
-                    android:onClick="onClick"
                     android:background="@drawable/rounded_rectangle"
                     android:backgroundTint="@color/Input_Grey"
-                    />
+                    android:clickable="true"
+                    android:onClick="onClick"
+                    android:paddingVertical="18dp"
+                    android:paddingLeft="78dp"
+                    android:paddingRight="56dp"
+                    android:text="@string/back"
+                    android:textSize="20dp" />
 
 
                 <ImageView
@@ -65,24 +64,20 @@
                     tools:ignore="SpeakableTextPresentCheck" />
 
 
-
-
-
                 <TextView
                     android:id="@+id/tvViewLogsText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View Logs"
-                    android:textSize="20dp"
-                    android:paddingLeft="78dp"
-                    android:paddingRight="9dp"
-                    android:paddingVertical="18dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/rounded_rectangle"
                     android:backgroundTint="@color/Input_Grey"
                     android:clickable="true"
                     android:onClick="onClick"
-                    />
+                    android:paddingVertical="18dp"
+                    android:paddingLeft="78dp"
+                    android:paddingRight="9dp"
+                    android:text="@string/view_logs"
+                    android:textSize="20dp" />
 
 
                 <TextView
@@ -121,9 +116,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:textSize="20dp"
-            android:text="Goals"
-            android:textColor="@color/Input_Grey" />
+            android:text="@string/goals"
+            android:textColor="@color/Input_Grey"
+            android:textSize="20dp" />
 
         <LinearLayout
             android:id="@+id/llgoalcontainer"
@@ -139,9 +134,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:textSize="20dp"
-            android:text="Description"
-            android:textColor="@color/Input_Grey" />
+            android:text="@string/description"
+            android:textColor="@color/Input_Grey"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/tvDescription"
@@ -150,7 +145,7 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/rounded_rectangle"
             android:padding="5dp"
-            android:text="Description"
+            android:text="@string/description"
             android:textSize="15dp"
             tools:ignore="TextSizeCheck" />
 

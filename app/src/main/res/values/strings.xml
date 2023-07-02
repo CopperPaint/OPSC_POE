@@ -136,6 +136,12 @@
     <string name="turtle_time">Turtle Time</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="view_logs">View Logs</string>
+    <string name="goals">Goals</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forgot Password?</string>
+    <string name="username">Username</string>
 
     //-------------------------------------------------------------------------------------
 
