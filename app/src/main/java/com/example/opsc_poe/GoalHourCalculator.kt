@@ -15,9 +15,10 @@ class GoalHourCalculator
             )
 {
     //preset bar colors
-    var yellow = "${R.string.hashSymbol}${Integer.toHexString(ContextCompat.getColor(upperContext, R.color.calculatorYellow))}"//"#fcef5d"
-    var red = "${R.string.hashSymbol}${Integer.toHexString(ContextCompat.getColor(upperContext, R.color.calculatorRed))}"//"#e81e1e"
-    var green = "${R.string.hashSymbol}${Integer.toHexString(ContextCompat.getColor(upperContext, R.color.calculatorGreen))}"//"#40bf2a"
+    //var yellow = "${R.string.hashSymbol}${Integer.toHexString(ContextCompat.getColor(upperContext, R.color.calculatorYellow))}"//"#fcef5d"
+    var yellow = "#fcef5d"
+    var red = "#e81e1e"
+    var green = "#40bf2a"
 
     //calculate goal hours if both goals exists
     fun CalculateHours(minIndex: Int, maxIndex: Int, activityID: Int): Triple<String, String, String>
