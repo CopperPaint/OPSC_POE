@@ -1,18 +1,10 @@
 package com.example.opsc_poe
 
-import android.content.ContentValues
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.opsc_poe.databinding.ActivityHomeBinding
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class Home_Activity : AppCompatActivity()
 {
@@ -39,65 +31,67 @@ class Home_Activity : AppCompatActivity()
 
         fun CycleHomeFragmentView (arrow : String)
         {
-
-            if (arrow == "Left")
+            try
             {
-                if (binding.tvSectionTitle.text == "Activities")
+                if (arrow == "Left")
                 {
-                    binding.tvSectionTitle.text = "Categories"
-                    /*
-                    fragmentControl.replaceFragment(
-                        home_category_view_fragment(),
-                        R.id.fcFragmentContainer,
-                        supportFragmentManager
-                    )
+                    if (binding.tvSectionTitle.text == "Activities")
+                    {
+                        binding.tvSectionTitle.text = "Categories"
+                        /*
+                        fragmentControl.replaceFragment(
+                            home_category_view_fragment(),
+                            R.id.fcFragmentContainer,
+                            supportFragmentManager
+                        )
+                         */
+                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
+                    } else
+                    {
+                        binding.tvSectionTitle.text = "Activities"
+                        /*
+                         fragmentControl.replaceFragment(
+                             home_activity_view_fragment(),
+                             R.id.fcFragmentContainer,
+                             supportFragmentManager
+                         )
+                         */
+                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
+                    }
+                }
+                else
+                {
+                    if (binding.tvSectionTitle.text == "Activities")
+                    {
+                        binding.tvSectionTitle.text = "Categories"
+                        /*
+                        fragmentControl.replaceFragment(
+                            home_category_view_fragment(),
+                            R.id.fcFragmentContainer,
+                            supportFragmentManager
+                        )
 
-                     */
-                    fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
-                } else
-                {
-                    binding.tvSectionTitle.text = "Activities"
-                    /*
-                     fragmentControl.replaceFragment(
-                         home_activity_view_fragment(),
-                         R.id.fcFragmentContainer,
-                         supportFragmentManager
-                     )
-                     */
-                    fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left")
+                         */
+                        fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
+                    } else
+                    {
+                        binding.tvSectionTitle.text = "Activities"
+                        /*
+                         fragmentControl.replaceFragment(
+                             home_activity_view_fragment(),
+                             R.id.fcFragmentContainer,
+                             supportFragmentManager
+                         )
+                         */
+                        fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
+                    }
                 }
             }
-            else
+            catch (e: Error)
             {
-                if (binding.tvSectionTitle.text == "Activities")
-                {
-                    binding.tvSectionTitle.text = "Categories"
-                    /*
-                    fragmentControl.replaceFragment(
-                        home_category_view_fragment(),
-                        R.id.fcFragmentContainer,
-                        supportFragmentManager
-                    )
-
-                     */
-                    fragmentControl.replaceFragmentAnim(home_category_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
-                } else
-                {
-                    binding.tvSectionTitle.text = "Activities"
-                    /*
-                     fragmentControl.replaceFragment(
-                         home_activity_view_fragment(),
-                         R.id.fcFragmentContainer,
-                         supportFragmentManager
-                     )
-                     */
-                    fragmentControl.replaceFragmentAnim(home_activity_view_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right")
-                }
+                GlobalClass.InformUser("Error","${e.toString()}", this)
             }
-
-
         }
-
 
         binding.imgCycleViewLeft.setOnClickListener {
             CycleHomeFragmentView("Left")
@@ -124,6 +118,7 @@ class Home_Activity : AppCompatActivity()
 
         }
 
+        //settings button
         binding.imgSettingsButton.setOnClickListener()
         {
             var intent = Intent(this, settings_view::class.java)
