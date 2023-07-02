@@ -18,7 +18,7 @@ import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import com.example.opsc_poe.databinding.SignInFragmentBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 
 
 class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
@@ -41,6 +41,25 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
         //-------------------------------------------------
         //code here
 
+
+        //Read Data
+        GlobalScope.launch{
+            if (GlobalClass.UpdateDataBase == true)
+            {
+                var DBManger = ManageDatabase()
+                GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
+                GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
+                GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
+                GlobalClass.UpdateDataBase = false
+            }
+            //withContext(Dispatchers.Main) {
+            //    UpdateUI()
+            //}
+        }
+
+
         //sign in button
         binding.tvSignInButton.setOnClickListener {
 
@@ -53,6 +72,7 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
 
                 if (trySubmitSignIn)
                 {
+                    //GlobalClass.InformUser(GlobalClass.user.userID.toString(), "", requireContext())
                     //if sign in is successful then send user to the the home view screen
                     var intent = Intent(activity, Home_Activity::class.java)
                     startActivity(intent)

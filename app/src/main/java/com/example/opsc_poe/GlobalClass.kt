@@ -27,6 +27,7 @@ class GlobalClass : Application()
         var categories = arrayListOf<Temp_CategoryDataClass>()
         var goals = arrayListOf<Temp_GoalDataClass>()
         var logs = arrayListOf<Temp_LogDataClass>()
+        var allUsers = arrayListOf<Temp_UserDataClass>()
         var user = Temp_UserDataClass()
 
 
@@ -325,6 +326,14 @@ class GlobalClass : Application()
             var newLog = Temp_LogDataClass(listLogLogID[i], listLogActivityID[i], listLogUserID[i], LocalDate.parse(listLogStartDate[i],formatter), LocalDate.parse(listLogEndDate[i], formatter), listLogHours[i])
             logs.add(newLog)
         }
+
+        //add the users
+        for(i in listUserUserID.indices)
+        {
+            var newUser = Temp_UserDataClass(listUserUserID[i], listUserEmail[i], listUserUsername[i], listUserPasswordHash[i], listUserPasswordSalt[i])
+            allUsers.add(newUser)
+        }
+
     }
 
 

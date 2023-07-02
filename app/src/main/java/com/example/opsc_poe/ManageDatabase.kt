@@ -20,6 +20,34 @@ class ManageDatabase
 {
     val db = Firebase.firestore
 
+    suspend fun getAllUsersFromFirestore(): ArrayList<Temp_UserDataClass> {
+        val allUsers = arrayListOf<Temp_UserDataClass>()
+        val querySnapshot = db.collection("Users").get().await()
+        GlobalClass.documents = DocumentID()
+        for (document in querySnapshot) {
+            //if (document.data.getValue("UserID").toString().toInt() == userID) {
+
+                val newUserID: Int = document.data.getValue("userID").toString().toInt()
+                val newEmail: String = document.data.getValue("email").toString()
+                val newUsername: String = document.data.getValue("username").toString()
+                val newPasswordHash: String = document.data.getValue("passwordHash").toString()
+                val newPasswordSalt: String = document.data.getValue("passwordSalt").toString()
+
+                val tempUser = Temp_UserDataClass(
+                    userID = newUserID,
+                    email = newEmail,
+                    username = newUsername,
+                    passwordHash = newPasswordHash,
+                    passwordSalt = newPasswordSalt
+                )
+
+                allUsers.add(tempUser)
+                GlobalClass.documents.allUserIDs.add(document.id)
+            //}
+        }
+        return allUsers
+    }
+
     suspend fun getCategoriesFromFirestore(userID: Int): ArrayList<Temp_CategoryDataClass> {
         val categories = arrayListOf<Temp_CategoryDataClass>()
         val querySnapshot = db.collection("Category").get().await()
@@ -142,6 +170,16 @@ class ManageDatabase
         return logs
     }
 
+
+    fun AddUserToFirestore(newUser: Temp_UserDataClass)
+    {
+        db.collection("Users")
+            .add(newUser)
+            .addOnSuccessListener {
+                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${it.id}")
+                GlobalClass.UpdateDataBase = true
+            }
+    }
 
     fun AddCategoryToFirestore(category: Temp_CategoryDataClass)
     {

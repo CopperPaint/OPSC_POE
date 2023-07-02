@@ -39,7 +39,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
         //code here
 
         //Test Data
-        GlobalClass.user.userID = 5
+        //GlobalClass.user.userID = 5
 
 
         //Read Data
