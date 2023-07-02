@@ -24,65 +24,58 @@ class sign_up_fragment : Fragment(R.layout.sign_up_fragment){
         _binding = SignUpFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
 
-
         //-------------------------------------------------
         //code here
 
         //sign in button
         binding.tvSignUpButton.setOnClickListener {
-
-            if (binding.etEmail.text.isNotEmpty() && binding.etUsername.text.isNotEmpty() && binding.etPassword.text.isNotEmpty())
+            try
             {
-
-                //
-
-                val trySignUp  =  Temp_UserDataClass()
-
-                var tryValidateUserEmail = trySignUp.ValidateUserEmail(binding.etEmail.text.toString())
-
-                var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(binding.etPassword.text.toString())
-
-
-
-                if (tryValidateUserEmail)
+                if (binding.etEmail.text.isNotEmpty() && binding.etUsername.text.isNotEmpty() && binding.etPassword.text.isNotEmpty())
                 {
-                    if (validateUserPasswordBool) {
 
-                        trySignUp.RegisterUser(
-                            binding.etEmail.text.toString(),
-                            binding.etUsername.text.toString(),
-                            binding.etPassword.text.toString(),
-                            requireContext()
-                        )
+                    //
+
+                    val trySignUp  =  Temp_UserDataClass()
+
+                    var tryValidateUserEmail = trySignUp.ValidateUserEmail(binding.etEmail.text.toString())
+
+                    var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(binding.etPassword.text.toString())
+
+
+                    if (tryValidateUserEmail)
+                    {
+                        if (validateUserPasswordBool)
+                        {
+
+                            trySignUp.RegisterUser(
+                                binding.etEmail.text.toString(),
+                                binding.etUsername.text.toString(),
+                                binding.etPassword.text.toString(),
+                                requireContext()
+                            )
+                        }
+                        else
+                        {
+                            GlobalClass.InformUser("Invalid Password", validateUserPasswordFeedback, requireContext())
+                        }
                     }
                     else
                     {
-                        GlobalClass.InformUser("Invalid Password", validateUserPasswordFeedback, requireContext())
+                        GlobalClass.InformUser("Invalid Email", "The email you entered either does not exist or is invalid", requireContext())
                     }
                 }
                 else
                 {
-                    GlobalClass.InformUser("Invalid Email", "The email you entered either does not exist or is invalid", requireContext())
+                    GlobalClass.InformUser("Input Error","Please fill in all fields", requireContext())
                 }
-
-
             }
-            else
+            catch (e: Error)
             {
-                GlobalClass.InformUser("Input Error","Please fill in all fields", requireContext())
+                GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
             }
-
-
-
-
-
-
-
-
-
             //-------------------------------------------------
         }
-
         binding.tvNeedHelpButton.setOnClickListener()
         {
             var intent = Intent(requireContext(), Help::class.java) //ViewActivity

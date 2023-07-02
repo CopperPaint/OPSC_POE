@@ -275,7 +275,6 @@ class ExportUserData (
         //val intent = Intent(Intent.ACTION_SEND)
         val intent = Intent(Intent.ACTION_SEND_MULTIPLE)
 
-
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         //define file type as csv
