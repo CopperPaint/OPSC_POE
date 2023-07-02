@@ -276,7 +276,7 @@ class ExportUserData (
         intent.type = "text/csv"
 
         //add extra with the file and prompt
-        intent.putExtra("Share this", fileArray)
+        intent.putExtra("Share using...", fileArray)
 
         //define share menu intent
         val chooser = Intent.createChooser(intent, "Share using...")
