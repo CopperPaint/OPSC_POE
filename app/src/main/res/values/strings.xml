@@ -121,14 +121,7 @@
     <string name="passwordSpecialCharacters">-?!@#£$%+=&amp;</string>
     <string name="maxGoalPrompt">Maximum Goal</string>
     <string name="noSetGoal">Goal Not Set</string>
-
-
-    getString(R.string.errorTitle)
-
-    //-------------------------------------------------------------------------------------
-
-    //-------------------------------------------------------------------------------------
-    //Jo
+    <string name="minGoalPrompt">Minimum Goal</string>
     <string name="start_date">Start Date</string>
     <string name="date">Date</string>
     <string name="log_option">Log Option</string>
@@ -138,13 +131,11 @@
     <string name="hours">Hours</string>
     <string name="add_log">Add Log</string>
     <string name="description">Description</string>
-
     <string name="create">Create</string>
     <string name="name">Name</string>
     <string name="insert_image">Insert Image</string>
     <string name="save">Save</string>
     <string name="help">Need Help?</string>
-
     <string name="colour">Colour</string>
     <string name="pick_colour">Pick Colour</string>
     <string name="goal">Goal</string>
@@ -168,11 +159,5 @@
     <string name="password">Password</string>
     <string name="forget_password">Forgot Password?</string>
     <string name="username">Username</string>
-
-    //-------------------------------------------------------------------------------------
-
-    getString(R.string.errorTitle)
-
-    //-------------------------------------------------------------------------------------
 
 </resources>

@@ -120,16 +120,16 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             minGoalCustom.binding.vwBar.layoutParams = minParam
 
 
-            minGoalCustom.binding.tvPrimaryText.text = "Minimum Goal"
+            minGoalCustom.binding.tvPrimaryText.text = getString(R.string.minGoalPrompt)
             minGoalCustom.binding.llBlockText.backgroundTintList = catColour
 
             var minGoal = GlobalClass.goals[currentMinGoal]
 
             if (!minGoal.isSet)
             {
-                minGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
-                minGoalCustom.binding.tvBlockText.text = "Hours"
-                minGoalCustom.binding.tvBlockX.text = "+"
+                minGoalCustom.binding.tvSecondaryText.text = getString(R.string.noSetGoal)
+                minGoalCustom.binding.tvBlockText.text = getString(R.string.hours)
+                minGoalCustom.binding.tvBlockX.text = getString(R.string.addSymbol)
             }
             else
             {
@@ -145,8 +145,8 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             {
                 //go to edit/create goal screen for minimum goal
                 var intent = Intent(requireContext(), Create_Goal::class.java)
-                intent.putExtra("currentGoalIDIndex", currentMinGoal)
-                intent.putExtra("CurrentActivity", activityIDIndex)
+                intent.putExtra(getString(R.string.currentGoalIdentityIndex), currentMinGoal)
+                intent.putExtra(getString(R.string.currentActivityIndex), activityIDIndex)
                 startActivity(intent)
             }
 
@@ -176,7 +176,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+            GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
         }
 
         //------------------------------------------------------
@@ -190,7 +190,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         fun goToLogs ()
         {
             //set the sign in fragment to be the initial view
-            fragmentControl.replaceFragmentAnim(View_Activity_Logs_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Up", requireContext())
+            fragmentControl.replaceFragmentAnim(View_Activity_Logs_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, getString(R.string.animUp), requireContext())
         }
 
 
@@ -216,14 +216,14 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         binding.imgAddLog.setOnClickListener()
         {
             var intent = Intent(requireContext(), AddLog::class.java)
-            intent.putExtra("activityIDIndex", activityIDIndex)
+            intent.putExtra(getString(R.string.activityIdentityIndex), activityIDIndex)
             startActivity(intent)
         }
 
         binding.imgEditActivity.setOnClickListener()
         {
             var intent = Intent(requireContext(), CreateActivity::class.java)
-            intent.putExtra("activityIDIndex", activityIDIndex)
+            intent.putExtra(getString(R.string.activityIdentityIndex), activityIDIndex)
             startActivity(intent)
         }
         //-------------------------------------------------
