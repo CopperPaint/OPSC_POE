@@ -34,93 +34,86 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
 
         //-------------------------------------------------
         //code here
+        try
+        {
+            val activityIDIndex = requireActivity()!!.intent.extras!!.getInt("activityIDIndex")
+            var currentActivity = GlobalClass.activities[activityIDIndex]
 
-        val activityIDIndex = requireActivity()!!.intent.extras!!.getInt("activityIDIndex")
-        var currentActivity = GlobalClass.activities[activityIDIndex]
-
-        //-----------------------------------------------------------------------------------------------------
-
-        var userHasData = false
-        for (i in GlobalClass.logs.indices) {
-
-            if (currentActivity.activityID == GlobalClass.logs[i].activityID)
+            //-----------------------------------------------------------------------------------------------------
+            var userHasData = false
+            for (i in GlobalClass.logs.indices)
             {
-                userHasData = true
-                break
+                if (currentActivity.activityID == GlobalClass.logs[i].activityID)
+                {
+                    userHasData = true
+                    break
+                }
             }
 
-        }
+            if (userHasData == false)
+            {
+                GlobalClass.NoUserAppData(binding.llBars, requireActivity(), requireContext(), "Log", activityIDIndex)
+            }
+            else
+            {
+                val activityLayout = binding.llBars
+                for (i in GlobalClass.logs.indices)
+                {
+                    //if the activity belongs to the signed in user
+                    if (GlobalClass.logs[i].activityID == currentActivity.activityID)
+                    {
+                        //create new custom activity
+                        var newLog = CustomActivity(activity)
+                        //set primary text
+                        newLog.binding.tvPrimaryText.text = "Start Date"
 
-        if (userHasData == false)
-        {
-            GlobalClass.NoUserAppData(binding.llBars, requireActivity(), requireContext(), "Log", activityIDIndex)
-        }
-        else {
+                        //get activity category
+                        // var index = Temp_CategoryDataClass().GetIndex(GlobalClass.activities[i].categoryID, GlobalClass.categories)
+                        //  var category = GlobalClass.categories[index]
 
+                        //set secondary text
+                        newLog.binding.tvSecondaryText.text = GlobalClass.logs[i].startDate.toString()//category.name
 
-            val activityLayout = binding.llBars
-            for (i in GlobalClass.logs.indices) {
-                //if the activity belongs to the signed in user
-                if (GlobalClass.logs[i].activityID == currentActivity.activityID) {
+                        //change the text sizes
+                        newLog.binding.tvPrimaryText.textSize = 14F
+                        newLog.binding.tvSecondaryText.textSize = 20F
 
-                    //create new custom activity
-                    var newLog = CustomActivity(activity)
-                    //set primary text
-                    newLog.binding.tvPrimaryText.text = "Start Date"
+                        var catIndex = Temp_CategoryDataClass().GetIndex(currentActivity.categoryID, GlobalClass.categories)
+                        var category = GlobalClass.categories[catIndex]
 
-                    //get activity category
-                    // var index = Temp_CategoryDataClass().GetIndex(GlobalClass.activities[i].categoryID, GlobalClass.categories)
-                    //  var category = GlobalClass.categories[index]
+                        //set the activity color shape color
+                        val catColour = ColorStateList.valueOf(Color.parseColor(category.colour))
 
-                    //set secondary text
-                    newLog.binding.tvSecondaryText.text = GlobalClass.logs[i].startDate.toString()//category.name
+                        //ColorStateList.valueOf(Color.parseColor(category.colour))
+                        newLog.binding.llBlockText.backgroundTintList = catColour
 
-                    //change the text sizes
-                    newLog.binding.tvPrimaryText.textSize = 14F
-                    newLog.binding.tvSecondaryText.textSize = 20F
+                        val barColor = ContextCompat.getColorStateList(
+                            requireContext(),
+                            R.color.Default_Charcoal_Grey)
 
-                    var catIndex = Temp_CategoryDataClass().GetIndex(currentActivity.categoryID, GlobalClass.categories)
-                    var category = GlobalClass.categories[catIndex]
+                        newLog.binding.vwBar.backgroundTintList = barColor
+                        newLog.binding.tvBlockText.text = "Hours Logged"
+                        newLog.binding.tvBlockX.text = DoubleToTime(GlobalClass.logs[i].hours.toString(), requireContext())
+                        //newActivity.binding.llBlockText.backgroundTintList =  ColorStateList.valueOf(Color.parseColor("#5c37d7"))
 
-                    //set the activity color shape color
-                    val catColour = ColorStateList.valueOf(Color.parseColor(category.colour))
-
-                    //ColorStateList.valueOf(Color.parseColor(category.colour))
-                    newLog.binding.llBlockText.backgroundTintList = catColour
-
-
-                    val barColor = ContextCompat.getColorStateList(
-                        requireContext(),
-                        R.color.Default_Charcoal_Grey)
-
-                    newLog.binding.vwBar.backgroundTintList = barColor
-                    newLog.binding.tvBlockText.text = "Hours Logged"
-                    newLog.binding.tvBlockX.text = DoubleToTime(GlobalClass.logs[i].hours.toString(), requireContext())
-                    //newActivity.binding.llBlockText.backgroundTintList =  ColorStateList.valueOf(Color.parseColor("#5c37d7"))
-
-                    //add the new view
-                    activityLayout.addView(newLog)
+                        //add the new view
+                        activityLayout.addView(newLog)
+                    }
                 }
             }
         }
-
-
-            //-----------------------------------------------------------------------------------------------------
-
-
-
-                binding.imgBackIndicator.setOnClickListener()
+        catch (e: Error)
         {
-
-            //set the sign in fragment to be the initial view
-            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Down", requireContext())
-
+            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
         }
 
-
+        //-----------------------------------------------------------------------------------------------------
+        binding.imgBackIndicator.setOnClickListener()
+        {
+            //set the sign in fragment to be the initial view
+            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Down", requireContext())
+        }
         //-------------------------------------------------
-
-
         return view
     }
 

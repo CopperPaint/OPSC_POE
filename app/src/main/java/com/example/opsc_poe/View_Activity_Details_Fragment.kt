@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.opsc_poe.GlobalClass.Companion.DoubleToTime
 import com.example.opsc_poe.databinding.ActivityViewDetailsFragmentBinding
-import kotlin.math.roundToInt
-
 
 class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_fragment) {
 
@@ -39,145 +37,147 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         //-------------------------------------------------
         //code here
 
-        var activity = GlobalClass.activities[activityIDIndex]
-        var catIndex = Temp_CategoryDataClass().GetIndex(activity.categoryID, GlobalClass.categories)
-        var category = GlobalClass.categories[catIndex]
-        val catColour = ColorStateList.valueOf(Color.parseColor(category.colour))
-
-        //passed activity
-        binding.tvDescription.text = activity.description  //description
-        binding.imgBackIndicator.backgroundTintList = catColour
-        binding.tvLogsAmount.backgroundTintList = catColour
-
-
-        //get goal indexes
-        var currentMaxGoal = -1
-        var currentMinGoal = -1
-
-        for (j in GlobalClass.goals.indices)
+        try
         {
-            if (activity.maxgoalID == GlobalClass.goals[j].goalID)
+            var activity = GlobalClass.activities[activityIDIndex]
+            var catIndex = Temp_CategoryDataClass().GetIndex(activity.categoryID, GlobalClass.categories)
+            var category = GlobalClass.categories[catIndex]
+            val catColour = ColorStateList.valueOf(Color.parseColor(category.colour))
+
+            //passed activity
+            binding.tvDescription.text = activity.description  //description
+            binding.imgBackIndicator.backgroundTintList = catColour
+            binding.tvLogsAmount.backgroundTintList = catColour
+
+
+            //get goal indexes
+            var currentMaxGoal = -1
+            var currentMinGoal = -1
+
+            for (j in GlobalClass.goals.indices)
             {
-                currentMaxGoal = j
+                if (activity.maxgoalID == GlobalClass.goals[j].goalID)
+                {
+                    currentMaxGoal = j
+                }
+
+                if (activity.mingoalID == GlobalClass.goals[j].goalID)
+                {
+                    currentMinGoal = j
+                }
             }
 
-            if (activity.mingoalID == GlobalClass.goals[j].goalID)
+
+            //MAX GOAL
+            //------------------------------------------------
+            var maxGoalCustom = CustomActivity(requireActivity())
+
+            //set the divider bar to be closer to fit all elements inside the view
+            val maxParam = maxGoalCustom.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
+            maxParam.setMargins(28, maxParam.topMargin, maxParam.rightMargin, maxParam.bottomMargin)
+            maxGoalCustom.binding.vwBar.layoutParams = maxParam
+
+
+            maxGoalCustom.binding.tvPrimaryText.text = "Maximum Goal"
+            maxGoalCustom.binding.llBlockText.backgroundTintList = catColour
+            var maxGoal = GlobalClass.goals[currentMaxGoal]
+            if (!maxGoal.isSet)
             {
-                currentMinGoal = j
+                maxGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
+                maxGoalCustom.binding.tvBlockText.text = "Hours"
+                maxGoalCustom.binding.tvBlockX.text = "+"
+            }
+            else
+            {
+                maxGoalCustom.binding.tvSecondaryText.text = maxGoal.interval
+                var (maxhour, maxText, maxColor) = GoalHourCalculator().CheckGoal(maxGoal.interval, maxGoal.amount, activity.activityID)
+                val maxBarColor = ColorStateList.valueOf(Color.parseColor(maxColor))
+                maxGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
+                maxGoalCustom.binding.tvBlockText.text = maxText
+                maxGoalCustom.binding.tvBlockX.text = DoubleToTime(maxhour, requireContext())
             }
 
-        }
+            maxGoalCustom.setOnClickListener()
+            {
+                //go to edit/create goal screen for maximum goal
+                var intent = Intent(requireContext(), Create_Goal::class.java)
+                intent.putExtra("currentGoalIDIndex", currentMaxGoal)
+                intent.putExtra("CurrentActivity", activityIDIndex)
+                startActivity(intent)
+            }
+
+            binding.llgoalcontainer.addView(maxGoalCustom)
 
 
-        //MAX GOAL
-        //------------------------------------------------
+            //MIN GOAL
+            //------------------------------------------------
 
-        var maxGoalCustom = CustomActivity(requireActivity())
+            var minGoalCustom = CustomActivity(requireActivity())
 
-        //set the divider bar to be closer to fit all elements inside the view
-        val maxParam = maxGoalCustom.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
-        maxParam.setMargins(28, maxParam.topMargin, maxParam.rightMargin, maxParam.bottomMargin)
-        maxGoalCustom.binding.vwBar.layoutParams = maxParam
-
-
-        maxGoalCustom.binding.tvPrimaryText.text = "Maximum Goal"
-        maxGoalCustom.binding.llBlockText.backgroundTintList = catColour
-        var maxGoal = GlobalClass.goals[currentMaxGoal]
-        if (!maxGoal.isSet)
-        {
-            maxGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
-            maxGoalCustom.binding.tvBlockText.text = "Hours"
-            maxGoalCustom.binding.tvBlockX.text = "+"
-        }
-        else
-        {
-            maxGoalCustom.binding.tvSecondaryText.text = maxGoal.interval
-            var (maxhour, maxText, maxColor) = GoalHourCalculator().CheckGoal(maxGoal.interval, maxGoal.amount, activity.activityID)
-            val maxBarColor = ColorStateList.valueOf(Color.parseColor(maxColor))
-            maxGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
-            maxGoalCustom.binding.tvBlockText.text = maxText
-            maxGoalCustom.binding.tvBlockX.text = DoubleToTime(maxhour, requireContext())
-        }
-
-        maxGoalCustom.setOnClickListener()
-        {
-            //go to edit/create goal screen for maximum goal
-            var intent = Intent(requireContext(), Create_Goal::class.java)
-            intent.putExtra("currentGoalIDIndex", currentMaxGoal)
-            intent.putExtra("CurrentActivity", activityIDIndex)
-            startActivity(intent)
-        }
-
-        binding.llgoalcontainer.addView(maxGoalCustom)
+            //set the divider bar to be closer to fit all elements inside the view
+            val minParam: ViewGroup.MarginLayoutParams = minGoalCustom.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
+            minParam.setMargins(28, minParam.topMargin, minParam.rightMargin, minParam.bottomMargin)
+            minGoalCustom.binding.vwBar.layoutParams = minParam
 
 
-        //MIN GOAL
-        //------------------------------------------------
+            minGoalCustom.binding.tvPrimaryText.text = "Minimum Goal"
+            minGoalCustom.binding.llBlockText.backgroundTintList = catColour
 
-        var minGoalCustom = CustomActivity(requireActivity())
+            var minGoal = GlobalClass.goals[currentMinGoal]
 
-        //set the divider bar to be closer to fit all elements inside the view
-        val minParam: ViewGroup.MarginLayoutParams = minGoalCustom.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
-        minParam.setMargins(28, minParam.topMargin, minParam.rightMargin, minParam.bottomMargin)
-        minGoalCustom.binding.vwBar.layoutParams = minParam
+            if (!minGoal.isSet)
+            {
+                minGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
+                minGoalCustom.binding.tvBlockText.text = "Hours"
+                minGoalCustom.binding.tvBlockX.text = "+"
+            }
+            else
+            {
+                minGoalCustom.binding.tvSecondaryText.text = minGoal.interval
+                var (hour, text, color) = GoalHourCalculator().CheckGoal(minGoal.interval, minGoal.amount, activity.activityID)
+                val maxBarColor = ColorStateList.valueOf(Color.parseColor(color))
+                minGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
+                minGoalCustom.binding.tvBlockText.text = text
+                minGoalCustom.binding.tvBlockX.text = DoubleToTime(hour, requireContext())
+            }
 
+            minGoalCustom.setOnClickListener()
+            {
+                //go to edit/create goal screen for minimum goal
+                var intent = Intent(requireContext(), Create_Goal::class.java)
+                intent.putExtra("currentGoalIDIndex", currentMinGoal)
+                intent.putExtra("CurrentActivity", activityIDIndex)
+                startActivity(intent)
+            }
 
-        minGoalCustom.binding.tvPrimaryText.text = "Minimum Goal"
-        minGoalCustom.binding.llBlockText.backgroundTintList = catColour
-
-        var minGoal = GlobalClass.goals[currentMinGoal]
-
-        if (!minGoal.isSet)
-        {
-            minGoalCustom.binding.tvSecondaryText.text = "Goal Not Set"
-            minGoalCustom.binding.tvBlockText.text = "Hours"
-            minGoalCustom.binding.tvBlockX.text = "+"
-        }
-        else
-        {
-            minGoalCustom.binding.tvSecondaryText.text = minGoal.interval
-            var (hour, text, color) = GoalHourCalculator().CheckGoal(minGoal.interval, minGoal.amount, activity.activityID)
-            val maxBarColor = ColorStateList.valueOf(Color.parseColor(color))
-            minGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
-            minGoalCustom.binding.tvBlockText.text = text
-            minGoalCustom.binding.tvBlockX.text = DoubleToTime(hour, requireContext())
-        }
-
-        minGoalCustom.setOnClickListener()
-        {
-            //go to edit/create goal screen for minimum goal
-            var intent = Intent(requireContext(), Create_Goal::class.java)
-            intent.putExtra("currentGoalIDIndex", currentMinGoal)
-            intent.putExtra("CurrentActivity", activityIDIndex)
-            startActivity(intent)
-        }
-
-        binding.llgoalcontainer.addView(minGoalCustom)
+            binding.llgoalcontainer.addView(minGoalCustom)
 
 
-        //calculate how many logs the current activity has
-        var currentUserGoalCount = 0
+            //calculate how many logs the current activity has
+            var currentUserGoalCount = 0
 
-        for (i in GlobalClass.logs.indices) {
-            //if (GlobalClass.logs[i].userID == GlobalClass.user.userID) {
+            for (i in GlobalClass.logs.indices) {
+                //if (GlobalClass.logs[i].userID == GlobalClass.user.userID) {
                 if (GlobalClass.logs[i].activityID == activity.activityID )
                 {
                     currentUserGoalCount += 1
                 }
-           // }
-        }
+                // }
+            }
 
             binding.tvLogsAmount.text = currentUserGoalCount.toString()
 
-        //display activities image
-        binding.imgActivityImage.setImageBitmap(activity.photo)
+            //display activities image
+            binding.imgActivityImage.setImageBitmap(activity.photo)
 
 
-       // var activity = GlobalClass.activities[GlobalClass.activities.size -1]
-        //binding.imageView.setImageBitmap(activity.photo)
-
-
-
+            // var activity = GlobalClass.activities[GlobalClass.activities.size -1]
+            //binding.imageView.setImageBitmap(activity.photo)
+        }
+        catch (e: Error)
+        {
+            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+        }
 
         //------------------------------------------------------
 
@@ -204,7 +204,6 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         }
 
 
-
         binding.tvViewLogsText.setOnClickListener()
         {
             goToLogs()
@@ -227,10 +226,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             intent.putExtra("activityIDIndex", activityIDIndex)
             startActivity(intent)
         }
-
-            //-------------------------------------------------
-
-
+        //-------------------------------------------------
         return view
     }
 
