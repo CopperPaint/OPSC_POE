@@ -153,7 +153,7 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+            GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
         }
 
         //PIE CHART SELECT
@@ -185,7 +185,7 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
     //-------------------------------------------------------------------------------
     private fun updateLable(calendar: Calendar) : String
     {
-        val dateFormat = "dd-MM-yyyy"
+        val dateFormat = getString(R.string.dateFormat) //"dd-MM-yyyy"
         val sdf = SimpleDateFormat(dateFormat, Locale.UK)
         var dateText = sdf.format(calendar.time)
         return dateText
@@ -234,14 +234,14 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
         }
         if (entries.size == 0)
         {
-            binding.tvCategoryInformation.text = "No date in this time period"
+            binding.tvCategoryInformation.text = getString(R.string.noMatchingDate)
         }
         else
         {
-            binding.tvCategoryInformation.text = "No category selected"
+            binding.tvCategoryInformation.text = getString(R.string.noCategorySelected)
         }
 
-        val dataSet = PieDataSet(entries, "Category Totals")
+        val dataSet = PieDataSet(entries, getString(R.string.pieCategoriesEntriesText))
 
         // on below line we are setting colors.
         dataSet.colors = colors
