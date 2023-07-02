@@ -1,5 +1,6 @@
 package com.example.opsc_poe
 
+//class to store category data
 class Temp_CategoryDataClass(
     var categoryID: Int = 0,
     var userID: Int = 0,
@@ -8,6 +9,7 @@ class Temp_CategoryDataClass(
     var description: String = ""
 )
 {
+    //get category index
     public fun GetIndex(id: Int, categorites: ArrayList<Temp_CategoryDataClass>): Int
     {
         var index: Int = -1

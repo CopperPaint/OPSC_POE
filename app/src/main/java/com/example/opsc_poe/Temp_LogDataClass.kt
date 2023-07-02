@@ -1,9 +1,8 @@
 package com.example.opsc_poe
 
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.util.Date
 
+//data class to store log data
 data class Temp_LogDataClass(
     var logID: Int = 0,
     var activityID: Int = 0,
@@ -13,6 +12,7 @@ data class Temp_LogDataClass(
     var hours: Double = 0.0
 )
 
+//data class to save log data to database
 data class LogStore(
     var logID: Int,
     var activityID: Int,

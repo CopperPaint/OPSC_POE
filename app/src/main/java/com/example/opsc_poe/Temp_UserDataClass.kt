@@ -9,7 +9,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
+//data class to store user data
 class Temp_UserDataClass
     (
 
@@ -101,9 +101,6 @@ class Temp_UserDataClass
 
         fun ValidateUser(userEmail: String, userPassword: String, context: Context): Boolean
         {
-
-
-
             val PasswordManager = ManagePassword()
 
             //loop through users
@@ -148,20 +145,16 @@ class Temp_UserDataClass
                         //exit loop
                         break
                     }
-
-
                 }
             }
 
             if (userID == 0)
             {
-
                 //user doesn't exist code goes here
                 GlobalClass.InformUser("Unable to Sign In", "Cannot find user with the given data", context)
 
                 //return the user exists boolean as false
                 return false
-
             }
             else{
 
@@ -169,11 +162,7 @@ class Temp_UserDataClass
                 return true
 
             }
-
-
-
         }
-
 
     fun ValidateUserEmail(attemptedEmail: CharSequence?): Boolean {
         return if (TextUtils.isEmpty(attemptedEmail)) {
@@ -183,16 +172,11 @@ class Temp_UserDataClass
         }
     }
 
-
-
         @SuppressLint("SuspiciousIndentation")
         fun ValidateUserPassword(attemptedPassword : String): Pair<Boolean, String>
         {
 
             var validationErrors = ArrayList<String>()
-
-
-
 
                  if (attemptedPassword.length < 8)
                  {

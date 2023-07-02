@@ -1,10 +1,8 @@
 package com.example.opsc_poe
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 
-
+//data class for activity data
 data class Temp_ActivityDataClass(
     var activityID: Int = 0,
     var userID: Int = 0,
@@ -16,6 +14,7 @@ data class Temp_ActivityDataClass(
     var photo : Bitmap? = null,   //bitmap?
 )
 
+//data class for saving activites to database
 data class ActivitySave(
     var activityID: Int = 0,
     var userID: Int = 0,
