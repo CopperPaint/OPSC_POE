@@ -2,19 +2,15 @@ package com.example.opsc_poe
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings.Global
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.opsc_poe.databinding.ActivityGlobalLogsListFragmentBinding
-import com.example.opsc_poe.databinding.ActivityViewDetailsFragmentBinding
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.ZoneId

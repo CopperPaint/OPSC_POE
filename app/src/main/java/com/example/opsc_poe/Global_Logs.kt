@@ -41,7 +41,8 @@ class Global_Logs : AppCompatActivity()
                             global_logs_category_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Left"
+                            "Left",
+                            this
                         )
                     } else
                     {
@@ -50,7 +51,8 @@ class Global_Logs : AppCompatActivity()
                             global_logs_list_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Left"
+                            "Left",
+                            this
                         )
                     }
                 }
@@ -63,7 +65,8 @@ class Global_Logs : AppCompatActivity()
                             global_logs_category_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Right"
+                            "Right",
+                            this
                         )
                     } else
                     {
@@ -72,7 +75,8 @@ class Global_Logs : AppCompatActivity()
                             global_logs_list_fragment(),
                             R.id.fcFragmentContainer,
                             supportFragmentManager,
-                            "Right"
+                            "Right",
+                            this
                         )
                     }
                 }

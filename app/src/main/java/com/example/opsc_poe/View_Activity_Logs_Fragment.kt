@@ -1,5 +1,6 @@
 package com.example.opsc_poe
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
 // onDestroyView.
     private val binding get() = _binding!!
 
+    @SuppressLint("Range")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -111,7 +113,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
         {
 
             //set the sign in fragment to be the initial view
-            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Down")
+            fragmentControl.replaceFragmentAnim(View_Activity_Details_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Down", requireContext())
 
         }
 

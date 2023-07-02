@@ -4,13 +4,10 @@ import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
@@ -29,7 +26,6 @@ class GlobalClass : Application()
         var logs = arrayListOf<Temp_LogDataClass>()
         var allUsers = arrayListOf<Temp_UserDataClass>()
         var user = Temp_UserDataClass()
-
 
         fun ReturnToHome(context: Context)
         {

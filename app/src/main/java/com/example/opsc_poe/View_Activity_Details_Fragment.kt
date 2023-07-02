@@ -190,7 +190,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
         fun goToLogs ()
         {
             //set the sign in fragment to be the initial view
-            fragmentControl.replaceFragmentAnim(View_Activity_Logs_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Up")
+            fragmentControl.replaceFragmentAnim(View_Activity_Logs_Fragment(), R.id.fcFragmentContainer, parentFragmentManager, "Up", requireContext())
         }
 
 

@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity()
         //Sign in view activation
         binding.tvSignIn.setOnClickListener{
             //replaceFragment(sign_in_fragment())
-            fragmentControl.replaceFragmentAnim(sign_in_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left_Half")
+            fragmentControl.replaceFragmentAnim(sign_in_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Left_Half", this)
         }
 
         //Sign up view activation
         binding.tvSignUp.setOnClickListener{
             //replaceFragment(sign_up_fragment())
-            fragmentControl.replaceFragmentAnim(sign_up_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right_Half")
+            fragmentControl.replaceFragmentAnim(sign_up_fragment(), R.id.fcFragmentContainer, supportFragmentManager, "Right_Half", this)
         }
 
 

@@ -1,13 +1,8 @@
 package com.example.opsc_poe
 
-import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
-import androidx.core.content.ContextCompat.startActivity
 import java.time.LocalDate
 import java.time.temporal.WeekFields
 import java.util.*
-import kotlin.math.roundToInt
 
 //private var data = GlobalClass
 

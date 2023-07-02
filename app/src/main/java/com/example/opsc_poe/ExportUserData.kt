@@ -174,7 +174,7 @@ class ExportUserData (
                     if (GlobalClass.activities[i].activityID == GlobalClass.logs[j].activityID) {
 
                         //define or redefine the variable to hold the users export log data each time a log matches the current userand activity
-                        var userLog = ExportLogData()
+                        var userLog = ExportLogData(upperContext.getString(R.string.defaultDate), upperContext.getString(R.string.dateFormat))
 
                         //set the name of the activity that the log belongs to
                         userLog.logActivityName = GlobalClass.activities[i].name
@@ -184,6 +184,9 @@ class ExportUserData (
 
                         //set the date that the log took place on
                         userLog.logDate = GlobalClass.logs[j].startDate
+
+                        //set the date format
+                        //userLog.dateFormat = upperContext.getString(R.string.errorTitle)
 
                         userLogData.add(userLog)
                     }
@@ -264,7 +267,7 @@ class ExportUserData (
 
         for (i in fileArray)
         {
-            var fileUri = FileProvider.getUriForFile(upperContext, BuildConfig.APPLICATION_ID + ".provider", i)
+            var fileUri = FileProvider.getUriForFile(upperContext, BuildConfig.APPLICATION_ID + upperContext.getString(R.string.providerAddOn), i)
             //var fileUri = "content://com.example.opsc_poe.provider/external_files/Android/data/com.example.opsc_poe/cache/userActivityData.csv"
             fileURIToExport.add(fileUri)//.toUri())
         }
@@ -276,7 +279,7 @@ class ExportUserData (
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         //define file type as csv
-        intent.type = "text/csv"
+        intent.type = upperContext.getString(R.string.exportFileTypeFilter)
 
         //add extra with the file and prompt
         //intent.putExtra(Intent.EXTRA_STREAM, fileURIToExport)
@@ -285,7 +288,7 @@ class ExportUserData (
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
         //define share menu intent
-        val chooser = Intent.createChooser(intent, "Share using...")
+        val chooser = Intent.createChooser(intent, upperContext.getString(R.string.sharePrompt))
 
         upperContext.startActivity(chooser)
 

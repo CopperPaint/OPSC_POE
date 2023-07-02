@@ -47,8 +47,18 @@
     <string name="cameraUnavailable">Camera is not available</string>
     <string name="getData">data</string>
     <string name="colorFormat">#%06X</string>
+    <string name="defaultDate">01-01-1900</string>
+    <string name="providerAddOn">.provider</string>
+    <string name="exportFileTypeFilter">text/csv</string>
+    <string name="sharePrompt">Share using...</string>
+    <string name="animUp">Up</string>
+    <string name="animDown">Down</string>
+    <string name="animLeft">Left</string>
+    <string name="animRight">Right</string>
+    <string name="animLeftHalf">Left_Half</string>
+    <string name="animRightHalf">Right_Half</string>
 
-
+    getString(R.string.errorTitle)
 
 
 </resources>
