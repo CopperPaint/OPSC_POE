@@ -94,7 +94,6 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
             alert.show()
 
         }
-
             return view
         }
 
