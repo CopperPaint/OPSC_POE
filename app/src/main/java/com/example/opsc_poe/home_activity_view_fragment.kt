@@ -42,6 +42,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
         //GlobalClass.user.userID = 5
 
 
+
         //Read Data
         GlobalScope.launch{
             if (GlobalClass.UpdateDataBase == true)
@@ -67,6 +68,8 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
     {
         binding.ivloadingturt.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
+
+        //GlobalClass.InformUser(GlobalClass.activities[0].name, GlobalClass.user.username, requireContext())
 
         var userHasData = false
         for (i in GlobalClass.activities.indices) {
