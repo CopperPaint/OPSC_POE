@@ -91,7 +91,7 @@ class settings_view : AppCompatActivity()
                 //disable multi line for the edit texts
                 //maybe check if new attempted password is the same as the old password?
 
-                val PasswordManager = ManagePassword()
+                val PasswordManager = ManagePassword(this)
                 //check current password
                 //docode here to chek if current oasswoed is the same and then prompt to choose new password
                 for (i in GlobalClass.listUserUserID.indices) {
@@ -129,7 +129,8 @@ class settings_view : AppCompatActivity()
 
                                     val trySignUp = Temp_UserDataClass()
                                     var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(
-                                        etPopUpNew.text.toString()
+                                        etPopUpNew.text.toString(),
+                                        this
                                     )
 
                                     //validate the new password
