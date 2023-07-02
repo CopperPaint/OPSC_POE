@@ -35,41 +35,42 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-        ): View? {
+        ): View?
+        {
             _binding = ActivityGlobalLogsListFragmentBinding.inflate(inflater, container, false)
             val view = binding.root
 
-
             var userHasData = false
-            for (i in GlobalClass.logs.indices) {
-
-           // GlobalClass.InformUser("", GlobalClass.logs.size.toString(), requireContext())
-
-            if (GlobalClass.logs[i].userID  == GlobalClass.user.userID)
+            for (i in GlobalClass.logs.indices)
             {
-                userHasData = true
-                //break
+                //if user has logs
+                if (GlobalClass.logs[i].userID  == GlobalClass.user.userID)
+                {
+                    userHasData = true
+                    //break
+                }
             }
 
-             }
-
-            if (userHasData == false)
+            if (userHasData == false) //if user has no logs
             {
                 GlobalClass.NoUserAppData(binding.llLogContainer, requireActivity(), requireContext(), "Logs", 0)
             }
-            else {
-
-
-                //-------------------------------------------------
-                //code here
+            else //if user has logs
+            {
                 //generate full list
-                GenerateLogList()
+                try {
+                    GenerateLogList()
+                }
+                catch (e: Error)
+                {
+                    GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+                }
             }
-
 
             //Date Pickers
             //-----------------------------------------------------------------------------------------
             val calendar = Calendar.getInstance()
+            //Start date picker
             val StartdatePicker = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, month)
@@ -81,7 +82,6 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
             }
 
             binding.btnStartDate.setOnClickListener {
-
                 var userHasData = false
                 for (i in GlobalClass.logs.indices) {
                     if (GlobalClass.logs[i].userID == GlobalClass.user.userID)
@@ -91,7 +91,7 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
                     }
                 }
 
-                if (userHasData == false)
+                if (userHasData == false) //if user has no data
                 {
                     GlobalClass.InformUser(
                         "No Logs Exist",
@@ -109,6 +109,7 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
                 }
             }
 
+            //End Date Picker
             val EnddatePicker = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, month)
@@ -148,15 +149,8 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
                         calendar2.get(Calendar.MONTH),
                         calendar2.get(Calendar.DAY_OF_MONTH)).show()
                 }
-
-
             }
-
             //------------------------------------------------------
-
-
-
-
             return view
         }
 
@@ -164,7 +158,6 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
             super.onDestroyView()
             _binding = null
         }
-
 
 
     private fun GenerateLogList()
@@ -175,8 +168,6 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
 
         for (i in loglist.indices)
         {
-
-
             if (loglist[i].userID == GlobalClass.user.userID)
             {
                 var activityIndex = 0
@@ -194,7 +185,6 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
                 {
                     if (EndDate != null) //both dates
                     {
-
                         if (loglist[i].startDate.isAfter(StartDate) && (loglist[i].endDate.isBefore(EndDate)))
                         {
                             AddLogView(loglist[i], activity)
@@ -228,11 +218,10 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
         if (binding.llLogContainer.childCount == 0)
         {
             GlobalClass.NoUserAppData(binding.llLogContainer, requireActivity(), requireContext(), "LogsData", 0)
-
         }
-
     }
 
+    //Update Date Text
     private fun updateTable(calendar: Calendar) : String {
         val dateFormat = "dd-MM-yyyy"
         val sdf = SimpleDateFormat(dateFormat, Locale.UK)
@@ -240,56 +229,48 @@ class global_logs_list_fragment : Fragment(R.layout.activity_global_logs_list_fr
         return dateText
     }
 
+    //Add Log to View
     @SuppressLint("Range")
     private fun AddLogView(log: Temp_LogDataClass, activity: Temp_ActivityDataClass)
     {
+        //create new custom activity
+        var newLog = CustomActivity(requireActivity())
 
+        val logParam: ViewGroup.MarginLayoutParams = newLog.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
+        logParam.setMargins(28, logParam.topMargin, logParam.rightMargin, logParam.bottomMargin)
+        newLog.binding.vwBar.layoutParams = logParam
 
+        //set primary text
+        newLog.binding.tvPrimaryText.text = activity.name
 
-            //create new custom activity
-            var newLog = CustomActivity(requireActivity())
+        //set secondary text
+        newLog.binding.tvSecondaryText.text = log.startDate.toString()
 
-            val logParam: ViewGroup.MarginLayoutParams = newLog.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
-            logParam.setMargins(28, logParam.topMargin, logParam.rightMargin, logParam.bottomMargin)
-            newLog.binding.vwBar.layoutParams = logParam
+        //change the text sizes
+        newLog.binding.tvPrimaryText.textSize = 14F
+        newLog.binding.tvSecondaryText.textSize = 20F
 
-            //set primary text
-            newLog.binding.tvPrimaryText.text = activity.name
+        var catIndex = Temp_CategoryDataClass().GetIndex(
+            activity.categoryID,
+            GlobalClass.categories
+        )
+        var category = GlobalClass.categories[catIndex]
+        //set the activity color shape color
+        val catColour = ColorStateList.valueOf(Color.parseColor(category.colour))
+        //ColorStateList.valueOf(Color.parseColor(category.colour))
+        newLog.binding.llBlockText.backgroundTintList = catColour
 
-            //set secondary text
-            newLog.binding.tvSecondaryText.text = log.startDate.toString()
+        //set bar color
+        val barColor = ContextCompat.getColorStateList(
+            requireContext(),
+            R.color.Default_Charcoal_Grey
+        )
+        newLog.binding.vwBar.backgroundTintList = barColor
 
-            //change the text sizes
-            newLog.binding.tvPrimaryText.textSize = 14F
-            newLog.binding.tvSecondaryText.textSize = 20F
+        newLog.binding.tvBlockText.text = "Hours Logged"
 
-            var catIndex = Temp_CategoryDataClass().GetIndex(
-                activity.categoryID,
-                GlobalClass.categories
-            )
-            var category = GlobalClass.categories[catIndex]
-            //set the activity color shape color
-            val catColour = ColorStateList.valueOf(Color.parseColor(category.colour))
-            //ColorStateList.valueOf(Color.parseColor(category.colour))
-            newLog.binding.llBlockText.backgroundTintList = catColour
+        newLog.binding.tvBlockX.text = GlobalClass.DoubleToTime(log.hours.toString())
 
-            //set bar color
-            val barColor = ContextCompat.getColorStateList(
-                requireContext(),
-                R.color.Default_Charcoal_Grey
-            )
-            newLog.binding.vwBar.backgroundTintList = barColor
-
-            newLog.binding.tvBlockText.text = "Hours Logged"
-
-            newLog.binding.tvBlockX.text = GlobalClass.DoubleToTime(log.hours.toString())
-
-            binding.llLogContainer.addView(newLog)
-
-
-
-
+        binding.llLogContainer.addView(newLog)
     }
-
-
-    }
+}
