@@ -1,5 +1,6 @@
 package com.example.opsc_poe
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.text.TextUtils
 import android.util.Patterns
@@ -184,6 +185,7 @@ class Temp_UserDataClass
 
 
 
+        @SuppressLint("SuspiciousIndentation")
         fun ValidateUserPassword(attemptedPassword : String): Pair<Boolean, String>
         {
 

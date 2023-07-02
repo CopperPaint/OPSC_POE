@@ -46,7 +46,7 @@ class home_category_view_fragment : Fragment(R.layout.home_category_view_fragmen
 
             if (userHasData == false) //if user has no data
             {
-                GlobalClass.NoUserAppData(binding.llBars, activity, requireContext(), "Category", 0)
+                GlobalClass.NoUserAppData(binding.llBars, activity, requireContext(), getString(R.string.viewLogCategory), 0)
             }
             else //if user has data
             {
@@ -64,21 +64,21 @@ class home_category_view_fragment : Fragment(R.layout.home_category_view_fragmen
                         //set primary text
                         newCategory.binding.tvPrimaryText.text = GlobalClass.categories[i].name
                         //set secondary text
-                        newCategory.binding.tvSecondaryText.text = "No of activties: " + actTotal
+                        newCategory.binding.tvSecondaryText.text = getString(R.string.numberOfActivitiesInCategory) + actTotal
                         //set the color of the divider bar between the text and the activity color shape
                         newCategory.binding.vwBar.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.Default_Charcoal_Grey)
                         //set the activity color shape color
                         newCategory.binding.llBlockText.backgroundTintList = catColour
                         //set the activity color block text
-                        newCategory.binding.tvBlockText.text = "Total Hours:"
+                        newCategory.binding.tvBlockText.text = getString(R.string.promptTotalHours)
                         //set the activity color block time
                         newCategory.binding.tvBlockX.text =  hourTotal.toString()
-                        newCategory.binding.tvBlockX.text = DoubleToTime(hourTotal.toString())
+                        newCategory.binding.tvBlockX.text = DoubleToTime(hourTotal.toString(), requireContext())
 
                         //category select binding
                         newCategory.setOnClickListener(){
                             var intent = Intent(activity, CategoryName::class.java)
-                            intent.putExtra("categoryIDIndex", i)
+                            intent.putExtra(getString(R.string.categoryIdentityIndex), i)
                             startActivity(intent)
                         }
                         //add the new view
@@ -89,7 +89,7 @@ class home_category_view_fragment : Fragment(R.layout.home_category_view_fragmen
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
+            GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", requireContext())
         }
         //-------------------------------------------------
         return view

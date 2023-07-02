@@ -95,7 +95,7 @@ class View_Activity_Logs_Fragment : Fragment(R.layout.activity_view_logs_fragmen
 
                     newLog.binding.vwBar.backgroundTintList = barColor
                     newLog.binding.tvBlockText.text = "Hours Logged"
-                    newLog.binding.tvBlockX.text = DoubleToTime(GlobalClass.logs[i].hours.toString())
+                    newLog.binding.tvBlockX.text = DoubleToTime(GlobalClass.logs[i].hours.toString(), requireContext())
                     //newActivity.binding.llBlockText.backgroundTintList =  ColorStateList.valueOf(Color.parseColor("#5c37d7"))
 
                     //add the new view

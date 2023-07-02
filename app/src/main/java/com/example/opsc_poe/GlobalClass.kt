@@ -37,12 +37,12 @@ class GlobalClass : Application()
         {
 
             var barNoData = CustomActivity(barActivity)
-            barNoData.binding.tvPrimaryText.text = "No $screenFunction Data"
-            barNoData.binding.tvSecondaryText.text = "Click Here to Add $screenFunction Data"
+            barNoData.binding.tvPrimaryText.text = "${barContext.getString(R.string.textNo)} $screenFunction ${barContext.getString(R.string.textData)}" //"No $screenFunction Data"
+            barNoData.binding.tvSecondaryText.text = "${barContext.getString(R.string.promptIndicatorToAdd)} $screenFunction ${barContext.getString(R.string.textData)}"//"Click Here to Add $screenFunction Data"
             barNoData.binding.vwBar.backgroundTintList = ContextCompat.getColorStateList(barContext, R.color.Default_Charcoal_Grey)
             barNoData.binding.llBlockText.backgroundTintList = ContextCompat.getColorStateList(barContext, R.color.Muted_Green)
-            barNoData.binding.tvBlockText.text = "Click Here"
-            barNoData.binding.tvBlockX.text = "+"
+            barNoData.binding.tvBlockText.text = barContext.getString(R.string.clickIndicator)
+            barNoData.binding.tvBlockX.text = barContext.getString(R.string.addSymbol)
             barNoData.binding.tvBlockX.textSize = 36F
 
             barNoData.isClickable = true
@@ -55,46 +55,46 @@ class GlobalClass : Application()
 
             when (screenFunction)
             {
-                "LogsData" ->
+                barContext.getString(R.string.logsDataScreenFunction) ->
                 {
 
                         val logParam: ViewGroup.MarginLayoutParams = barNoData.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
                         logParam.setMargins(28, logParam.topMargin, logParam.rightMargin, logParam.bottomMargin)
                         barNoData.binding.vwBar.layoutParams = logParam
 
-                        barNoData.binding.tvPrimaryText.text = "No Logs Found"
-                        barNoData.binding.tvSecondaryText.text = "Try a different set of filters"
+                        barNoData.binding.tvPrimaryText.text = barContext.getString(R.string.noLogsFound)
+                        barNoData.binding.tvSecondaryText.text = barContext.getString(R.string.noLogsFoundMessage)
 
                         barNoData.binding.tvBlockText.text = ""
-                        barNoData.binding.tvBlockX.text = "\uD83D\uDCC5"
+                        barNoData.binding.tvBlockX.text = barContext.getString(R.string.calSymbol) //"\uD83D\uDCC5"
                         barNoData.binding.tvBlockX.height = 210
 
 
                 }
-                "Logs" ->
+                barContext.getString(R.string.logsScreenFunction) ->
                 {
 
                     val logParam: ViewGroup.MarginLayoutParams = barNoData.binding.vwBar.layoutParams as ViewGroup.MarginLayoutParams
                     logParam.setMargins(28, logParam.topMargin, logParam.rightMargin, logParam.bottomMargin)
 
                     barNoData.binding.vwBar.layoutParams = logParam
-                    barNoData.binding.tvSecondaryText.text = "Go to an activity to add a log"
+                    barNoData.binding.tvSecondaryText.text = barContext.getString(R.string.promptToGoAddLog)
 
                     barNoData.binding.tvBlockText.text = ""
-                    barNoData.binding.tvBlockX.text = "\uD83D\uDCC5"
+                    barNoData.binding.tvBlockX.text = barContext.getString(R.string.calSymbol) //"\uD83D\uDCC5"
                     barNoData.binding.tvBlockX.height = 210
                 }
-                "Log" ->
+                barContext.getString(R.string.logScreenFunction) ->
                 {
                     barNoData.setOnClickListener()
                     {
                         //load add activity
                         var intent = Intent(barContext, AddLog::class.java)
-                        intent.putExtra("activityIDIndex", dataID)
+                        intent.putExtra(barContext.getString(R.string.activityIdentityIndex), dataID)
                         barContext.startActivity(intent)
                     }
                 }
-                "Activity" ->
+                barContext.getString(R.string.textActivity) ->
                 {
                     barNoData.setOnClickListener()
                     {
@@ -119,13 +119,13 @@ class GlobalClass : Application()
                         }
                         else
                         {
-                            InformUser("No Categories Available", "Add a category from the home page", barContext)
+                            InformUser(barContext.getString(R.string.noCategoriesTitle), barContext.getString(R.string.noCategoriesMessage), barContext)
                         }
 
 
                     }
                 }
-                "Category" ->
+                barContext.getString(R.string.viewLogCategory)->
                 {
                     barNoData.setOnClickListener()
                     {
@@ -151,12 +151,13 @@ class GlobalClass : Application()
             val alert = AlertDialog.Builder(context)
             alert.setTitle(messageTitle)
             alert.setMessage(messageText)
-            alert.setPositiveButton("OK", null)
+            alert.setPositiveButton(context.getString(R.string.alertOK), null)
 
             alert.show()
         }
 
-        fun DoubleToTime(currentDouble: String): String {
+
+        fun DoubleToTime(currentDouble: String, context : Context): String {
 
             if (currentDouble.toDoubleOrNull() == null) {
                 return currentDouble
@@ -164,9 +165,9 @@ class GlobalClass : Application()
             }
             else
             {
-                var splitCurrentDouble = currentDouble.split(".")
+                var splitCurrentDouble = currentDouble.split(context.getString(R.string.timeDelimiter))
                 var currentHours = splitCurrentDouble[0].toInt()
-                var minutesFraction = "0." + splitCurrentDouble[1]
+                var minutesFraction = context.getString(R.string.minutesFractionStart) + splitCurrentDouble[1]
                 var currentMinutes = (minutesFraction.toDouble() * 60)
                 return "$currentHours:${currentMinutes.roundToInt()}"
             }

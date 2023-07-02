@@ -23,7 +23,7 @@ class ViewActivity : AppCompatActivity()
         window.statusBarColor = ContextCompat.getColor(this, R.color.Dark_Green)
 
         //get activity index
-        val activityIDIndex = intent.getIntExtra("activityIDIndex", 0)
+        val activityIDIndex = intent.getIntExtra(getString(R.string.activityIdentityIndex), 0)
 
         //get activity
         var activity = GlobalClass.activities[activityIDIndex]
@@ -49,13 +49,13 @@ class ViewActivity : AppCompatActivity()
             try
             {
                 var intent = Intent(this, settings_view::class.java)
-                intent.putExtra("previousScreen", "Activity_View")
-                intent.putExtra("currentDataID", activityIDIndex)
+                intent.putExtra(getString(R.string.previousScreenKey), getString(R.string.activityView))
+                intent.putExtra(getString(R.string.currentDataIDKey), activityIDIndex)
                 startActivity(intent)
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)

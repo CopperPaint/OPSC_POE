@@ -38,6 +38,11 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
         //-------------------------------------------------
         //code here
 
+        //Test Data
+        //GlobalClass.user.userID = 5
+
+
+
         //Read Data
         GlobalScope.launch{
             try
@@ -60,6 +65,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                 GlobalClass.InformUser("Error", "${e.toString()}", requireContext())
             }
         }
+
         //-------------------------------------------------
         return view
     }
@@ -182,6 +188,51 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                                 newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(total.toString())
                             }
                         }
+                    if (minGoal.isSet)
+                    {
+                        if (maxGoal.isSet) //both goals
+                        {
+                            var (hour, text, color) = GoalHourCalculator().CalculateHours(currentMinGoal, currentMaxGoal, GlobalClass.activities[i].activityID)
+                            val barColor = ColorStateList.valueOf(Color.parseColor(color))
+                            newActivity.binding.vwBar.backgroundTintList = barColor
+                            newActivity.binding.tvBlockText.text = text
+                            newActivity.binding.tvBlockX.text = DoubleToTime(hour, requireContext())
+                        }
+                        else //min only
+                        {
+                            var goal = GlobalClass.goals[currentMinGoal]
+                            var (hour, text, color) = GoalHourCalculator().CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
+                            val barColor = ColorStateList.valueOf(Color.parseColor(color))
+                            newActivity.binding.vwBar.backgroundTintList = barColor
+                            newActivity.binding.tvBlockText.text = text
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour, requireContext())
+                        }
+                    }
+                    else
+                    {
+                        if (maxGoal.isSet) //max only
+                        {
+                            var goal = GlobalClass.goals[currentMaxGoal]
+                            var (hour, text, color) = GoalHourCalculator().CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
+                            val barColor = ColorStateList.valueOf(Color.parseColor(color))
+                            newActivity.binding.vwBar.backgroundTintList = barColor
+                            newActivity.binding.tvBlockText.text = text
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(hour, requireContext())
+                        }
+                        else //no goals
+                        {
+                            var total = 0.0
+                            for (k in GlobalClass.logs.indices)
+                            {
+                                if (GlobalClass.logs[k].activityID == GlobalClass.activities[i].activityID)
+                                {
+                                    total = total + GlobalClass.logs[k].hours
+                                }
+                            }
+                            newActivity.binding.tvBlockText.text = "Total Hours:"
+                            newActivity.binding.tvBlockX.text = GlobalClass.DoubleToTime(total.toString(), requireContext())
+                        }
+                    }
 
                         //select activity binding
                         newActivity.setOnClickListener(){
