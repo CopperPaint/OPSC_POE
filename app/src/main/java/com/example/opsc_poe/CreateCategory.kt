@@ -52,7 +52,7 @@ class CreateCategory : AppCompatActivity()
 
         //create category button
         //--------------------------------------------------------------------------------
-            var categoryIDIndex = intent.getIntExtra("categoryIDIndex", -1)
+            var categoryIDIndex = intent.getIntExtra(getString(R.string.categoryIdentityIndex), -1)
 
             if (categoryIDIndex == -1) //create category
             {
@@ -87,7 +87,7 @@ class CreateCategory : AppCompatActivity()
                     }
                     catch (e: Error)
                     {
-                        GlobalClass.InformUser("Error", "${e.toString()}", this)
+                        GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
                     }
                 }
             }
@@ -135,7 +135,7 @@ class CreateCategory : AppCompatActivity()
                 }
                 catch (e: Error)
                 {
-                    GlobalClass.InformUser("Error", "${e.toString()}", this)
+                    GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
                 }
             }
         }
@@ -167,7 +167,7 @@ class CreateCategory : AppCompatActivity()
     //Convert Color Int to String
     fun intToColourString(color: Int): String
     {
-        return String.format("#%06X", 0xFFFFFF and color)
+        return String.format(getString(R.string.colorFormat), 0xFFFFFF and color)
     }
 
     override fun onBackPressed() {}

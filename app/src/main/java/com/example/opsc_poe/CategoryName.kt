@@ -28,7 +28,7 @@ class CategoryName : AppCompatActivity()
         window.statusBarColor = ContextCompat.getColor(this, R.color.Dark_Green)
 
         //get category index
-        val categoryIDIndex = intent.getIntExtra("categoryIDIndex", 0)
+        val categoryIDIndex = intent.getIntExtra(getString(R.string.categoryIdentityIndex), 0)
 
         //passed category
         var category = GlobalClass.categories[categoryIDIndex]
@@ -54,7 +54,7 @@ class CategoryName : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -64,7 +64,7 @@ class CategoryName : AppCompatActivity()
         //if user has no data
         if (userHasData == false)
         {
-            GlobalClass.NoUserAppData(binding.llBars, this, this, "Activity", 0)
+            GlobalClass.NoUserAppData(binding.llBars, this, this, getString(R.string.textActivity), 0)
         }
         else
         {
@@ -163,7 +163,7 @@ class CategoryName : AppCompatActivity()
                                             total = total + GlobalClass.logs[k].hours
                                         }
                                     }
-                                    newActivity.binding.tvBlockText.text = "Total Hours:"
+                                    newActivity.binding.tvBlockText.text =  getString(R.string.promptTotalHours)
                                     newActivity.binding.tvBlockX.text = DoubleToTime(total.toString())
                                 }
                             }
@@ -171,7 +171,7 @@ class CategoryName : AppCompatActivity()
                             //set the click function of the activity to load the activity detail view
                             newActivity.setOnClickListener(){
                                 var intent = Intent(this, ViewActivity::class.java)
-                                intent.putExtra("activityIDIndex", i)
+                                intent.putExtra(getString(R.string.activityIdentityIndex), i)
                                 startActivity(intent)
                             }
                             //add the new view
@@ -182,7 +182,7 @@ class CategoryName : AppCompatActivity()
             }
             catch (e :Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -201,7 +201,7 @@ class CategoryName : AppCompatActivity()
             }
             catch (e :Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -215,12 +215,12 @@ class CategoryName : AppCompatActivity()
             {
                 //go to add create category page
                 var intent = Intent(this, CreateCategory::class.java)
-                intent.putExtra("categoryIDIndex", categoryIDIndex)
+                intent.putExtra(getString(R.string.categoryIdentityIndex), categoryIDIndex)
                 startActivity(intent)
             }
             catch (e : Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -238,7 +238,7 @@ class CategoryName : AppCompatActivity()
             }
             catch (e : Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -251,13 +251,13 @@ class CategoryName : AppCompatActivity()
             try
             {
                 var intent = Intent(this, settings_view::class.java)
-                intent.putExtra("previousScreen", "Category_View")
-                intent.putExtra("currentDataID", categoryIDIndex)
+                intent.putExtra(getString(R.string.previousScreenKey), getString(R.string.categoryViewScreenValue))
+                intent.putExtra(getString(R.string.currentDataIDKey), categoryIDIndex)
                 startActivity(intent)
             }
             catch (e : Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)

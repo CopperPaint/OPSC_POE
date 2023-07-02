@@ -113,6 +113,8 @@ class ExportUserData (
                         )
 
 
+
+
                         //set the maximum goal interval
                         userActivity.activityMaximumGoalInterval = GlobalClass.goals[p].interval
 
@@ -274,7 +276,7 @@ class ExportUserData (
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         //define file type as csv
-        intent.type = "*/*"
+        intent.type = "text/csv"
 
         //add extra with the file and prompt
         //intent.putExtra(Intent.EXTRA_STREAM, fileURIToExport)

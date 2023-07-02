@@ -12,6 +12,43 @@
     <string name="exportLogHeaders">Activity Name, Hours Logged, Date Logged</string>
     <string name="exportLogFileName">userLogData.csv</string>
     <string name="exportActivityFileName">userActivityData.csv</string>
+    <string name="activityIdentityIndex">activityIDIndex</string>
+    <string name="errorTitle">Error</string>
+    <string name="logStopwatch">Stopwatch</string>
+    <string name="logManualInput">Input Hours</string>
+    <string name="inputErrorTitle">Input Error</string>
+    <string name="addLogErrorMessage">Cannot have 0 hours. Please set the amount of hours or use the stop watch to time an activity</string>
+    <string name="dateFormat">dd-MM-yyyy</string>
+    <string name="timerStartText">Start</string>
+    <string name="timerStopText">Stop</string>
+    <string name="timeStringFormat">%02d:%02d:%02d</string>
+    <string name="categoryIdentityIndex">categoryIDIndex</string>
+    <string name="textActivity">Activity</string>
+    <string name="promptTotalHours">Total Hours:</string>
+    <string name="previousScreenKey">previousScreen</string>
+    <string name="categoryViewScreenValue">Category_View</string>
+    <string name="currentDataIDKey">currentDataID</string>
+    <string name="currentActivityIndex">CurrentActivity</string>
+    <string name="intervalDaily">Daily</string>
+    <string name="intervalWeekly">Weekly</string>
+    <string name="intervalMonthly">Monthly</string>
+    <string name="currentGoalIdentityIndex">currentGoalIDIndex</string>
+    <string name="textEdit">Edit</string>
+    <string name="createGoalScreenValue">Create_Goal</string>
+    <string name="noCategoriesTitle">No Categories Available</string>
+    <string name="noCategoriesMessage">Add a category from the home page</string>
+    <string name="textCreate">Create</string>
+    <string name="categoriesNeeded">Category Needed</string>
+    <string name="fileExtensionJPG">.jpg</string>
+    <string name="needAllInputFields">All input fields required</string>
+    <string name="needActivityDescription">Please enter an activity description</string>
+    <string name="needActivityName">Please enter an activity name</string>
+    <string name="createActivityScreenValue">Create_Activity</string>
+    <string name="cameraUnavailable">Camera is not available</string>
+    <string name="getData">data</string>
+    <string name="colorFormat">#%06X</string>
+
+
 
 
 </resources>

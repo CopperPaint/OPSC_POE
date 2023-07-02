@@ -44,9 +44,9 @@ class CreateActivity : AppCompatActivity()
         //set status bar color
         window.statusBarColor = ContextCompat.getColor(this, R.color.Dark_Green)
 
-        var activityIDIndex = intent.getIntExtra("activityIDIndex", -1)
+        var activityIDIndex = intent.getIntExtra(getString(R.string.activityIdentityIndex), -1)
 
-        binding.tvScreenFunction.text = "Edit"
+        binding.tvScreenFunction.text = getString(R.string.textEdit)
 
         //Spinner
         //----------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ class CreateActivity : AppCompatActivity()
         //if spinner has items
         if (items.size <= 0)
         {
-            GlobalClass.InformUser("No Categories Available", "Add a category from the home page", this)
+            GlobalClass.InformUser(getString(R.string.noCategoriesTitle), getString(R.string.noCategoriesMessage), this)
         }
 
 
@@ -93,7 +93,7 @@ class CreateActivity : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the home screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -104,7 +104,7 @@ class CreateActivity : AppCompatActivity()
         {
             try
             {
-                binding.tvScreenFunction.text = "Create"
+                binding.tvScreenFunction.text = getString(R.string.textCreate)
                 binding.btnClick.setOnClickListener()
                 {
                     if (binding.etActivtyName.text.isNotEmpty())
@@ -113,7 +113,7 @@ class CreateActivity : AppCompatActivity()
                         {
                             if (items.size <= 0)
                             {
-                                GlobalClass.InformUser("Category Needed", "Add a category from the home page", this)
+                                GlobalClass.InformUser(getString(R.string.categoriesNeeded), getString(R.string.noCategoriesMessage), this)
                             }
                             else //create activity
                             {
@@ -151,7 +151,7 @@ class CreateActivity : AppCompatActivity()
                                 if (activity.photo != null)
                                 {
                                     //Save Image to Local Storage
-                                    val filename = "${activity.name}.jpg"
+                                    val filename = "${activity.name}${getString(R.string.fileExtensionJPG)}"
                                     val file = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), filename)
                                     try {
                                         val out = FileOutputStream(file)
@@ -197,18 +197,18 @@ class CreateActivity : AppCompatActivity()
                         }
                         else
                         {
-                            GlobalClass.InformUser("All input fields required", "Please enter an activity description", this)
+                            GlobalClass.InformUser(getString(R.string.needAllInputFields), getString(R.string.needActivityDescription), this)
                         }
                     }
                     else
                     {
-                        GlobalClass.InformUser("All input fields required", "Please enter an activity name", this)
+                        GlobalClass.InformUser(getString(R.string.needAllInputFields), getString(R.string.needActivityName), this)
                     }
                 }
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -253,7 +253,7 @@ class CreateActivity : AppCompatActivity()
                     if (activity.photo != null)
                     {
                         //Save Image to Local Storage
-                        val filename = "${activity.name}.jpg"
+                        val filename = "${activity.name}${getString(R.string.fileExtensionJPG)}"
                         val file = File(this.getExternalFilesDir(Environment.DIRECTORY_PICTURES), filename)
                         try {
                             val out = FileOutputStream(file)
@@ -298,7 +298,7 @@ class CreateActivity : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -310,13 +310,13 @@ class CreateActivity : AppCompatActivity()
             try
             {
                 var intent = Intent(this, Help::class.java)
-                intent.putExtra("previousScreen", "Create_Activity")
-                intent.putExtra("activityIDIndex", activityIDIndex)
+                intent.putExtra(getString(R.string.previousScreenKey), getString(R.string.createActivityScreenValue))
+                intent.putExtra(getString(R.string.activityIdentityIndex), activityIDIndex)
                 startActivity(intent)
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -332,7 +332,7 @@ class CreateActivity : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -352,14 +352,14 @@ class CreateActivity : AppCompatActivity()
         if (cameraIntent.resolveActivity(packageManager) != null) {
             startActivityForResult(cameraIntent, CAMERA_REQUEST_CODE)
         } else {
-            Toast.makeText(this, "Camera is not available", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.cameraUnavailable), Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val imageBitmap = data?.extras?.get(getString(R.string.getData)) as Bitmap
             imageView.setImageBitmap(imageBitmap)
             //Save the image locally
             //saveImageLocally(imageBitmap)

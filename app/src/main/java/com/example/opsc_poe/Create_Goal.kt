@@ -26,7 +26,7 @@ class Create_Goal : AppCompatActivity()
         //set status bar color
         window.statusBarColor = ContextCompat.getColor(this, R.color.Dark_Green)
 
-        var currentActivityIndex = intent.extras?.getInt("CurrentActivity")!!
+        var currentActivityIndex = intent.extras?.getInt(getString(R.string.currentActivityIndex))!!
         //var currentActivityIndex = intent.getIntExtra("CurrentActivity",0)
 
         //set activity
@@ -40,27 +40,27 @@ class Create_Goal : AppCompatActivity()
         binding.npHourGoal.maxValue = 24
         binding.npHourGoal.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
 
-        val timeFrame = arrayOf<String>("Daily", "Weekly", "Monthly")
+        val timeFrame = arrayOf<String>(getString(R.string.intervalDaily), getString(R.string.intervalWeekly), getString(R.string.intervalMonthly))
         binding.npTimeFrameGoal.minValue = 1
         binding.npTimeFrameGoal.maxValue = 3
         binding.npTimeFrameGoal.displayedValues = timeFrame
         binding.npTimeFrameGoal.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
 
-        var currentGoalID = intent.extras?.getInt("currentGoalIDIndex")
+        var currentGoalID = intent.extras?.getInt(getString(R.string.currentGoalIdentityIndex))
         var currentGoal = GlobalClass.goals[currentGoalID!!]
 
         //if goal exists, preset values
         if (currentGoal.isSet)
         {
             try{
-                binding.tvScreenFunction.text = "Edit"
+                binding.tvScreenFunction.text = getString(R.string.textEdit)
 
                 var currentInterval = 0
 
                 when (currentGoal.interval){
-                    "Daily" -> currentInterval = 1
-                    "Weekly" -> currentInterval = 2
-                    "Monthly" -> currentInterval = 3
+                    getString(R.string.intervalDaily) -> currentInterval = 1
+                    getString(R.string.intervalWeekly) -> currentInterval = 2
+                    getString(R.string.intervalMonthly) -> currentInterval = 3
                 }
 
                 binding.npTimeFrameGoal.value = currentInterval
@@ -78,7 +78,7 @@ class Create_Goal : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
             }
         }
 
@@ -89,10 +89,10 @@ class Create_Goal : AppCompatActivity()
             try{
                 var intervalText = ""
                 when (binding.npTimeFrameGoal.value) {
-                    1 -> {intervalText = "Daily"}
-                    2 -> {intervalText = "Weekly"}
-                    3 -> {intervalText = "Monthly"}
-                    else -> {intervalText = "Daily"}
+                    1 -> {intervalText = getString(R.string.intervalDaily)}
+                    2 -> {intervalText = getString(R.string.intervalWeekly)}
+                    3 -> {intervalText = getString(R.string.intervalMonthly)}
+                    else -> {intervalText = getString(R.string.intervalDaily)}
                 }
                 currentGoal.interval = intervalText
                 currentGoal.amount = binding.npHourGoal.value
@@ -118,7 +118,7 @@ class Create_Goal : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
             }
         }
 
@@ -128,15 +128,15 @@ class Create_Goal : AppCompatActivity()
             try{
                 var intent = Intent(this, Help::class.java) //ViewActivity
 
-                intent.putExtra("previousScreen", "Create_Goal")
-                intent.putExtra("CurrentActivity", currentActivityIndex)
-                intent.putExtra("currentGoalIDIndex", currentGoalID)
+                intent.putExtra(getString(R.string.previousScreenKey), getString(R.string.createGoalScreenValue))
+                intent.putExtra(getString(R.string.currentActivityIndex), currentActivityIndex)
+                intent.putExtra(getString(R.string.currentGoalIdentityIndex), currentGoalID)
                 //GlobalClass.InformUser("", currentActivityIndex.toString(), this)
                 startActivity(intent)
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
             }
         }
 

@@ -57,7 +57,7 @@ class AddLog : AppCompatActivity()
         binding.dpHours.descendantFocusability = ViewGroup.FOCUS_BLOCK_DESCENDANTS
 
         //get extra value
-        val activityIDIndex = intent.getIntExtra("activityIDIndex", 0)
+        val activityIDIndex = intent.getIntExtra(getString(R.string.activityIdentityIndex), 0)
 
         //passed activity
         var activity = GlobalClass.activities[activityIDIndex]
@@ -85,7 +85,7 @@ class AddLog : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
             }
         }
         //start date button
@@ -98,7 +98,7 @@ class AddLog : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", "${e.toString()}", this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), "${e.toString()}", this)
             }
         }
 
@@ -109,7 +109,7 @@ class AddLog : AppCompatActivity()
         //SPINNER
         //------------------------------------------------------------------------------------
         //set spinner items
-        val items = arrayOf("Stopwatch", "Input Hours")
+        val items = arrayOf(getString(R.string.logStopwatch), getString(R.string.logManualInput))
         val spinner = findViewById<Spinner>(R.id.spWatchOption)
         if (spinner != null)
         {
@@ -125,12 +125,12 @@ class AddLog : AppCompatActivity()
             {
                 val selectedItem = parent.getItemAtPosition(position).toString()
                 when (selectedItem) {
-                    "Stopwatch" -> {
+                    getString(R.string.logStopwatch) -> {
                         binding.llStopWatch.visibility = View.VISIBLE
                         binding.llInputHours.visibility = View.GONE
                         isStopWatch = true
                     }
-                    "Input Hours" -> {
+                    getString(R.string.logManualInput) -> {
                         // Code to execute when "Input Hours" is selected
                         binding.llStopWatch.visibility = View.GONE
                         binding.llInputHours.visibility = View.VISIBLE
@@ -175,7 +175,7 @@ class AddLog : AppCompatActivity()
 
                 if (inputTime == 0.0)
                 {
-                    GlobalClass.InformUser("Input Error","Cannot have 0 hours. Please set the amount of hours or use the stop watch to time an activity", this)
+                    GlobalClass.InformUser(getString(R.string.inputErrorTitle),getString(R.string.addLogErrorMessage), this)
                 }
                 else
                 {
@@ -196,7 +196,7 @@ class AddLog : AppCompatActivity()
                     GlobalScope.launch {
                         var DBmanager = ManageDatabase()
                         //add log to database
-                        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                        val formatter = DateTimeFormatter.ofPattern(getString(R.string.dateFormat))
 
                         var store = LogStore(
                             logID = log.logID,
@@ -223,7 +223,7 @@ class AddLog : AppCompatActivity()
             }
             catch (e: Error)
             {
-                GlobalClass.InformUser("Error", e.toString(), this)
+                GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
                 //return user to the sign in screen
                 var intent = Intent(this, MainActivity::class.java) //ViewActivity
                 startActivity(intent)
@@ -251,17 +251,17 @@ class AddLog : AppCompatActivity()
     //------------------------------------------------------------------------------------
     private fun updateLable(calendar: Calendar) : String
     {
-        var dateText = ""
+        var dateText =""
         try
         {
-            val dateFormat = "dd-MM-yyyy"
+            val dateFormat = getString(R.string.dateFormat)
             val sdf = SimpleDateFormat(dateFormat, Locale.UK)
             dateText = sdf.format(calendar.time)
             return dateText
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", e.toString(), this)
+            GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
             //return user to the sign in screen
             var intent = Intent(this, MainActivity::class.java) //ViewActivity
             startActivity(intent)
@@ -282,7 +282,7 @@ class AddLog : AppCompatActivity()
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", e.toString(), this)
+            GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
             //return user to the sign in screen
             var intent = Intent(this, MainActivity::class.java) //ViewActivity
             startActivity(intent)
@@ -301,7 +301,7 @@ class AddLog : AppCompatActivity()
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", e.toString(), this)
+            GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
             //return user to the sign in screen
             var intent = Intent(this, MainActivity::class.java) //ViewActivity
             startActivity(intent)
@@ -315,13 +315,13 @@ class AddLog : AppCompatActivity()
         {
             serviceIntent.putExtra(TimerService.TIME_EXTRA, time)
             startService(serviceIntent)
-            binding.btnStartStop.text = "Stop"
+            binding.btnStartStop.text = getString(R.string.timerStopText)
             binding.btnStartStop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pause, 0, 0, 0)
             timerStarted = true
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", e.toString(), this)
+            GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
             //return user to the sign in screen
             var intent = Intent(this, MainActivity::class.java) //ViewActivity
             startActivity(intent)
@@ -334,13 +334,13 @@ class AddLog : AppCompatActivity()
         try
         {
             stopService(serviceIntent)
-            binding.btnStartStop.text = "Start"
+            binding.btnStartStop.text = getString(R.string.timerStartText)
             binding.btnStartStop.setCompoundDrawablesWithIntrinsicBounds(R.drawable.play_arrow, 0, 0, 0)
             timerStarted = false
         }
         catch (e: Error)
         {
-            GlobalClass.InformUser("Error", e.toString(), this)
+            GlobalClass.InformUser(getString(R.string.errorTitle), e.toString(), this)
             //return user to the sign in screen
             var intent = Intent(this, MainActivity::class.java) //ViewActivity
             startActivity(intent)
@@ -369,7 +369,7 @@ class AddLog : AppCompatActivity()
     }
 
     //method to format a time string
-    private fun makeTimeString(hour: Int, min: Int, sec: Int): String = String.format("%02d:%02d:%02d", hour, min, sec)
+    private fun makeTimeString(hour: Int, min: Int, sec: Int): String = String.format(getString(R.string.timeStringFormat), hour, min, sec)
 
     override fun onBackPressed() {}
 }
