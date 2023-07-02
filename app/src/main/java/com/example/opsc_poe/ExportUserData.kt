@@ -294,7 +294,7 @@ class ExportUserData (
         //define share menu intent
         val chooser = Intent.createChooser(intent, "Share using...")
 
-        upperContext.startActivity(intent)
+        upperContext.startActivity(chooser)
 
 
 
