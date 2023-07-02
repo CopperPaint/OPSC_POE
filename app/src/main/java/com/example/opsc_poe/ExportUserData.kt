@@ -57,7 +57,6 @@ class ExportUserData (
         if (!selectedExportItems.isNullOrEmpty()) {
             shareCSVFiles(filesToExport)
         }
-
     }
 
     private fun exportActivityData(): ArrayList<ExportActivityData> {
@@ -185,18 +184,12 @@ class ExportUserData (
                         userLog.logDate = GlobalClass.logs[j].startDate
 
                         userLogData.add(userLog)
-
-
                     }
                 }
-
-
             }
 
         }
-
         return userLogData
-
     }
 
     private fun generateActivityCSVFileToExport(
@@ -229,8 +222,6 @@ class ExportUserData (
 
         //return the complete file
         return File(upperContext.externalCacheDir,fileName)//File(upperContext.getExternalFilesDir(null), fileName)
-
-
     }
 
     private fun generateLogCSVFileToExport(
@@ -238,7 +229,6 @@ class ExportUserData (
         fileName: String,
         fileHeaders: String
     ): File {
-
 
         //generate the file
         val externalCacheFile = File(upperContext.externalCacheDir, fileName)
@@ -261,11 +251,8 @@ class ExportUserData (
         //flush the file
         filePrintWriter.flush()
 
-
         //return the complete file
         return File(upperContext.externalCacheDir,fileName)//File(upperContext.getExternalFilesDir(null), fileName)
-
-
     }
 
 
@@ -279,11 +266,10 @@ class ExportUserData (
             //var fileUri = "content://com.example.opsc_poe.provider/external_files/Android/data/com.example.opsc_poe/cache/userActivityData.csv"
             fileURIToExport.add(fileUri)//.toUri())
         }
-
-        //GlobalClass.InformUser("", fileArray[0].toString() + "\n\n" + fileURIToExport[0].toString(), upperContext)
-
         //intent to provide share functionality
-        val intent = Intent(Intent.ACTION_SEND)
+        //val intent = Intent(Intent.ACTION_SEND)
+        val intent = Intent(Intent.ACTION_SEND_MULTIPLE)
+
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
@@ -291,29 +277,19 @@ class ExportUserData (
         intent.type = "*/*"
 
         //add extra with the file and prompt
-        intent.putExtra(Intent.EXTRA_STREAM, fileURIToExport)
+        //intent.putExtra(Intent.EXTRA_STREAM, fileURIToExport)
+        intent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, fileURIToExport)
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-
 
         //define share menu intent
         val chooser = Intent.createChooser(intent, "Share using...")
 
-
-
         upperContext.startActivity(chooser)
-
-
 
         //call the intent to prompt the user with the share menu
         //startActivity(upperContext, chooser, null)
     }
-
-
-
-
-
 }
 
 
