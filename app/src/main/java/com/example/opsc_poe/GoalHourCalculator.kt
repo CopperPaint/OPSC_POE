@@ -1,5 +1,8 @@
 package com.example.opsc_poe
 
+import android.content.Context
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.toColorInt
 import java.time.LocalDate
 import java.time.temporal.WeekFields
 import java.util.*
@@ -7,11 +10,14 @@ import java.util.*
 //private var data = GlobalClass
 
 class GoalHourCalculator
+    (
+    private val upperContext : Context
+            )
 {
     //preset bar colors
-    var yellow = "#fcef5d"
-    var red = "#e81e1e"
-    var green = "#40bf2a"
+    var yellow = "${R.string.hashSymbol}${Integer.toHexString(ContextCompat.getColor(upperContext, R.color.calculatorYellow))}"//"#fcef5d"
+    var red = "${R.string.hashSymbol}${Integer.toHexString(ContextCompat.getColor(upperContext, R.color.calculatorRed))}"//"#e81e1e"
+    var green = "${R.string.hashSymbol}${Integer.toHexString(ContextCompat.getColor(upperContext, R.color.calculatorGreen))}"//"#40bf2a"
 
     //calculate goal hours if both goals exists
     fun CalculateHours(minIndex: Int, maxIndex: Int, activityID: Int): Triple<String, String, String>
@@ -24,14 +30,14 @@ class GoalHourCalculator
 
         //check min
         val (minHour, minText, minColor) = CheckGoal(mingoal.interval, mingoal.amount, activityID)
-        if (minText.equals("Overtime")) //if over mingoal hours
+        if (minText.equals(upperContext.getString(R.string.workOvertime))) //if over mingoal hours
         {
             //check max
             val (maxHour, maxText, maxColor) = CheckGoal(maxgoal.interval, maxgoal.amount, activityID) //here
-            if (maxText.equals("Hours to Go!")) //if under maxgoal hours
+            if (maxText.equals(upperContext.getString(R.string.hoursLeft))) //if under maxgoal hours
             {
-                calcHour = "✔"
-                goalText = "Goal Reached!"
+                calcHour = upperContext.getString(R.string.tickSymbol)
+                goalText = upperContext.getString(R.string.workCompleted)
                 barColour = green
             }
             else //if over or if equal to max
@@ -58,7 +64,7 @@ class GoalHourCalculator
 
         try
         {
-            if (interval.equals("Daily")) //Daily
+            if (interval.equals(upperContext.getString(R.string.intervalDaily))) //Daily
             {
                 //logs
                 for (log in GlobalClass.logs.indices)
@@ -75,7 +81,7 @@ class GoalHourCalculator
                     }
                 }
             }
-            else if (interval.equals("Weekly")) //Weekly
+            else if (interval.equals(upperContext.getString(R.string.intervalWeekly))) //Weekly
             {
                 //get current week
                 val weekFields = WeekFields.of(Locale.UK)
@@ -97,7 +103,7 @@ class GoalHourCalculator
                     }
                 }
             }
-            else if (interval.equals("Monthly")) //Monthly
+            else if (interval.equals(upperContext.getString(R.string.intervalMonthly))) //Monthly
             {
                 //get current date
                 val currentDate = LocalDate.now()
@@ -135,20 +141,20 @@ class GoalHourCalculator
             val total = GetHours(interval, activityID)
             if (total == amount.toDouble()) //if goal reached
             {
-                hourToGo = "✔"
-                hourText = "Goal Reached!"
+                hourToGo = upperContext.getString(R.string.tickSymbol)
+                hourText = upperContext.getString(R.string.workCompleted)
                 barColor = green
             }
             else if (total > amount.toDouble()) //if over goal
             {
                 hourToGo = (total - amount).toString()
-                hourText = "Overtime"
+                hourText = upperContext.getString(R.string.workOvertime)
                 barColor = red
             }
             else //if under goal
             {
                 hourToGo = (amount.toDouble() - total).toString()
-                hourText = "Hours to Go!"
+                hourText = upperContext.getString(R.string.hoursLeft)
                 barColor = yellow
             }
         }

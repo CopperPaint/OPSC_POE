@@ -16,4 +16,8 @@
     <color name="start_green">#87bf3d</color>
     <color name="stop_red">#c4472b</color>
     <color name="reset_blue">#2B9DC3</color>
+
+    <color name="calculatorYellow">#fcef5d</color>
+    <color name="calculatorRed">#e81e1e</color>
+    <color name="calculatorGreen">#40bf2a</color>
 </resources>

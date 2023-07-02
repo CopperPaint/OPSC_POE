@@ -62,7 +62,7 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            var dateText = updateLable(calendar)
+            var dateText = updateLabel(calendar)
             binding.tvStartDate.text = dateText
             StartDate = calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
             var data = GetChartData()
@@ -82,7 +82,7 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            var dateText = updateLable(calendar)
+            var dateText = updateLabel(calendar)
             binding.tvEndDate.text = dateText
             EndDate = calendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
             var data = GetChartData()
@@ -168,7 +168,7 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
             }
             override fun onNothingSelected() {
                 // Handle no section selected here
-                binding.tvCategoryInformation.text = "No Category Selected"
+                binding.tvCategoryInformation.text = getString(R.string.noCategorySelected)
             }
         })
         //------------------------------------------------------
@@ -183,7 +183,7 @@ class global_logs_category_fragment : Fragment(R.layout.activity_global_logs_cat
 
     //Date Format Method
     //-------------------------------------------------------------------------------
-    private fun updateLable(calendar: Calendar) : String
+    private fun updateLabel(calendar: Calendar) : String
     {
         val dateFormat = getString(R.string.dateFormat) //"dd-MM-yyyy"
         val sdf = SimpleDateFormat(dateFormat, Locale.UK)

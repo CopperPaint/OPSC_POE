@@ -91,6 +91,12 @@
     //Jake
     //-------------------------------------------------------------------------------------
 
+    <string name="hashSymbol">#</string>
+    <string name="workOvertime">Overtime</string>
+    <string name="hoursLeft">Hours to Go!</string>
+    <string name="tickSymbol">✔</string>
+    <string name="workCompleted">Goal Reached!</string>
+
     getString(R.string.errorTitle)
 
     //-------------------------------------------------------------------------------------

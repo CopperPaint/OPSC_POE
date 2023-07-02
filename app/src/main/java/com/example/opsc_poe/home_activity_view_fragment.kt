@@ -147,7 +147,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                         {
                             if (maxGoal.isSet) //both goals
                             {
-                                var (hour, text, color) = GoalHourCalculator().CalculateHours(currentMinGoal, currentMaxGoal, GlobalClass.activities[i].activityID)
+                                var (hour, text, color) = GoalHourCalculator(requireContext()).CalculateHours(currentMinGoal, currentMaxGoal, GlobalClass.activities[i].activityID)
                                 val barColor = ColorStateList.valueOf(Color.parseColor(color))
                                 newActivity.binding.vwBar.backgroundTintList = barColor
                                 newActivity.binding.tvBlockText.text = text
@@ -156,7 +156,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                             else //min only
                             {
                                 var goal = GlobalClass.goals[currentMinGoal]
-                                var (hour, text, color) = GoalHourCalculator().CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
+                                var (hour, text, color) = GoalHourCalculator(requireContext()).CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
                                 val barColor = ColorStateList.valueOf(Color.parseColor(color))
                                 newActivity.binding.vwBar.backgroundTintList = barColor
                                 newActivity.binding.tvBlockText.text = text
@@ -168,7 +168,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                             if (maxGoal.isSet) //max only
                             {
                                 var goal = GlobalClass.goals[currentMaxGoal]
-                                var (hour, text, color) = GoalHourCalculator().CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
+                                var (hour, text, color) = GoalHourCalculator(requireContext()).CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
                                 val barColor = ColorStateList.valueOf(Color.parseColor(color))
                                 newActivity.binding.vwBar.backgroundTintList = barColor
                                 newActivity.binding.tvBlockText.text = text
@@ -192,7 +192,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                     {
                         if (maxGoal.isSet) //both goals
                         {
-                            var (hour, text, color) = GoalHourCalculator().CalculateHours(currentMinGoal, currentMaxGoal, GlobalClass.activities[i].activityID)
+                            var (hour, text, color) = GoalHourCalculator(requireContext()).CalculateHours(currentMinGoal, currentMaxGoal, GlobalClass.activities[i].activityID)
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
@@ -201,7 +201,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                         else //min only
                         {
                             var goal = GlobalClass.goals[currentMinGoal]
-                            var (hour, text, color) = GoalHourCalculator().CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
+                            var (hour, text, color) = GoalHourCalculator(requireContext()).CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
@@ -213,7 +213,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                         if (maxGoal.isSet) //max only
                         {
                             var goal = GlobalClass.goals[currentMaxGoal]
-                            var (hour, text, color) = GoalHourCalculator().CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
+                            var (hour, text, color) = GoalHourCalculator(requireContext()).CheckGoal(goal.interval, goal.amount, GlobalClass.activities[i].activityID)
                             val barColor = ColorStateList.valueOf(Color.parseColor(color))
                             newActivity.binding.vwBar.backgroundTintList = barColor
                             newActivity.binding.tvBlockText.text = text
