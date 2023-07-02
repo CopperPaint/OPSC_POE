@@ -62,7 +62,7 @@ class ExportUserData (
     private fun exportActivityData(): ArrayList<ExportActivityData> {
 
         var userActivityData = arrayListOf<ExportActivityData>()
-        var goalCalculator = GoalHourCalculator()
+        var goalCalculator = GoalHourCalculator(upperContext)
 
         //loop through activities
         for (i in GlobalClass.activities.indices) {

@@ -90,7 +90,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             else
             {
                 maxGoalCustom.binding.tvSecondaryText.text = maxGoal.interval
-                var (maxhour, maxText, maxColor) = GoalHourCalculator().CheckGoal(maxGoal.interval, maxGoal.amount, activity.activityID)
+                var (maxhour, maxText, maxColor) = GoalHourCalculator(requireContext()).CheckGoal(maxGoal.interval, maxGoal.amount, activity.activityID)
                 val maxBarColor = ColorStateList.valueOf(Color.parseColor(maxColor))
                 maxGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
                 maxGoalCustom.binding.tvBlockText.text = maxText
@@ -134,7 +134,7 @@ class View_Activity_Details_Fragment : Fragment(R.layout.activity_view_details_f
             else
             {
                 minGoalCustom.binding.tvSecondaryText.text = minGoal.interval
-                var (hour, text, color) = GoalHourCalculator().CheckGoal(minGoal.interval, minGoal.amount, activity.activityID)
+                var (hour, text, color) = GoalHourCalculator(requireContext()).CheckGoal(minGoal.interval, minGoal.amount, activity.activityID)
                 val maxBarColor = ColorStateList.valueOf(Color.parseColor(color))
                 minGoalCustom.binding.vwBar.backgroundTintList = maxBarColor
                 minGoalCustom.binding.tvBlockText.text = text
