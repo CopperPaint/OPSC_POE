@@ -159,6 +159,15 @@
     <string name="export">Export Data</string>
     <string name="password_reset">Reset Password</string>
     <string name="settings">Settings</string>
-
-
+    <string name="promptCurrentPassword">Current Password</string>
+    <string name="promptCollectCurrentPassword">Enter your current password below</string>
+    <string name="promptNewPassword">New Password</string>
+    <string name="promptEnterNewPassword">Enter a new password</string>
+    <string name="alertConfirm">Confirm</string>
+    <string name="updatedPasswordTitle">Password Updated</string>
+    <string name="updatedPasswordMessage">Your new password has been set</string>
+    <string name="attemptedPasswordDoesNotMatch">The password you entered does not match your current password</string>
+    <string name="exportActivityDataTitle">Activity Data</string>
+    <string name="exportLogDataTitle">Log Data</string>
+    <string name="promptExportData">Select the type of data to export</string>
 </resources>

@@ -62,7 +62,7 @@ class settings_view : AppCompatActivity()
         }
 
         //get the extra
-        var previousScreen = intent.getStringExtra("previousScreen")
+        var previousScreen = intent.getStringExtra(getString(R.string.previousScreenKey))
 
         fun SignOut() {
             //return user to the initial view screen
@@ -72,29 +72,29 @@ class settings_view : AppCompatActivity()
 
         fun GoBack(previousScreenVar: String) {
             when (previousScreenVar) {
-                "Home_View" -> {
+                getString(R.string.homeView) -> {
                     //return user to the initial view screen
                     var intent = Intent(this, Home_Activity::class.java)
                     startActivity(intent)
                 }
-                "Category_View" -> {
-                    var returningCategoryID = intent.getIntExtra("currentDataID", 0)
+                getString(R.string.categoryViewScreenValue) -> {
+                    var returningCategoryID = intent.getIntExtra(getString(R.string.currentDataIDKey), 0)
 
                     //GlobalClass.InformUser("", returningCategoryID.toString(), this)
 
                     //return user to the initial view screen
                     var intent = Intent(this, CategoryName::class.java)
-                    intent.putExtra("categoryIDIndex", returningCategoryID)
+                    intent.putExtra(getString(R.string.categoryIdentityIndex), returningCategoryID)
                     startActivity(intent)
                 }
-                "Activity_View" -> {
-                    var returningActivityID = intent.getIntExtra("currentDataID", 0)
+                getString(R.string.activityView) -> {
+                    var returningActivityID = intent.getIntExtra(getString(R.string.currentDataIDKey), 0)
 
                     //GlobalClass.InformUser("", returningActivityID.toString(), this)
 
                     //return user to the initial view screen
                     var intent = Intent(this, ViewActivity::class.java)
-                    intent.putExtra("activityIDIndex", returningActivityID)
+                    intent.putExtra(getString(R.string.activityIdentityIndex), returningActivityID)
                     startActivity(intent)
                 }
             }
@@ -105,15 +105,15 @@ class settings_view : AppCompatActivity()
 
 
             val etPopUp = EditText(this)
-            etPopUp.hint = "Current Password"
+            etPopUp.hint = getString(R.string.promptCurrentPassword)
 
             var alert = AlertDialog.Builder(this)
-            alert.setTitle("Forgot Password? (Coming Soon)")
-            alert.setMessage("Enter your current password below")
+            alert.setTitle(getString(R.string.forgotPasswordTitle))
+            alert.setMessage(getString(R.string.promptCollectCurrentPassword))
 
             alert.setView(etPopUp)
 
-            alert.setPositiveButton("Send", DialogInterface.OnClickListener { dialog, whichButton ->
+            alert.setPositiveButton(getString(R.string.alertSend), DialogInterface.OnClickListener { dialog, whichButton ->
 
                 val PasswordManager = ManagePassword(this)
 
@@ -133,14 +133,14 @@ class settings_view : AppCompatActivity()
 
 
 
-                    etPopUpNew.hint = "New Password"
-                    alertReset.setTitle("Reset Password")
-                    alertReset.setMessage("Enter a new password")
+                    etPopUpNew.hint = getString(R.string.promptNewPassword)
+                    alertReset.setTitle(getString(R.string.password_reset))
+                    alertReset.setMessage(getString(R.string.promptEnterNewPassword))
 
                     alertReset.setView(etPopUpNew)
 
                     alertReset.setPositiveButton(
-                        "Confirm",
+                        getString(R.string.alertConfirm),
                         DialogInterface.OnClickListener { dialog, whichButton ->
 
                             val trySignUp = Temp_UserDataClass()
@@ -203,8 +203,8 @@ class settings_view : AppCompatActivity()
 
 
                                 GlobalClass.InformUser(
-                                    "Password Updated",
-                                    "Your new password has been set",
+                                    getString(R.string.updatedPasswordTitle),
+                                    getString(R.string.updatedPasswordMessage),
                                     this
                                 )
 
@@ -212,7 +212,7 @@ class settings_view : AppCompatActivity()
                             } else {
                                 //if the new password is invalid
                                 GlobalClass.InformUser(
-                                    "Invalid Password",
+                                    getString(R.string.invalidPassword),
                                     validateUserPasswordFeedback,
                                     this
                                 )
@@ -227,8 +227,8 @@ class settings_view : AppCompatActivity()
                 {
                     //if entered password does not match current
                     GlobalClass.InformUser(
-                        "Invalid Password",
-                        "The password you entered does not match your current password",
+                        getString(R.string.invalidPassword),
+                        getString(R.string.attemptedPasswordDoesNotMatch),
                         this
                     )
                 }
@@ -244,11 +244,11 @@ class settings_view : AppCompatActivity()
 
         fun exportUserData() {
 
-            val userDataTypes = arrayOf<String>("Activity Data", "Log Data")
+            val userDataTypes = arrayOf<String>(getString(R.string.exportActivityDataTitle), getString(R.string.exportLogDataTitle))
             val selectedItems = ArrayList<Int>() // Where we track the selected items
             val builder = AlertDialog.Builder(this)
             // Set the dialog title
-            builder.setTitle("Select the type of data to export")
+            builder.setTitle(getString(R.string.promptExportData))
                 // Specify the list array, the items to be selected by default (null for none),
                 // and the listener through which to receive callbacks when items are selected
                 .setMultiChoiceItems(userDataTypes, null,
@@ -262,7 +262,7 @@ class settings_view : AppCompatActivity()
                         }
                     })
                 // Set the action buttons
-                .setPositiveButton("Confirm",
+                .setPositiveButton(getString(R.string.alertConfirm),
                     DialogInterface.OnClickListener { dialog, id ->
                         // User clicked OK, so save the selectedItems results somewhere
                         // or return them to the component that opened the dialog
@@ -273,7 +273,7 @@ class settings_view : AppCompatActivity()
                         //GlobalClass.InformUser("Selected", exportData.selectedExportItems.toString(), this)
 
                     })
-                .setNegativeButton("Cancel",
+                .setNegativeButton(getString(R.string.alertCancel),
                     DialogInterface.OnClickListener { dialog, id ->
                        // ...
                     })
