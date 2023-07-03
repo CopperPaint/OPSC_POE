@@ -37,8 +37,9 @@ class sign_in_fragment : Fragment(R.layout.sign_in_fragment) {
                 if (GlobalClass.UpdateDataBase == true)
                 {
                     var DBManger = ManageDatabase()
-                    GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
+
                     GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
                     GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
                     GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
                     GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)

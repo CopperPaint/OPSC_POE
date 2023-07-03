@@ -241,8 +241,9 @@ class Temp_UserDataClass
                     DBmanager.AddUserToFirestore(newUser)
 
                     //READ DATA
-                    GlobalClass.allUsers = DBmanager.getAllUsersFromFirestore()
+
                     GlobalClass.categories = DBmanager.getCategoriesFromFirestore(GlobalClass.user.userID)
+                    GlobalClass.allUsers = DBmanager.getAllUsersFromFirestore()
                     GlobalClass.activities = DBmanager.getActivitesFromFirestore(GlobalClass.user.userID)
                     GlobalClass.goals = DBmanager.getGoalsFromFirestore(GlobalClass.user.userID)
                     GlobalClass.logs = DBmanager.getLogsFromFirestore(GlobalClass.user.userID)

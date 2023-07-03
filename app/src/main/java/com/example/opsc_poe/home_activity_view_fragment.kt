@@ -50,8 +50,9 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                 if (GlobalClass.UpdateDataBase == true)
                 {
                     var DBManger = ManageDatabase()
-                    GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
+
                     GlobalClass.categories = DBManger.getCategoriesFromFirestore(user.userID)
+                    GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
                     GlobalClass.activities = DBManger.getActivitesFromFirestore(user.userID)
                     GlobalClass.goals = DBManger.getGoalsFromFirestore(user.userID)
                     GlobalClass.logs = DBManger.getLogsFromFirestore(user.userID)
@@ -97,6 +98,8 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
             }
             else //if user has data
             {
+
+
                 val activityLayout = binding.llBars
                 for (i in GlobalClass.activities.indices)
                 {
