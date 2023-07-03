@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings.Global
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
@@ -108,13 +110,17 @@ class settings_view : AppCompatActivity()
 
 
             val etPopUp = EditText(this)
+            etPopUp.isSingleLine = true
             etPopUp.hint = getString(R.string.promptCurrentPassword)
+            etPopUp.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            etPopUp.transformationMethod = PasswordTransformationMethod.getInstance();
 
             var alert = AlertDialog.Builder(this)
             alert.setTitle(getString(R.string.forgotPasswordTitle))
             alert.setMessage(getString(R.string.promptCollectCurrentPassword))
 
             alert.setView(etPopUp)
+
 
             alert.setPositiveButton(getString(R.string.alertSend), DialogInterface.OnClickListener { dialog, whichButton ->
 
@@ -131,6 +137,10 @@ class settings_view : AppCompatActivity()
                 if (attemptedUserPasswordHash == GlobalClass.user.passwordHash) {
 
                     val etPopUpNew = EditText(this)
+                    etPopUpNew.isSingleLine = true
+                    etPopUpNew.hint = getString(R.string.promptCurrentPassword)
+                    etPopUpNew.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    etPopUpNew.transformationMethod = PasswordTransformationMethod.getInstance();
 
                     var alertReset = AlertDialog.Builder(this)
 
