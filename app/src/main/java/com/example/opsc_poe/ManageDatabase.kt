@@ -242,6 +242,21 @@ class ManageDatabase
     //UPDATE DATA
     //---------------------------------------------------------------------------------------------
     //update given category in database
+
+    suspend fun updateUserInFirestore(currentUser: Temp_UserDataClass, ID: String) {
+        val categoryRef = db.collection("Users").document(ID)
+        categoryRef.update(
+            mapOf(
+                "userID" to currentUser.userID,
+                "email" to currentUser.email,
+                "username" to currentUser.username,
+                "passwordHash" to currentUser.passwordHash,
+                "passwordSalt" to currentUser.passwordSalt
+
+            )
+        ).await()
+    }
+
     suspend fun updateCategoryInFirestore(category: Temp_CategoryDataClass, ID: String) {
         val categoryRef = db.collection("Category").document(ID)
         categoryRef.update(

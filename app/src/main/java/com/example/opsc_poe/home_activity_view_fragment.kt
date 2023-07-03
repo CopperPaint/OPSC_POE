@@ -50,6 +50,7 @@ class home_activity_view_fragment : Fragment(R.layout.home_activity_view_fragmen
                 if (GlobalClass.UpdateDataBase == true)
                 {
                     var DBManger = ManageDatabase()
+                    GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
                     GlobalClass.categories = DBManger.getCategoriesFromFirestore(user.userID)
                     GlobalClass.activities = DBManger.getActivitesFromFirestore(user.userID)
                     GlobalClass.goals = DBManger.getGoalsFromFirestore(user.userID)

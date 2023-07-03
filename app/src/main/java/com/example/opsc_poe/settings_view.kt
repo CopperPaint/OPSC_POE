@@ -33,9 +33,9 @@ class settings_view : AppCompatActivity()
         setContentView(binding.root)
 
         //Read Data
-        GlobalScope.launch{
-            if (GlobalClass.UpdateDataBase == true)
-            {
+        GlobalScope.launch {
+           // if (GlobalClass.UpdateDataBase == true) {
+
                 var DBManger = ManageDatabase()
                 GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
                 GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
@@ -43,10 +43,22 @@ class settings_view : AppCompatActivity()
                 GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
                 GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
                 GlobalClass.UpdateDataBase = false
-            }
+           // }
             //withContext(Dispatchers.Main) {
             //    UpdateUI()
             //}
+        }
+
+        var userIDIndex = 0
+
+        //find the user ID Index
+        for (i in GlobalClass.allUsers.indices)
+        {
+            if (GlobalClass.allUsers[i].userID == GlobalClass.user.userID)
+            {
+                userIDIndex = i
+                break
+            }
         }
 
         //get the extra
@@ -88,12 +100,9 @@ class settings_view : AppCompatActivity()
             }
         }
 
-
-        //look over this, the logic is weird with the lists and objects
         fun resetPassword() {
-            //var attemptPasswordReset = false
 
-            var passPasswordErrors = ""
+
 
             val etPopUp = EditText(this)
             etPopUp.hint = "Current Password"
@@ -106,186 +115,132 @@ class settings_view : AppCompatActivity()
 
             alert.setPositiveButton("Send", DialogInterface.OnClickListener { dialog, whichButton ->
 
-                //attemptPasswordReset = true
-
-                //disable multi line for the edit texts
-                //maybe check if new attempted password is the same as the old password?
-
                 val PasswordManager = ManagePassword(this)
-                //check current password
-                //for (i in GlobalClass.listUserUserID.indices ) {
 
-                    //if (GlobalClass.listUserUserID[i] == GlobalClass.user.userID) {
+                var currentUserSalt = GlobalClass.user.passwordSalt
 
-                        var currentUserSalt = GlobalClass.user.passwordSalt
+                val attemptedUserPasswordHash = PasswordManager.generateHash(
+                    etPopUp.text.toString(),
+                    currentUserSalt
+                )
 
-                        val attemptedUserPasswordHash = PasswordManager.generateHash(
-                            etPopUp.text.toString(),
-                            currentUserSalt
-                        )
+                //if the correct password is entered
+                if (attemptedUserPasswordHash == GlobalClass.user.passwordHash) {
 
-                        if (attemptedUserPasswordHash == GlobalClass.user.passwordHash) {
-                            //if password matches show new alert
+                    val etPopUpNew = EditText(this)
 
-                            var newPasswordAttempt = false
+                    var alertReset = AlertDialog.Builder(this)
 
 
-                            val etPopUpNew = EditText(this)
 
-                            var alertReset = AlertDialog.Builder(this)
+                    etPopUpNew.hint = "New Password"
+                    alertReset.setTitle("Reset Password")
+                    alertReset.setMessage("Enter a new password")
 
+                    alertReset.setView(etPopUpNew)
 
-                            //maybe make the current password display as dots
-                            etPopUpNew.hint = "New Password"
-                            alertReset.setTitle("Reset Password")
-                            alertReset.setMessage("Enter a new password")
+                    alertReset.setPositiveButton(
+                        "Confirm",
+                        DialogInterface.OnClickListener { dialog, whichButton ->
 
-                            alertReset.setView(etPopUpNew)
-
-                            alertReset.setPositiveButton(
-                                "Confirm",
-                                DialogInterface.OnClickListener { dialog, whichButton ->
-
-                                    val trySignUp = Temp_UserDataClass()
-                                    var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(
-                                        etPopUpNew.text.toString(),
-                                        this
-                                    )
-
-                                    //validate the new password
-
-                                    if (validateUserPasswordBool) {
-
-                                        //hash the new password
-                                        val newPasswordHash = PasswordManager.generateHash(
-                                            etPopUpNew.text.toString(),
-                                            currentUserSalt
-                                        )
-
-                                        //set the new password hash back into the list (later DB)
-                                        GlobalClass.user.passwordHash = newPasswordHash
-
-                                        GlobalClass.InformUser(
-                                            "Success!",
-                                            "Your new password has been saved.",
-                                            this
-                                        )
-
-                                        newPasswordAttempt = true
-
-                                    } else {
-
-                                        passPasswordErrors = validateUserPasswordFeedback
-                                        //dialog.dismiss()
-                                        GlobalClass.InformUser(
-                                            "Invalid Password",
-                                            validateUserPasswordFeedback,
-                                            this
-                                        )
-                                        //dialog.cancel()
-
-
-                                    }
-
-
-                                })
-
-                            alertReset.setNegativeButton(
-                                "Cancel",
-                                DialogInterface.OnClickListener { dialog, whichButton ->
-                                    newPasswordAttempt = true
-                                })
-
-                            alertReset.setOnDismissListener {
-                                if (!newPasswordAttempt) {
-
-                                    //while (!GlobalClass.alertInformUserShowing)
-                                    //{
-
-                                    val alertPasswordError = AlertDialog.Builder(this)
-
-
-                                    alertPasswordError.setTitle("Invalid Password")
-                                    alertPasswordError.setMessage(passPasswordErrors)
-                                    alertPasswordError.setNegativeButton("OK", null)
-
-                                    // alertPasswordError.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, whichButton ->
-                                    //(it as AlertDialog).show()
-                                    // dialog.dismiss()
-                                    //dialog.cancel()
-                                    //(it as AlertDialog).show()
-
-                                    // })
-
-                                    val parentDialogInterface = it
-
-                                    alertPasswordError.setOnDismissListener {
-                                        (it as AlertDialog).show()
-                                        (parentDialogInterface as AlertDialog).show()
-                                    }
-
-                                    alertPasswordError.show()
-
-
-                                    //}
-
-
-                                }
-                            }
-
-                            alertReset.show()
-
-/*
-                            while (!newPasswordAttempt) {
-
-                                alertReset = AlertDialog.Builder(this)
-                                alertReset.show()
-
-                            }
-
- */
-
-
-                            //break
-
-                        } else {
-                            //show wrong current password
-                            GlobalClass.InformUser(
-                                "Incorrect Password",
-                                "The password entered does not match the existing current password",
+                            val trySignUp = Temp_UserDataClass()
+                            var (validateUserPasswordBool, validateUserPasswordFeedback) = trySignUp.ValidateUserPassword(
+                                etPopUpNew.text.toString(),
                                 this
                             )
 
-                            //somehow return to the top of method and try again? maybe loop or while? or repeat?
+                            if (validateUserPasswordBool) {
 
-                            //here needs to be the loop thing
+                                //if the new password is valid
+                                //hash the new password
 
-                            //break
+                                val newPasswordHash = PasswordManager.generateHash(
+                                    etPopUpNew.text.toString(),
+                                    currentUserSalt
+                                )
 
-                        }
-                    //}
+                                var updatedUser = Temp_UserDataClass(GlobalClass.user.userID, GlobalClass.user.email, GlobalClass.user.username, newPasswordHash, GlobalClass.user.passwordSalt)
 
-                //}
+                                //update the current user in the db and global class
+                                //GlobalClass.user.passwordHash = newPasswordHash
+
+
+
+
+
+
+                                //Read Data
+                                GlobalScope.launch {
+                                    //if (GlobalClass.UpdateDataBase == true) {
+
+
+
+                                        //Update Data
+                                        var documentID =
+                                            GlobalClass.documents.allUserIDs[userIDIndex]
+                                        var DBmanager = ManageDatabase()
+                                        DBmanager.updateUserInFirestore(
+                                            updatedUser,
+                                            documentID
+                                        )
+
+                                        var DBManger = ManageDatabase()
+                                        GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
+                                        GlobalClass.categories =
+                                            DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
+                                        GlobalClass.activities =
+                                            DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
+                                        GlobalClass.goals =
+                                            DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
+                                        GlobalClass.logs =
+                                            DBManger.getLogsFromFirestore(GlobalClass.user.userID)
+                                        GlobalClass.UpdateDataBase = false
+                                    //}
+                                    //withContext(Dispatchers.Main) {
+                                    //    UpdateUI()
+                                    //}
+                                }
+
+
+                                GlobalClass.InformUser(
+                                    "Password Updated",
+                                    "Your new password has been set",
+                                    this
+                                )
+
+
+                            } else {
+                                //if the new password is invalid
+                                GlobalClass.InformUser(
+                                    "Invalid Password",
+                                    validateUserPasswordFeedback,
+                                    this
+                                )
+
+                            }
+
+                        })
+                    alertReset.show()
+
+                }
+                else
+                {
+                    //if entered password does not match current
+                    GlobalClass.InformUser(
+                        "Invalid Password",
+                        "The password you entered does not match your current password",
+                        this
+                    )
+                }
+
 
             })
 
-            alert.setNegativeButton(
-                "Cancel",
-                DialogInterface.OnClickListener { dialog, whichButton -> })
-
-
             alert.show()
-
-
-/*
-            if (attemptPasswordReset == true)
-            {
-
-            }
-
- */
-
         }
+
+
+
 
         fun exportUserData() {
 

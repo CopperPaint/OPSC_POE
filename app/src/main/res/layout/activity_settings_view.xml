@@ -103,7 +103,9 @@
             android:paddingVertical="18dp"
             android:paddingLeft="82dp"
             android:text="@string/password_reset"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:clickable="true"
+            android:onClick="onClick"/>
 
         <ImageView
             android:id="@+id/imgResetPasswordIndicator"
@@ -117,6 +119,8 @@
             android:paddingVertical="13dp"
             android:paddingLeft="25dp"
             android:paddingRight="15dp"
+            android:clickable="true"
+            android:onClick="onClick"
             app:srcCompat="@drawable/navigation_arrow"
             tools:ignore="SpeakableTextPresentCheck" />
 
