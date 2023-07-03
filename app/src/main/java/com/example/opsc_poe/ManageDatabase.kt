@@ -27,7 +27,7 @@ class ManageDatabase
     suspend fun getAllUsersFromFirestore(): ArrayList<Temp_UserDataClass> {
         val allUsers = arrayListOf<Temp_UserDataClass>()
         val querySnapshot = db.collection("Users").get().await()
-        GlobalClass.documents = DocumentID()
+        //GlobalClass.documents = DocumentID()
         for (document in querySnapshot) {
             //if (document.data.getValue("UserID").toString().toInt() == userID) {
 

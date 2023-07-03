@@ -39,11 +39,13 @@ class settings_view : AppCompatActivity()
                 var DBManger = ManageDatabase()
 
                 GlobalClass.categories = DBManger.getCategoriesFromFirestore(GlobalClass.user.userID)
-            GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
+                GlobalClass.allUsers = DBManger.getAllUsersFromFirestore()
                 GlobalClass.activities = DBManger.getActivitesFromFirestore(GlobalClass.user.userID)
                 GlobalClass.goals = DBManger.getGoalsFromFirestore(GlobalClass.user.userID)
                 GlobalClass.logs = DBManger.getLogsFromFirestore(GlobalClass.user.userID)
                 GlobalClass.UpdateDataBase = false
+
+
            // }
             //withContext(Dispatchers.Main) {
             //    UpdateUI()
