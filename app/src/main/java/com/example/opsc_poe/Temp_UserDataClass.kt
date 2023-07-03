@@ -192,10 +192,7 @@ class Temp_UserDataClass
 
                     //exit loop
                     break
-
                 }
-
-
             }
 
             //check if the user matching the given data exists or conflicts
@@ -211,8 +208,17 @@ class Temp_UserDataClass
                     newUserPasswordSalt
                 )
 
-                val currentLastUserIDIndex = GlobalClass.allUsers.last().userID//GlobalClass.listUserUserID.last()
-                var newUserUserIDIndex = currentLastUserIDIndex + 1
+
+                var userIDs = ArrayList<Int>()
+                for (j in GlobalClass.allUsers.indices)
+                {
+                    userIDs.add(GlobalClass.allUsers[j].userID)
+                }
+
+                var lastID = userIDs.max()
+                //val currentLastUserIDIndex = GlobalClass.allUsers.last().userID//GlobalClass.listUserUserID.last()
+
+                var newUserUserIDIndex = lastID + 1
 
                 //add the new user to the user data lists
                 /*GlobalClass.listUserUserID.add(newUserUserIDIndex)
